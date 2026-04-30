@@ -18,43 +18,49 @@
 :root {
 
   /**
-   * colors
+   * RECRUITER-OPTIMIZED COLOR SYSTEM
+   * Palette: Neutral Slate-Dark + Emerald Accent
+   * Rule: 60% bg | 30% surface | 10% emerald accent
    */
 
-  /* gradient */
+  /* Gradients (simplified / flat) */
+  --bg-gradient-onyx: #1E2433;
+  --bg-gradient-jet: #1A1F2E;
+  --bg-gradient-yellow-1: linear-gradient(to right, #10B981, #10B981);
+  --bg-gradient-yellow-2: linear-gradient(to right, #10B981, #10B981);
+  --border-gradient-onyx: rgba(255, 255, 255, 0.06);
+  --text-gradient-yellow: linear-gradient(90deg, #10B981, #34D399);
 
-  --bg-gradient-onyx: linear-gradient(to bottom right,
-      hsl(240, 1%, 25%) 3%,
-      hsl(0, 0%, 19%) 97%);
-  --bg-gradient-jet: linear-gradient(to bottom right,
-      hsla(240, 1%, 18%, 0.251) 0%,
-      hsla(240, 2%, 11%, 0) 100%), hsl(240, 2%, 13%);
-  --bg-gradient-yellow-1: linear-gradient(to bottom right,
-      hsl(180, 100%, 45%) 0%,
-      hsla(180, 100%, 45%, 0) 50%);
-  --bg-gradient-yellow-2: linear-gradient(135deg,
-      hsla(180, 100%, 45%, 0.251) 0%,
-      hsla(180, 100%, 45%, 0) 59.86%), hsl(240, 2%, 13%);
-  --border-gradient-onyx: linear-gradient(to bottom right,
-      hsl(0, 0%, 25%) 0%,
-      hsla(0, 0%, 25%, 0) 50%);
-  --text-gradient-yellow: linear-gradient(to right,
-      hsl(180, 100%, 55%),
-      hsl(180, 100%, 45%));
+  /* === 60% — Background (neutral dark slate) === */
+  --smoky-black: #0D1117;
+  /* page bg */
 
-  /* solid */
+  /* === 30% — Surfaces (blue-tinted dark cards) === */
+  --eerie-black-2: #161B27;
+  /* sidebar / article card bg */
+  --eerie-black-1: #1C2233;
+  /* nested elements, icon boxes */
+  --onyx: #232A3B;
+  /* hover surfaces, title bg */
+  --jet: rgba(255, 255, 255, 0.08);
+  /* subtle borders/separators */
 
-  --jet: hsl(0, 0%, 22%);
-  --onyx: hsl(240, 1%, 17%);
-  --eerie-black-1: hsl(240, 2%, 13%);
-  --eerie-black-2: hsl(240, 2%, 12%);
-  --smoky-black: hsl(0, 0%, 7%);
-  --white-1: hsl(0, 0%, 100%);
-  --white-2: hsl(0, 0%, 98%);
-  --orange-yellow-crayola: hsl(180, 100%, 50%);
-  --vegas-gold: hsl(180, 80%, 40%);
-  --light-gray: hsl(0, 0%, 84%);
-  --light-gray-70: hsla(0, 0%, 84%, 0.7);
+  /* === 10% — Emerald Accent === */
+  --orange-yellow-crayola: #10B981;
+  /* primary accent */
+  --vegas-gold: #059669;
+  /* accent hover */
+  --accent-soft-glow: rgba(16, 185, 129, 0.12);
+
+  /* === Typography Colors === */
+  --white-1: #F1F5F9;
+  /* headings — crisp, not pure white */
+  --white-2: #E2E8F0;
+  /* sub-headings */
+  --light-gray: #94A3B8;
+  /* body text — slate-400 */
+  --light-gray-70: #64748B;
+  /* muted text — slate-500 */
   --bittersweet-shimmer: hsl(0, 43%, 51%);
 
   /**
@@ -64,9 +70,9 @@
   /* font-family */
   --ff-poppins: 'Poppins', sans-serif;
 
-  /* font-size */
-  --fs-1: 24px;
-  --fs-2: 18px;
+  /* font-size — slightly bumped for readability */
+  --fs-1: 26px;
+  --fs-2: 19px;
   --fs-3: 17px;
   --fs-4: 16px;
   --fs-5: 15px;
@@ -81,19 +87,17 @@
   --fw-600: 600;
 
   /**
-   * shadow
+   * shadow — softer, cleaner
    */
-
-  --shadow-1: 0 4px 6px hsla(0, 0%, 0%, 0.3);
-  --shadow-2: 0 10px 15px hsla(0, 0%, 0%, 0.4);
-  --shadow-3: 0 20px 25px hsla(0, 0%, 0%, 0.4);
-  --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.5);
-  --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.6);
+  --shadow-1: 0 2px 8px hsla(220, 40%, 5%, 0.4);
+  --shadow-2: 0 8px 20px hsla(220, 40%, 5%, 0.45);
+  --shadow-3: 0 16px 30px hsla(220, 40%, 5%, 0.45);
+  --shadow-4: 0 20px 40px hsla(220, 40%, 5%, 0.5);
+  --shadow-5: 0 24px 80px hsla(220, 40%, 5%, 0.6);
 
   /**
    * transition
    */
-
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease-in-out;
 
@@ -187,21 +191,20 @@ article {
   width: 100%;
   height: 1px;
   background: var(--jet);
-  margin: 16px 0;
+  margin: 20px 0;
 }
 
 .icon-box {
   position: relative;
-  background: var(--eerie-black-1);
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  background: var(--smoky-black);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--orange-yellow-crayola);
-  box-shadow: var(--shadow-1);
   z-index: 1;
 }
 
@@ -263,7 +266,7 @@ article.active {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 30px;
+  width: 36px;
   height: 3px;
   background: var(--text-gradient-yellow);
   border-radius: 3px;
@@ -303,8 +306,8 @@ article.active {
 }
 
 .content-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px var(--accent-soft-glow);
   border-color: var(--orange-yellow-crayola);
 }
 
