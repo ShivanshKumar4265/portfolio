@@ -911,49 +911,82 @@ main {
 
 
 /**
- * skills 
+ * skills - pill badge style
  */
 
 .skills-title {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.skills-list {
-  padding: 20px;
+.skills-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-
-.skills-item:not(:last-child) {
-  margin-bottom: 15px;
+.skill-category {
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 14px;
+  padding: 18px 20px;
 }
 
-.skill .title-wrapper {
+.skill-category-title {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 8px;
-}
-
-.skill .title-wrapper data {
-  color: var(--light-gray);
+  gap: 8px;
   font-size: var(--fs-7);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-600);
+  color: var(--orange-yellow-crayola);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
 }
 
-.skill-progress-bg {
-  background: var(--jet);
-  width: 100%;
-  height: 8px;
-  border-radius: 10px;
+.skill-category-title ion-icon {
+  font-size: 16px;
 }
 
-.skill-progress-fill {
-  background: var(--text-gradient-yellow);
-  height: 100%;
-  border-radius: inherit;
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--eerie-black-1);
+  border: 1px solid var(--jet);
+  color: var(--white-2);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-500);
+  padding: 5px 12px;
+  border-radius: 999px;
+  transition: var(--transition-1);
+  cursor: default;
+}
 
+.skill-pill img {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.skill-pill ion-icon {
+  font-size: 14px;
+  color: var(--orange-yellow-crayola);
+}
+
+.skill-pill:hover {
+  background: var(--onyx);
+  border-color: var(--orange-yellow-crayola);
+  color: var(--white-1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--accent-soft-glow);
+}
 
 
 
