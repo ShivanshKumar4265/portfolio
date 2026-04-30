@@ -423,10 +423,10 @@ main {
 .info-content .title {
   color: var(--orange-yellow-crayola);
   background: var(--onyx);
-  font-size: var(--fs-8);
-  font-weight: var(--fw-300);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-400);
   width: max-content;
-  padding: 3px 12px;
+  padding: 5px 16px;
   border-radius: 8px;
   border: 1px solid var(--orange-yellow-crayola);
 }
