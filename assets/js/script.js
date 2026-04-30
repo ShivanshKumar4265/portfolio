@@ -138,16 +138,49 @@ for (let i = 0; i < formInputs.length; i++) {
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
+const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let j = 0; j < navigationLinks.length; j++) {
-      navigationLinks[j].classList.remove("active");
+// activate nav link by matching href to visible section
+const setActiveNavLink = (id) => {
+  for (let i = 0; i < navigationLinks.length; i++) {
+    const href = navigationLinks[i].getAttribute("href");
+    if (href === `#${id}`) {
+      navigationLinks[i].classList.add("active");
+    } else {
+      navigationLinks[i].classList.remove("active");
     }
-    this.classList.add("active");
+  }
+};
 
+// IntersectionObserver to highlight nav on scroll
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        setActiveNavLink(entry.target.id);
+      }
+    }
+  },
+  { threshold: 0.3, rootMargin: "0px 0px -30% 0px" }
+);
+
+// observe all sections/articles with an id
+document.querySelectorAll("article[id], section[id]").forEach((section) => {
+  sectionObserver.observe(section);
+});
+
+// click handler — scroll to section and set active
+for (let i = 0; i < navigationLinks.length; i++) {
+  navigationLinks[i].addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+    if (href && href.startsWith("#")) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        setActiveNavLink(target.id);
+      }
+    }
   });
 }
 
