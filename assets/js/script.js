@@ -203,12 +203,12 @@ if (emailCopyLink) {
   const copyEmailFunc = async () => {
     try {
       await navigator.clipboard.writeText(emailToCopy);
-      
+
       const originalText = emailCopyLink.innerText;
       if (originalText !== "Copied!") {
         emailCopyLink.innerText = "Copied!";
         emailCopyLink.style.color = "var(--orange-yellow-crayola)";
-        
+
         setTimeout(() => {
           emailCopyLink.innerText = emailToCopy;
           emailCopyLink.style.color = "";
@@ -225,7 +225,7 @@ if (emailCopyLink) {
 
 
 // ── Avatar Lightbox ──
-const avatarBox     = document.querySelector('.avatar-box');
+const avatarBox = document.querySelector('.avatar-box');
 const avatarLightbox = document.getElementById('avatarLightbox');
 
 if (avatarBox && avatarLightbox) {

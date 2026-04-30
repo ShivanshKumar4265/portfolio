@@ -395,13 +395,20 @@ main {
   max-width: min(420px, 90vw);
   max-height: 90vh;
   border-radius: 20px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 2px var(--orange-yellow-crayola);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--orange-yellow-crayola);
   animation: lightbox-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes lightbox-in {
-  from { transform: scale(0.75); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 
@@ -466,16 +473,20 @@ main {
 }
 
 .contact-item {
-  min-width: 100%;
+  min-width: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 16px;
+  overflow: hidden;
 }
 
 .contact-info {
-  max-width: calc(100% - 46px);
-  width: calc(100% - 46px);
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
+
 
 .contact-title {
   color: var(--light-gray-70);
@@ -487,7 +498,13 @@ main {
 .contact-info :is(.contact-link, time, address) {
   color: var(--white-2);
   font-size: var(--fs-7);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
+
 
 .contact-info address {
   font-style: normal;
