@@ -150,3 +150,32 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+// Copy email to clipboard
+const emailCopyLink = document.getElementById('email-copy-link');
+
+if (emailCopyLink) {
+  const emailToCopy = emailCopyLink.getAttribute('data-copy-email');
+
+  const copyEmailFunc = async () => {
+    try {
+      await navigator.clipboard.writeText(emailToCopy);
+      
+      const originalText = emailCopyLink.innerText;
+      if (originalText !== "Copied!") {
+        emailCopyLink.innerText = "Copied!";
+        emailCopyLink.style.color = "var(--orange-yellow-crayola)";
+        
+        setTimeout(() => {
+          emailCopyLink.innerText = emailToCopy;
+          emailCopyLink.style.color = "";
+        }, 2000);
+      }
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
+  emailCopyLink.addEventListener('click', copyEmailFunc);
+  emailCopyLink.addEventListener('mouseenter', copyEmailFunc);
+}
