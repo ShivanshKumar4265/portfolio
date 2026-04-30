@@ -222,3 +222,27 @@ if (emailCopyLink) {
   emailCopyLink.addEventListener('click', copyEmailFunc);
   emailCopyLink.addEventListener('mouseenter', copyEmailFunc);
 }
+
+
+// ── Avatar Lightbox ──
+const avatarBox     = document.querySelector('.avatar-box');
+const avatarLightbox = document.getElementById('avatarLightbox');
+
+if (avatarBox && avatarLightbox) {
+  avatarBox.addEventListener('click', () => {
+    avatarLightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  avatarLightbox.addEventListener('click', () => {
+    avatarLightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      avatarLightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+}
