@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 512 512" fill="none">
+  <!-- Center person -->
+  <circle cx="256" cy="152" r="56" fill="#ffdb70"/>
+  <path d="M176 344c0-44.2 35.8-80 80-80s80 35.8 80 80v24H176v-24z" fill="#ffdb70"/>
+  <!-- Left person -->
+  <circle cx="112" cy="184" r="40" fill="#ffdb70" opacity="0.6"/>
+  <path d="M52 344c0-33.1 26.9-60 60-60s60 26.9 60 60v16H52v-16z" fill="#ffdb70" opacity="0.6"/>
+  <!-- Right person -->
+  <circle cx="400" cy="184" r="40" fill="#ffdb70" opacity="0.6"/>
+  <path d="M340 344c0-33.1 26.9-60 60-60s60 26.9 60 60v16H340v-16z" fill="#ffdb70" opacity="0.6"/>
+</svg>
