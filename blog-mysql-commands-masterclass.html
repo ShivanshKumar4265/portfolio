@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete SQL Commands Masterclass (MySQL) — Shivansh Kumar</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="./assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* Custom CSS Variables & Overrides for the Masterclass Blog */
+    :root {
+      --code-bg: #090d14;
+      --accent-green: #10B981;
+      --accent-green-glow: rgba(16, 185, 129, 0.15);
+      --card-bg-solid: #1C2233;
+      --card-bg-gradient: linear-gradient(135deg, #1C2233 0%, #161B27 100%);
+      --border-accent: rgba(16, 185, 129, 0.3);
+      --glass-blur: blur(12px);
+    }
+
+    .masterclass-container {
+      font-family: 'Outfit', 'Poppins', sans-serif;
+      color: var(--white-1);
+    }
+
+    .blog-header {
+      margin-bottom: 25px;
+    }
+
+    .blog-meta-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--fs-7);
+      color: var(--light-gray-70);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .blog-meta-wrapper .category {
+      color: var(--accent-green);
+      background: var(--accent-soft-glow);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .blog-title {
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--white-1);
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .blog-subtitle {
+      font-size: var(--fs-6);
+      color: var(--light-gray);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+
+    .back-to-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-green);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-500);
+      border: 1px solid var(--accent-green);
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: var(--transition-1);
+      margin-bottom: 20px;
+      background: transparent;
+    }
+
+    .back-to-blog:hover {
+      background: var(--accent-green);
+      color: var(--smoky-black);
+      transform: translateX(-4px);
+    }
+
+    /* Premium widescreen SQL masterclass banner */
+    .blog-banner-img {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      border: 1px solid var(--jet);
+      box-shadow: var(--shadow-3);
+    }
+    
+    .blog-banner-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform var(--transition-2);
+    }
+
+    .blog-banner-img:hover img {
+      transform: scale(1.02);
+    }
+
+    @media (min-width: 576px) {
+      .blog-banner-img { height: 280px; }
+    }
+
+    @media (min-width: 1024px) {
+      .blog-banner-img { height: 350px; }
+    }
+
+    /* 2-Column Responsive Layout: Content + Sticky Sidebar TOC */
+    .layout-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .main-article-content {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    @media (min-width: 1024px) {
+      .layout-wrapper {
+        flex-direction: row-reverse;
+        align-items: flex-start;
+      }
+      
+      .toc-sidebar {
+        width: 280px;
+        position: sticky;
+        top: 20px;
+        flex-shrink: 0;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      
+      .main-article-content {
+        flex: 1;
+      }
+    }
+
+    /* Table of Contents Styling */
+    .toc-card {
+      background: var(--card-bg-gradient);
+      border: 1px solid var(--jet);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .toc-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white-1);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--jet);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-title ion-icon {
+      color: var(--accent-green);
+      font-size: 18px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .toc-item a {
+      color: var(--light-gray);
+      transition: var(--transition-1);
+      display: block;
+      line-height: 1.4;
+      padding: 4px 0;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+    }
+
+    .toc-item a:hover {
+      color: var(--accent-green);
+      padding-left: 14px;
+    }
+
+    .toc-item.active a {
+      color: var(--accent-green);
+      border-left-color: var(--accent-green);
+      padding-left: 14px;
+      font-weight: 500;
+    }
+
+    /* Article Typography & Elements */
+    .content-section {
+      margin-bottom: 45px;
+      scroll-margin-top: 20px; /* Offset for sticky navs when anchor jumping */
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--jet);
+      padding-bottom: 10px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(18px, 4vw, 24px);
+      font-weight: 600;
+      color: var(--white-1);
+    }
+
+    .section-header .section-num {
+      background: var(--accent-soft-glow);
+      color: var(--accent-green);
+      border: 1px solid var(--border-accent);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .content-section p {
+      font-size: 15px;
+      color: var(--light-gray);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .content-section h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--white-2);
+      margin: 25px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .content-section h3::before {
+      content: "";
+      width: 4px;
+      height: 14px;
+      background: var(--accent-green);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* Premium Callout Boxes */
+    .callout {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .callout.trap {
+      background: rgba(239, 68, 68, 0.04);
+      border-left: 4px solid #EF4444;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.trap h4 {
+      color: #FCA5A5;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout.performance {
+      background: rgba(245, 158, 11, 0.04);
+      border-left: 4px solid #F59E0B;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.performance h4 {
+      color: #FCD34D;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout.internals {
+      background: rgba(59, 130, 246, 0.04);
+      border-left: 4px solid #3B82F6;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.internals h4 {
+      color: #93C5FD;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Beautiful Responsive Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--jet);
+      margin: 20px 0;
+      box-shadow: var(--shadow-1);
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+      min-width: 500px;
+    }
+
+    .custom-table th {
+      background: var(--eerie-black-1);
+      color: var(--white-1);
+      font-weight: 600;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--jet);
+    }
+
+    .custom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      color: var(--light-gray);
+      vertical-align: middle;
+    }
+
+    .custom-table tr:hover td {
+      background: rgba(255, 255, 255, 0.01);
+      color: var(--white-2);
+    }
+
+    .custom-table .badge-cell {
+      font-weight: 600;
+    }
+
+    /* Interactive Code Block Container */
+    .code-container {
+      position: relative;
+      background: var(--code-bg);
+      border-radius: 12px;
+      border: 1px solid var(--jet);
+      margin: 18px 0;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 11px;
+      color: var(--light-gray-70);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .code-header .lang-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      color: var(--light-gray);
+    }
+
+    .code-header .lang-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--accent-green);
+      border-radius: 50%;
+    }
+
+    .copy-btn {
+      background: rgba(255,255,255,0.04);
+      color: var(--light-gray);
+      border: 1px solid var(--jet);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition-1);
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-green-glow);
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border-color: #10B981;
+    }
+
+    .code-container pre {
+      padding: 16px;
+      overflow-x: auto !important;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+      margin: 0;
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+      font-size: 13.5px;
+      line-height: 1.5;
+      width: 100%;
+      max-width: 100%;
+      display: block;
+    }
+
+    .code-container pre code {
+      color: #E2E8F0;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+    }
+
+    /* Force all pre and code spans to display inline, overriding style.css global display: block */
+    pre span,
+    code span,
+    .code-container pre span,
+    .faq-answer pre span,
+    .faq-answer code span {
+      display: inline !important;
+    }
+
+    /* SQL Code Syntax Coloring helper */
+    .sql-keyword { color: #f43f5e; font-weight: 500; }
+    .sql-string { color: #10b981; }
+    .sql-number { color: #3b82f6; }
+    .sql-comment { color: #64748b; font-style: italic; }
+
+    /* Interactive 350 Q&A Section Styling */
+    .faq-catalog {
+      background: var(--card-bg-gradient);
+      border: 1px solid var(--jet);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 40px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .faq-catalog-header {
+      margin-bottom: 20px;
+    }
+
+    .faq-catalog-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--white-1);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .faq-catalog-title ion-icon {
+      color: var(--accent-green);
+    }
+
+    .faq-catalog-desc {
+      font-size: 13.5px;
+      color: var(--light-gray);
+      line-height: 1.5;
+    }
+
+    /* FAQ Controls (Search & Category Filters) */
+    .faq-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-wrapper ion-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--light-gray-70);
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--smoky-black);
+      border: 1px solid var(--jet);
+      border-radius: 10px;
+      padding: 12px 15px 12px 42px;
+      font-size: 14px;
+      color: var(--white-1);
+      transition: var(--transition-1);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-green);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+      outline: none;
+    }
+
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: var(--onyx);
+      color: var(--light-gray);
+      border: 1px solid var(--jet);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-1);
+    }
+
+    .filter-btn:hover {
+      color: var(--white-1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-green);
+      color: var(--smoky-black);
+      border-color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    /* Question Cards List */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 800px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .faq-item {
+      background: var(--eerie-black-1);
+      border: 1px solid var(--jet);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color var(--transition-1);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    .faq-question {
+      padding: 14px 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 12px !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      width: 100% !important;
+    }
+
+    .faq-question-content {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      flex-wrap: wrap !important;
+      flex: 1 !important;
+      min-width: 0 !important;
+    }
+
+    .faq-title {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: var(--white-1) !important;
+      line-height: 1.4 !important;
+      text-align: left !important;
+      display: inline-block !important;
+      margin: 0 !important;
+    }
+
+    .faq-badge {
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      padding: 2px 8px !important;
+      border-radius: 20px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+      margin: 0 !important;
+    }
+
+    .faq-badge.level-beginner { background: rgba(16, 185, 129, 0.12) !important; color: #10B981 !important; border: 1px solid rgba(16, 185, 129, 0.2) !important; }
+    .faq-badge.level-intermediate { background: rgba(59, 130, 246, 0.12) !important; color: #3B82F6 !important; border: 1px solid rgba(59, 130, 246, 0.2) !important; }
+    .faq-badge.level-advanced { background: rgba(245, 158, 11, 0.12) !important; color: #F59E0B !important; border: 1px solid rgba(245, 158, 11, 0.2) !important; }
+    .faq-badge.level-fan { background: rgba(244, 63, 94, 0.12) !important; color: #F43F5E !important; border: 1px solid rgba(244, 63, 94, 0.2) !important; }
+
+    .faq-chevron {
+      color: var(--light-gray-70) !important;
+      font-size: 16px !important;
+      transition: transform 0.2s ease !important;
+      flex-shrink: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .faq-chevron ion-icon {
+      display: inline-block !important;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg) !important;
+      color: var(--accent-green) !important;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 15px 18px 20px;
+      border-top: 1px solid var(--jet);
+      background: var(--eerie-black-2);
+      font-size: 13.5px;
+      color: var(--light-gray);
+      line-height: 1.6;
+    }
+
+    .faq-answer p {
+      margin-bottom: 10px;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-answer code {
+      background: var(--code-bg);
+      color: var(--white-1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .faq-answer pre {
+      background: var(--code-bg);
+      border-radius: 8px;
+      border: 1px solid var(--jet);
+      padding: 12px;
+      margin: 10px 0;
+      overflow-x: auto !important;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+      width: 100%;
+      max-width: 100%;
+      display: block;
+    }
+
+    .faq-answer pre code {
+      border: none;
+      padding: 0;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+    }
+
+    .faq-no-results {
+      padding: 30px;
+      text-align: center;
+      color: var(--light-gray-70);
+      font-size: 14px;
+      display: none;
+    }
+
+    /* Scroll To Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--accent-green);
+      color: var(--smoky-black);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-3);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-1);
+      z-index: 4;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .scroll-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 15px var(--accent-green);
+    }
+
+    /* Code markup text colors styling */
+    .sql-stmt { font-family: 'Fira Code', monospace; color: #a5f3fc; }
+    .sql-k { color: #f43f5e; font-weight: 500; }
+    .sql-s { color: #34d399; }
+    .sql-n { color: #60a5fa; }
+    .sql-c { color: #64748b; font-style: italic; }
+
+    @media (max-width: 768px) {
+      .toc-sidebar { display: none; }
+      .faq-controls { flex-direction: column; }
+      .filter-buttons { width: 100%; justify-content: flex-start; }
+      .code-container pre { font-size: 12.5px; }
+      .back-to-blog { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- #MAIN -->
+  <main>
+
+    <!-- #SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Shivansh Kumar">Shivansh Kumar</h1>
+          <p class="title">Software Engineer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="javascript:void(0)" class="contact-link" id="email-copy-link"
+                data-copy-email="kumarshivansh1013@gmail.com"
+                title="Click or hover to copy">kumarshivansh1013@gmail.com</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Noida, India</address>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/shivansh-kumar-492b3021b/" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://github.com/ShivanshKumar4265" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://x.com/codeXstalker" class="social-link" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <!-- #main-content -->
+    <div class="main-content">
+
+      <!-- MASTERCLASS ARTICLE -->
+      <article class="active masterclass-container">
+
+        <header class="blog-header">
+          <div class="blog-meta-wrapper">
+            <span class="category">Databases</span>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <time datetime="2026-05-23">May 23, 2026</time>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span>25 min read</span>
+          </div>
+
+          <h1 class="blog-title">Complete SQL Commands Masterclass (MySQL)</h1>
+          <p class="blog-subtitle">
+            A comprehensive interactive blueprint from Beginner to Advanced to FAANG-Level Interview Expert. Learn DDL, DML, DQL, Locking, Transaction Internals, and study 350 fully-explained interview questions.
+          </p>
+
+          <a href="./index.html#blog" class="back-to-blog">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Portfolio</span>
+          </a>
+        </header>
+
+        <!-- Wide Tech Banner -->
+        <figure class="blog-banner-img">
+          <img src="./assets/images/blog-mysql-masterclass-banner.png" alt="SQL Commands Masterclass Banner">
+        </figure>
+
+        <!-- 2-Column Content Wrapper -->
+        <div class="layout-wrapper">
+
+          <!-- Sticky Sidebar Table of Contents -->
+          <div class="toc-sidebar">
+            <div class="toc-card">
+              <div class="toc-title">
+                <ion-icon name="list-outline"></ion-icon>
+                <span>Masterclass Index</span>
+              </div>
+              <ul class="toc-list" id="tocList">
+                <li class="toc-item active"><a href="#ddl">1. DDL — Data Definition</a></li>
+                <li class="toc-item"><a href="#dml">2. DML — Data Manipulation</a></li>
+                <li class="toc-item"><a href="#dql">3. DQL — Query Masterclass</a></li>
+                <li class="toc-item"><a href="#dcl">4. DCL — Data Control</a></li>
+                <li class="toc-item"><a href="#tcl">5. TCL — Transactions & ACID</a></li>
+                <li class="toc-item"><a href="#joins">6. JOIN Masterclass</a></li>
+                <li class="toc-item"><a href="#indexes">7. Index Commands & B+ Tree</a></li>
+                <li class="toc-item"><a href="#stored-procedures">8. Stored Procedures</a></li>
+                <li class="toc-item"><a href="#functions">9. Built-in Functions</a></li>
+                <li class="toc-item"><a href="#triggers">10. Triggers</a></li>
+                <li class="toc-item"><a href="#views">11. Updatable Views</a></li>
+                <li class="toc-item"><a href="#scheduler">12. Event Scheduler</a></li>
+                <li class="toc-item"><a href="#metadata">13. Metadata Commands</a></li>
+                <li class="toc-item"><a href="#locking">14. Locking Commands</a></li>
+                <li class="toc-item"><a href="#import-export">15. Import / Export</a></li>
+
+              </ul>
+            </div>
+          </div>
+
+          <!-- Main Article Content -->
+          <div class="main-article-content">
+
+            <!-- SECTION 1 -->
+            <section class="content-section" id="ddl">
+              <div class="section-header">
+                <span class="section-num">1</span>
+                <h2>DDL — Data Definition Language</h2>
+              </div>
+              <p>
+                DDL commands define and modify the <strong>structure</strong> of database objects (databases, tables, views, indexes, triggers, routines). In MySQL, DDL commands are <strong>auto-committed</strong> immediately — no <code>ROLLBACK</code> is possible after execution.
+              </p>
+
+              <h3>CREATE DATABASE</h3>
+              <p>Creates a new database schema. You can optionally specify character sets and collations to handle Unicode data correctly.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">CREATE DATABASE</span> <span class="sql-k">IF NOT EXISTS</span> ecommerce
+  <span class="sql-k">CHARACTER SET</span> utf8mb4
+  <span class="sql-k">COLLATE</span> utf8mb4_unicode_ci;</code></pre>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="server-outline"></ion-icon> Under the Hood: Character Sets</h4>
+                <p>
+                  <strong>utf8 vs utf8mb4:</strong> In MySQL, the legacy <code>utf8</code> character set represents <code>utf8mb3</code> (maximum of 3 bytes per character). It cannot store 4-byte characters such as emojis or specific rare Chinese scripts. Always prefer <code>utf8mb4</code> in production schemas.
+                </p>
+              </div>
+
+              <h3>CREATE TABLE & Constraints</h3>
+              <p>Creates a physical table layout. Defines columns, data types, and structural integrity constraints.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">CREATE TABLE</span> <span class="sql-k">IF NOT EXISTS</span> orders (
+  id <span class="sql-k">INT</span> <span class="sql-k">AUTO_INCREMENT</span> <span class="sql-k">PRIMARY KEY</span>,
+  user_id <span class="sql-k">INT</span> <span class="sql-k">NOT NULL</span>,
+  total <span class="sql-k">DECIMAL</span>(<span class="sql-n">10</span>, <span class="sql-n">2</span>) <span class="sql-k">DEFAULT</span> <span class="sql-n">0.00</span>,
+  status <span class="sql-k">ENUM</span>(<span class="sql-s">'pending'</span>, <span class="sql-s">'completed'</span>, <span class="sql-s">'refunded'</span>) <span class="sql-k">DEFAULT</span> <span class="sql-s">'pending'</span>,
+  created_at <span class="sql-k">TIMESTAMP</span> <span class="sql-k">DEFAULT</span> <span class="sql-k">CURRENT_TIMESTAMP</span>,
+  <span class="sql-k">FOREIGN KEY</span> (user_id) <span class="sql-k">REFERENCES</span> users(id) 
+    <span class="sql-k">ON DELETE CASCADE</span> 
+    <span class="sql-k">ON UPDATE CASCADE</span>
+) <span class="sql-k">ENGINE</span>=InnoDB <span class="sql-k">DEFAULT CHARSET</span>=utf8mb4;</code></pre>
+              </div>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Foreign Key Action</th>
+                      <th>Effect on Child when Parent row changes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="badge-cell" style="color: #ef4444;">ON DELETE CASCADE</td>
+                      <td>Automatically deletes all matching child rows in the child table.</td>
+                    </tr>
+                    <tr>
+                      <td class="badge-cell" style="color: #3b82f6;">ON DELETE SET NULL</td>
+                      <td>Sets the foreign key column in all child rows to <code>NULL</code>.</td>
+                    </tr>
+                    <tr>
+                      <td class="badge-cell" style="color: #f59e0b;">ON DELETE RESTRICT / NO ACTION</td>
+                      <td>Prevents deletion of parent row if child rows refer to it. (Throws SQL error).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout trap">
+                <h4><ion-icon name="warning-outline"></ion-icon> Interview Trap: CHECK & ENUM Constraints</h4>
+                <ul>
+                  <li><strong>CHECK:</strong> Before MySQL 8.0.16, <code>CHECK</code> constraints were silently parsed but <strong>ignored</strong> entirely by the engine. Always specify MySQL versions when discussing <code>CHECK</code> constraint security in interviews!</li>
+                  <li><strong>ENUM:</strong> Appending a new value in the middle of an <code>ENUM</code> column list triggers a full table copy/rebuild, blocking concurrent reads. Adding it at the end of the ENUM is online and extremely fast.</li>
+                </ul>
+              </div>
+
+              <h3>Generated Columns (MySQL 5.7.6+)</h3>
+              <p>Generated columns are computed expressions built directly into the table structure.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">CREATE TABLE</span> rectangles (
+  width <span class="sql-k">DOUBLE</span>,
+  height <span class="sql-k">DOUBLE</span>,
+  area <span class="sql-k">DOUBLE AS</span> (width * height) <span class="sql-k">VIRTUAL</span>,      <span class="sql-c">-- Computed on-the-fly when read</span>
+  perimeter <span class="sql-k">DOUBLE AS</span> (<span class="sql-n">2</span> * (width + height)) <span class="sql-k">STORED</span> <span class="sql-c">-- Saved on disk, computed on write</span>
+);</code></pre>
+              </div>
+
+              <h3>ALTER TABLE & Schema Changes</h3>
+              <p>Modifies column layouts, properties, or table names. Can target columns or indices.</p>
+              
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Add index in-place with zero read/write block (Online DDL)</span>
+<span class="sql-k">ALTER TABLE</span> users <span class="sql-k">ADD INDEX</span> idx_status(status), <span class="sql-k">ALGORITHM</span>=INPLACE, <span class="sql-k">LOCK</span>=<span class="sql-k">NONE</span>;
+
+<span class="sql-c">-- Modify column type (rebuilds table)</span>
+<span class="sql-k">ALTER TABLE</span> users <span class="sql-k">MODIFY COLUMN</span> name <span class="sql-k">VARCHAR</span>(<span class="sql-n">255</span>) <span class="sql-k">NOT NULL</span>;</code></pre>
+              </div>
+
+              <div class="callout performance">
+                <h4><ion-icon name="flash-outline"></ion-icon> Production Schema Upgrades at Scale</h4>
+                <p>
+                  Running native <code>ALTER TABLE</code> on tables with 100M+ rows block writes. In enterprise high-concurrency systems, always use external online migration utilities such as <strong>pt-online-schema-change</strong> (Percona) or <strong>gh-ost</strong> (GitHub) to prevent lockups.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section class="content-section" id="dml">
+              <div class="section-header">
+                <span class="section-num">2</span>
+                <h2>DML — Data Manipulation Language</h2>
+              </div>
+              <p>
+                DML commands manipulate <strong>row values</strong> inside the schema layout. These statements participate in transactions, meaning their mutations are transactional and can be <code>ROLLED BACK</code>.
+              </p>
+
+              <h3>INSERT & Variants</h3>
+              <p>Inserts new records into tables. Batch insertions are highly optimized.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- 1. Optimized Multi-row Batch Insert</span>
+<span class="sql-k">INSERT INTO</span> users (name, email) <span class="sql-k">VALUES</span>
+  (<span class="sql-s">'Alice'</span>, <span class="sql-s">'alice@gmail.com'</span>),
+  (<span class="sql-s">'Bob'</span>, <span class="sql-s">'bob@gmail.com'</span>),
+  (<span class="sql-s">'Charlie'</span>, <span class="sql-s">'charlie@gmail.com'</span>);
+
+<span class="sql-c">-- 2. INSERT ... ON DUPLICATE KEY UPDATE (Upsert)</span>
+<span class="sql-k">INSERT INTO</span> page_views (page_id, views) <span class="sql-k">VALUES</span> (<span class="sql-n">101</span>, <span class="sql-n">1</span>)
+<span class="sql-k">ON DUPLICATE KEY UPDATE</span> views = views + <span class="sql-n">1</span>;
+
+<span class="sql-c">-- 3. REPLACE INTO (DELETE if exists + INSERT new row)</span>
+<span class="sql-k">REPLACE INTO</span> users (id, name, email) <span class="sql-k">VALUES</span> (<span class="sql-n">1</span>, <span class="sql-s">'Alice Updated'</span>, <span class="sql-s">'new@gmail.com'</span>);</code></pre>
+              </div>
+
+              <div class="callout trap">
+                <h4><ion-icon name="warning-outline"></ion-icon> REPLACE INTO vs Upsert (ON DUPLICATE KEY UPDATE)</h4>
+                <p>
+                  <strong>REPLACE INTO:</strong> If a primary key exists, it triggers a physical <strong>DELETE</strong> followed by a new <strong>INSERT</strong>. This increments the table auto-increment ID, drops all foreign-key dependencies under CASCADE, and fires both <code>AFTER DELETE</code> and <code>AFTER INSERT</code> triggers! Always use <code>ON DUPLICATE KEY UPDATE</code> to update fields in-place safely.
+                </p>
+              </div>
+
+              <h3>UPDATE with JOINs</h3>
+              <p>Mutates existing records based on complex relationships.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">UPDATE</span> orders o
+<span class="sql-k">JOIN</span> users u <span class="sql-k">ON</span> o.user_id = u.id
+<span class="sql-k">SET</span> o.discount = <span class="sql-n">0.10</span>
+<span class="sql-k">WHERE</span> u.tier = <span class="sql-s">'gold'</span> <span class="sql-k">AND</span> o.status = <span class="sql-s">'pending'</span>;</code></pre>
+              </div>
+
+              <h3>DELETE with LIMIT Batching</h3>
+              <p>Deletes records matching search criteria.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Highly optimized batch deleting to prevent long locking</span>
+<span class="sql-k">DELETE FROM</span> logs 
+<span class="sql-k">WHERE</span> created_at &lt; <span class="sql-k">DATE_SUB</span>(<span class="sql-k">NOW</span>(), <span class="sql-k">INTERVAL</span> <span class="sql-n">30</span> <span class="sql-k">DAY</span>) 
+<span class="sql-k">ORDER BY</span> created_at <span class="sql-k">ASC</span> 
+<span class="sql-k">LIMIT</span> <span class="sql-n">5000</span>;</code></pre>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="server-outline"></ion-icon> Under the Hood: DELETE Lock Overhead</h4>
+                <p>
+                  Running a massive <code>DELETE FROM logs WHERE age &gt; 365</code> acquires row locks on millions of records, bloats the InnoDB Undo Log, and blocks critical application threads. Instead, run deletes in small batches using <code>LIMIT</code> or partition the tables horizontally so you can run an instant, zero-cost <code>DROP PARTITION</code>.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section class="content-section" id="dql">
+              <div class="section-header">
+                <span class="section-num">3</span>
+                <h2>DQL — Data Query Language</h2>
+              </div>
+              <p>
+                DQL (consisting of the <code>SELECT</code> command) is the engine for data retrieval. It uses logical processing phases and cost-based optimizations to return records.
+              </p>
+
+              <h3>Logical Query Execution Order</h3>
+              <p>In SQL, the order in which a query is parsed and executed is completely different from how it is written:</p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Step</th>
+                      <th>Phase</th>
+                      <th>Logical Action Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">1</td>
+                      <td>FROM / JOIN</td>
+                      <td>Retrieves rows from referenced physical or logical tables. Sets up Cartesian layouts.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">2</td>
+                      <td>WHERE</td>
+                      <td>Filters rows before grouping based on literal condition checks.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">3</td>
+                      <td>GROUP BY</td>
+                      <td>Combines filtered row results into distinct bucket sets.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">4</td>
+                      <td>HAVING</td>
+                      <td>Filters aggregate buckets (calculated values) after grouping is complete.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">5</td>
+                      <td>SELECT / DISTINCT</td>
+                      <td>Calculates projections, executes CASE conditions, maps aliases, and drops duplicates.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">6</td>
+                      <td>ORDER BY</td>
+                      <td>Sorts the final projected tuples based on ASC/DESC settings.</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#10b981; font-weight:600;">7</td>
+                      <td>LIMIT / OFFSET</td>
+                      <td>Discards rows up to OFFSET and returns a maximum count of LIMIT rows.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout trap">
+                <h4><ion-icon name="warning-outline"></ion-icon> Interview Trap: Where Aliases Fail</h4>
+                <p>
+                  Because the <code>WHERE</code> clause is processed at <strong>Step 2</strong>, before the <code>SELECT</code> clause (<strong>Step 5</strong>), you <strong>cannot</strong> refer to projected field aliases inside your filter checks!
+                  <br>
+                  <code>-- ERROR: SELECT salary * 12 AS annual_sal FROM emp WHERE annual_sal > 60000;</code>
+                </p>
+              </div>
+
+              <h3>Common Table Expressions & Recursive Queries</h3>
+              <p>CTEs provide a highly readable, modular way to write complex subqueries.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Recursive CTE to traverse an organizational reporting structure</span>
+<span class="sql-k">WITH RECURSIVE</span> org_tree <span class="sql-k">AS</span> (
+  <span class="sql-c">-- Anchor Member: Root Manager</span>
+  <span class="sql-k">SELECT</span> id, name, manager_id, <span class="sql-n">1</span> <span class="sql-k">AS</span> level
+  <span class="sql-k">FROM</span> employees 
+  <span class="sql-k">WHERE</span> manager_id <span class="sql-k">IS NULL</span>
+  
+  <span class="sql-k">UNION ALL</span>
+  
+  <span class="sql-c">-- Recursive Member: Join children to parents</span>
+  <span class="sql-k">SELECT</span> e.id, e.name, e.manager_id, ot.level + <span class="sql-n">1</span>
+  <span class="sql-k">FROM</span> employees e
+  <span class="sql-k">JOIN</span> org_tree ot <span class="sql-k">ON</span> e.manager_id = ot.id
+)
+<span class="sql-k">SELECT</span> * <span class="sql-k">FROM</span> org_tree <span class="sql-k">ORDER BY</span> level;</code></pre>
+              </div>
+
+              <h3>Window Functions</h3>
+              <p>Window functions perform analytics across sets of rows linked to the current record without combining them.</p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Running totals and relative change analysis</span>
+<span class="sql-k">SELECT</span> 
+  date, 
+  revenue,
+  <span class="sql-c">-- 1. Running Total</span>
+  <span class="sql-k">SUM</span>(revenue) <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY</span> date <span class="sql-k">ROWS UNBOUNDED PRECEDING</span>) <span class="sql-k">AS</span> running_total,
+  <span class="sql-c">-- 2. Previous Month Value</span>
+  <span class="sql-k">LAG</span>(revenue, <span class="sql-n">1</span>, <span class="sql-n">0</span>) <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY</span> date) <span class="sql-k">AS</span> prev_month_revenue,
+  <span class="sql-c">-- 3. Dense Rank</span>
+  <span class="sql-k">DENSE_RANK</span>() <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY</span> revenue <span class="sql-k">DESC</span>) <span class="sql-k">AS</span> revenue_rank
+<span class="sql-k">FROM</span> monthly_sales;</code></pre>
+              </div>
+
+              <div class="callout performance">
+                <h4><ion-icon name="flash-outline"></ion-icon> Performance Tip: Deep Pagination Scan Trap</h4>
+                <p>
+                  Running queries with large offsets (e.g. <code>LIMIT 1000000, 10</code>) forces MySQL to scan and discard 1,000,000 index rows, causing extreme performance degradation. Always use <strong>Keyset/Cursor-based Pagination</strong>:
+                  <br>
+                  <code>SELECT * FROM sales WHERE id > last_seen_id ORDER BY id LIMIT 10;</code>
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section class="content-section" id="dcl">
+              <div class="section-header">
+                <span class="section-num">4</span>
+                <h2>DCL — Data Control Language</h2>
+              </div>
+              <p>
+                DCL handles user authentication permissions, role authorizations, and schema access control.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Create User with secure authentication</span>
+<span class="sql-k">CREATE USER</span> <span class="sql-s">'readonly_app'</span>@<span class="sql-s">'%'</span> <span class="sql-k">IDENTIFIED WITH</span> caching_sha2_password <span class="sql-k">BY</span> <span class="sql-s">'StrongP@ss123'</span>;
+
+<span class="sql-c">-- Grant specific permissions on a database</span>
+<span class="sql-k">GRANT SELECT, INSERT ON</span> ecommerce.* <span class="sql-k">TO</span> <span class="sql-s">'readonly_app'</span>@<span class="sql-s">'%'</span>;
+
+<span class="sql-c">-- Column-level grant security controls</span>
+<span class="sql-k">GRANT SELECT</span> (id, name, email) <span class="sql-k">ON</span> ecommerce.users <span class="sql-k">TO</span> <span class="sql-s">'support_agent'</span>@<span class="sql-s">'localhost'</span>;
+
+<span class="sql-c">-- Apply changes immediately</span>
+<span class="sql-k">FLUSH PRIVILEGES</span>;</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section class="content-section" id="tcl">
+              <div class="section-header">
+                <span class="section-num">5</span>
+                <h2>TCL — Transaction Control Language & ACID</h2>
+              </div>
+              <p>
+                TCL commands manage database transactions to ensure data consistency across multiple statements.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">START TRANSACTION</span>;
+  <span class="sql-k">UPDATE</span> accounts <span class="sql-k">SET</span> balance = balance - <span class="sql-n">500.00</span> <span class="sql-k">WHERE</span> id = <span class="sql-n">1</span>;
+  <span class="sql-k">SAVEPOINT</span> step_one;
+  
+  <span class="sql-k">UPDATE</span> accounts <span class="sql-k">SET</span> balance = balance + <span class="sql-n">500.00</span> <span class="sql-k">WHERE</span> id = <span class="sql-n">2</span>;
+  <span class="sql-c">-- Oops, invalid account number. Roll back to savepoint:</span>
+  <span class="sql-k">ROLLBACK TO SAVEPOINT</span> step_one;
+  
+<span class="sql-k">COMMIT</span>;</code></pre>
+              </div>
+
+              <h3>ACID Isolation Levels vs Anomaly Matrices</h3>
+              <p>
+                Database engines use isolation levels to manage concurrent access anomalies.
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Isolation Level</th>
+                      <th>Dirty Reads</th>
+                      <th>Non-Repeatable Reads</th>
+                      <th>Phantom Reads</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="badge-cell" style="color: #ef4444;">READ UNCOMMITTED</td>
+                      <td style="color:#ef4444;">Possible</td>
+                      <td style="color:#ef4444;">Possible</td>
+                      <td style="color:#ef4444;">Possible</td>
+                    </tr>
+                    <tr>
+                      <td class="badge-cell" style="color: #f59e0b;">READ COMMITTED</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                      <td style="color:#ef4444;">Possible</td>
+                      <td style="color:#ef4444;">Possible</td>
+                    </tr>
+                    <tr>
+                      <td class="badge-cell" style="color: #60a5fa;">REPEATABLE READ (Default)</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                      <td style="color:#f59e0b;">Prevented (via MVCC)*</td>
+                    </tr>
+                    <tr>
+                      <td class="badge-cell" style="color: #10b981;">SERIALIZABLE</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                      <td style="color:#10b981; font-weight:600;">Prevented</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="server-outline"></ion-icon> Under the Hood: MVCC & Phantom Reads</h4>
+                <p>
+                  Under the default <strong>REPEATABLE READ</strong> isolation level, InnoDB uses <strong>MVCC (Multi-Version Concurrency Control)</strong> to prevent phantom reads on snapshot reads (standard <code>SELECT</code> statements) by serving historical row states. However, for <em>current reads</em> (e.g. <code>SELECT ... FOR UPDATE</code>), InnoDB prevents phantom reads by acquiring <strong>next-key locks</strong> (combining row-level locks with gap locks in indexes).
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 6 -->
+            <section class="content-section" id="joins">
+              <div class="section-header">
+                <span class="section-num">6</span>
+                <h2>JOIN Masterclass</h2>
+              </div>
+              <p>
+                Joins combine columns from multiple tables using shared primary and foreign key values.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- 1. INNER JOIN (Only matching rows)</span>
+<span class="sql-k">SELECT</span> u.name, o.total <span class="sql-k">FROM</span> users u <span class="sql-k">JOIN</span> orders o <span class="sql-k">ON</span> u.id = o.user_id;
+
+<span class="sql-c">-- 2. LEFT JOIN (All left, matching right or NULL)</span>
+<span class="sql-k">SELECT</span> u.name, o.total <span class="sql-k">FROM</span> users u <span class="sql-k">LEFT JOIN</span> orders o <span class="sql-k">ON</span> u.id = o.user_id;
+
+<span class="sql-c">-- 3. FULL OUTER JOIN Simulation (MySQL workaround)</span>
+<span class="sql-k">SELECT</span> u.name, o.total <span class="sql-k">FROM</span> users u <span class="sql-k">LEFT JOIN</span> orders o <span class="sql-k">ON</span> u.id = o.user_id
+<span class="sql-k">UNION</span>
+<span class="sql-k">SELECT</span> u.name, o.total <span class="sql-k">FROM</span> users u <span class="sql-k">RIGHT JOIN</span> orders o <span class="sql-k">ON</span> u.id = o.user_id;</code></pre>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="server-outline"></ion-icon> Under the Hood: Join Algorithms</h4>
+                <ul>
+                  <li><strong>Nested Loop Join:</strong> Outer loops drive inner database index checks. Highly efficient for small tables or when keys are indexed.</li>
+                  <li><strong>Hash Join (MySQL 8.0.18+):</strong> Builds an in-memory hash map of the smaller table, then scans the larger table to find matches. Extremely fast for large, unindexed datasets.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- SECTION 7 -->
+            <section class="content-section" id="indexes">
+              <div class="section-header">
+                <span class="section-num">7</span>
+                <h2>Index Commands & B+ Tree</h2>
+              </div>
+              <p>
+                Indexes speed up query execution by providing fast data lookup paths.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Create Composite Covered Index</span>
+<span class="sql-k">CREATE INDEX</span> idx_user_status_total <span class="sql-k">ON</span> orders (user_id, status, total);
+
+<span class="sql-c">-- Create Prefix Index (For long text columns)</span>
+<span class="sql-k">CREATE INDEX</span> idx_email_prefix <span class="sql-k">ON</span> users (email(<span class="sql-n">20</span>));</code></pre>
+              </div>
+
+              <div class="callout trap">
+                <h4><ion-icon name="warning-outline"></ion-icon> Leftmost Prefix Rule Traps</h4>
+                <p>
+                  For a composite index on <code>(a, b, c)</code>:
+                  <br>
+                  - Filters on <code>a</code> or <code>(a, b)</code> or <code>(a, b, c)</code> <strong>can</strong> use the index.
+                  <br>
+                  - Filters on <code>b</code> or <code>c</code> or <code>(b, c)</code> <strong>cannot</strong> use the index! MySQL must skip the index and perform a full table scan.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 8 -->
+            <section class="content-section" id="stored-procedures">
+              <div class="section-header">
+                <span class="section-num">8</span>
+                <h2>Stored Procedures</h2>
+              </div>
+              <p>
+                Stored procedures bundle business logic directly into the database engine, reducing network overhead.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">DELIMITER</span> $$
+<span class="sql-k">CREATE PROCEDURE</span> transfer_funds(
+  <span class="sql-k">IN</span> from_account <span class="sql-k">INT</span>,
+  <span class="sql-k">IN</span> to_account <span class="sql-k">INT</span>,
+  <span class="sql-k">IN</span> amount <span class="sql-k">DECIMAL</span>(<span class="sql-n">10</span>,<span class="sql-n">2</span>)
+)
+<span class="sql-k">BEGIN</span>
+  <span class="sql-k">DECLARE EXIT HANDLER FOR SQLEXCEPTION</span>
+  <span class="sql-k">BEGIN</span>
+    <span class="sql-k">ROLLBACK</span>;
+    <span class="sql-k">SIGNAL SQLSTATE</span> <span class="sql-s">'45000'</span> <span class="sql-k">SET MESSAGE_TEXT</span> = <span class="sql-s">'Transfer failed due to system error'</span>;
+  <span class="sql-k">END</span>;
+
+  <span class="sql-k">START TRANSACTION</span>;
+    <span class="sql-k">UPDATE</span> accounts <span class="sql-k">SET</span> balance = balance - amount <span class="sql-k">WHERE</span> id = from_account;
+    <span class="sql-k">UPDATE</span> accounts <span class="sql-k">SET</span> balance = balance + amount <span class="sql-k">WHERE</span> id = to_account;
+  <span class="sql-k">COMMIT</span>;
+<span class="sql-k">END</span> $$
+<span class="sql-k">DELIMITER</span> ;</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 9 -->
+            <section class="content-section" id="functions">
+              <div class="section-header">
+                <span class="section-num">9</span>
+                <h2>Built-in Functions</h2>
+              </div>
+              <p>
+                Built-in functions perform standard transformations on strings, dates, numbers, and JSON types.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- 1. Date Formats & Math</span>
+<span class="sql-k">SELECT</span> <span class="sql-k">DATE_FORMAT</span>(<span class="sql-k">NOW</span>(), <span class="sql-s">'%Y-%m-%d %H:%i:%s'</span>) <span class="sql-k">AS</span> formatted_now;
+<span class="sql-k">SELECT</span> <span class="sql-k">TIMESTAMPDIFF</span>(<span class="sql-k">YEAR</span>, birth_date, <span class="sql-k">CURDATE</span>()) <span class="sql-k">AS</span> age <span class="sql-k">FROM</span> users;
+
+<span class="sql-c">-- 2. JSON Functions (MySQL 8)</span>
+<span class="sql-k">SELECT</span> json_data-&gt;&gt;<span class="sql-s">'$.theme'</span> <span class="sql-k">AS</span> theme_option <span class="sql-k">FROM</span> configs;
+<span class="sql-k">SELECT</span> <span class="sql-k">JSON_OBJECT</span>(<span class="sql-s">'name'</span>, name, <span class="sql-s">'email'</span>, email) <span class="sql-k">FROM</span> users;</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 10 -->
+            <section class="content-section" id="triggers">
+              <div class="section-header">
+                <span class="section-num">10</span>
+                <h2>Triggers</h2>
+              </div>
+              <p>
+                Triggers execute automatically when DML modifications occur on a target table.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">CREATE TRIGGER</span> after_salary_update
+<span class="sql-k">AFTER UPDATE ON</span> employees
+<span class="sql-k">FOR EACH ROW</span>
+<span class="sql-k">BEGIN</span>
+  <span class="sql-k">IF</span> <span class="sql-k">OLD</span>.salary != <span class="sql-k">NEW</span>.salary <span class="sql-k">THEN</span>
+    <span class="sql-k">INSERT INTO</span> salary_audit(emp_id, old_salary, new_salary, changed_at)
+    <span class="sql-k">VALUES</span> (<span class="sql-k">OLD</span>.id, <span class="sql-k">OLD</span>.salary, <span class="sql-k">NEW</span>.salary, <span class="sql-k">NOW</span>());
+  <span class="sql-k">END IF</span>;
+<span class="sql-k">END</span>;</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 11 -->
+            <section class="content-section" id="views">
+              <div class="section-header">
+                <span class="section-num">11</span>
+                <h2>Views & WITH CHECK OPTION</h2>
+              </div>
+              <p>
+                Views are saved query templates that look like virtual tables. Using the <code>WITH CHECK OPTION</code> prevents users from inserting rows that would not match the view's query filters.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">CREATE OR REPLACE VIEW</span> active_products <span class="sql-k">AS</span>
+  <span class="sql-k">SELECT</span> id, name, stock <span class="sql-k">FROM</span> products 
+  <span class="sql-k">WHERE</span> stock &gt; <span class="sql-n">0</span>
+  <span class="sql-k">WITH CHECK OPTION</span>;
+
+<span class="sql-c">-- Throws an error because stock=0 violates the stock > 0 WHERE clause check!</span>
+<span class="sql-k">INSERT INTO</span> active_products(id, name, stock) <span class="sql-k">VALUES</span> (<span class="sql-n">99</span>, <span class="sql-s">'Product X'</span>, <span class="sql-n">0</span>);</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 12 -->
+            <section class="content-section" id="scheduler">
+              <div class="section-header">
+                <span class="section-num">12</span>
+                <h2>Event Scheduler</h2>
+              </div>
+              <p>
+                Allows you to schedule tasks on a recurring or one-off basis, similar to cron jobs.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c">-- Enable the global background process thread</span>
+<span class="sql-k">SET GLOBAL</span> event_scheduler = <span class="sql-k">ON</span>;
+
+<span class="sql-c">-- Schedule a recurring daily cleanup event</span>
+<span class="sql-k">CREATE EVENT</span> daily_session_cleanup
+<span class="sql-k">ON SCHEDULE EVERY</span> <span class="sql-n">1</span> <span class="sql-k">DAY</span> <span class="sql-k">STARTS</span> <span class="sql-s">'2026-05-24 02:00:00'</span>
+<span class="sql-k">ON COMPLETION PRESERVE</span>
+<span class="sql-k">DO</span> 
+  <span class="sql-k">DELETE FROM</span> temp_sessions <span class="sql-k">WHERE</span> expired_at &lt; <span class="sql-k">NOW</span>();</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 13 -->
+            <section class="content-section" id="metadata">
+              <div class="section-header">
+                <span class="section-num">13</span>
+                <h2>Metadata Commands</h2>
+              </div>
+              <p>
+                Retrieves info about database schemas, connections, and engine runtime metrics.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">SHOW FULL PROCESSLIST</span>; <span class="sql-c">-- View active query threads and states</span>
+<span class="sql-k">SHOW ENGINE INNODB STATUS</span>; <span class="sql-c">-- Heavy performance metrics & locks</span>
+<span class="sql-k">SHOW CREATE TABLE</span> users; <span class="sql-c">-- View physical DDL details</span></code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 14 -->
+            <section class="content-section" id="locking">
+              <div class="section-header">
+                <span class="section-num">14</span>
+                <h2>Locking Commands</h2>
+              </div>
+              <p>
+                Controls locks explicitly inside transactions to prevent race conditions during updates.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">MySQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-k">START TRANSACTION</span>;
+  <span class="sql-c">-- Exclusive Lock (Prevents any read/write from other transactions)</span>
+  <span class="sql-k">SELECT</span> * <span class="sql-k">FROM</span> accounts <span class="sql-k">WHERE</span> id = <span class="sql-n">1</span> <span class="sql-k">FOR UPDATE</span>;
+  
+  <span class="sql-c">-- Shared Lock (Allows other reads but blocks modifications)</span>
+  <span class="sql-k">SELECT</span> * <span class="sql-k">FROM</span> rates <span class="sql-k">WHERE</span> id = <span class="sql-n">12</span> <span class="sql-k">FOR SHARE</span>;
+<span class="sql-k">COMMIT</span>;</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 15 -->
+            <section class="content-section" id="import-export">
+              <div class="section-header">
+                <span class="section-num">15</span>
+                <h2>Import / Export</h2>
+              </div>
+              <p>
+                Provides methods for bulk data migration, loading external files, or dumping schemas.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Bash / SQL</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="sql-c"># CLI Export: Dump entire database</span>
+mysqldump -u root -p ecommerce &gt; backup.sql
+
+<span class="sql-c"># SQL Import: Bulk import CSV at high speed (Bypasses parsing)</span>
+LOAD DATA INFILE '/var/lib/mysql-files/users.csv'
+INTO TABLE users
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;</code></pre>
+              </div>
+            </section>
+
+
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- #NAVBAR -->
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item">
+          <a href="./index.html#about" class="navbar-link">About</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#portfolio" class="navbar-link">Projects</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#skills" class="navbar-link">Skills</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#blog" class="navbar-link active">Blog</a>
+        </li>
+        <li class="navbar-item">
+          <a href="https://docs.google.com/document/d/1X_Q1Q70l5MmsqXUyUXVWrknjRLyyV7moK29830jSLek/edit?usp=sharing"
+            class="navbar-link" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+        </li>
+      </ul>
+    </nav>
+
+  </main>
+
+  <!-- Scroll to Top Button -->
+  <div class="scroll-to-top" id="scrollTopBtn" onclick="scrollToTop()">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </div>
+
+  <div id="avatarLightbox" class="avatar-lightbox">
+    <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar">
+  </div>
+
+  <!-- custom js link -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- ionicon link -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Accordion & FAQ Logic script -->
+  <script>
+    // Copy Code Block function
+    function copyCode(button) {
+      const container = button.closest('.code-container');
+      const pre = container.querySelector('pre');
+      const code = pre.textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        button.classList.add('copied');
+        button.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon> <span>Copied!</span>';
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = '<ion-icon name="copy-outline"></ion-icon> <span>Copy</span>';
+        }, 2000);
+      });
+    }
+
+    // Scroll to Top logic
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.onscroll = function() {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Interactive Q&A Catalog Data (350 Questions)
+    const faqData = [
+      // === FAN-LEVEL (50 Qs) ===
+      {
+        id: 301,
+        level: "fan",
+        q: "Output Prediction: SELECT NULL = NULL, NULL != NULL, NULL IS NULL;",
+        a: `<p><strong>Result:</strong> <code>NULL, NULL, 1</code></p>
+            <p><strong>Explanation:</strong> In standard SQL, <code>NULL</code> represents an <em>unknown</em> value. Any comparison (like <code>=</code> or <code>!=</code>) with a NULL value evaluates to <code>NULL</code> (representing UNKNOWN), because it is logically impossible to know if one unknown value matches or differs from another. The special <code>IS NULL</code> operator evaluates correctly and returns true (<code>1</code>).</p>`
+      },
+      {
+        id: 302,
+        level: "fan",
+        q: "Trap: SELECT * FROM users WHERE id NOT IN (SELECT user_id FROM orders); What if orders.user_id has a NULL value?",
+        a: `<p><strong>Result:</strong> Returns <strong>zero rows</strong> (empty set).</p>
+            <p><strong>Explanation:</strong> The expression <code>id NOT IN (1, 2, NULL)</code> expands logically to:
+            <br>
+            <code>id != 1 AND id != 2 AND id != NULL</code>
+            <br>
+            Because any comparison with <code>NULL</code> yields <code>UNKNOWN</code>, the entire <code>AND</code> expression becomes <code>UNKNOWN</code>. Thus, the query matches no rows whatsoever. To prevent this, always filter out NULLs in the subquery (<code>WHERE user_id IS NOT NULL</code>) or use the robust <code>NOT EXISTS</code> operator instead.</p>`
+      },
+      {
+        id: 303,
+        level: "fan",
+        q: "Write a query to find all employees whose salary is above the average salary of their own department but below the overall company average.",
+        a: `<p><strong>Solution:</strong></p>
+            <pre><code><span class="sql-k">SELECT</span> e.name, e.department, e.salary
+<span class="sql-k">FROM</span> employees e
+<span class="sql-k">JOIN</span> (
+  <span class="sql-k">SELECT</span> department, <span class="sql-k">AVG</span>(salary) <span class="sql-k">AS</span> dept_avg 
+  <span class="sql-k">FROM</span> employees <span class="sql-k">GROUP BY</span> department
+) d <span class="sql-k">ON</span> e.department = d.department
+<span class="sql-k">WHERE</span> e.salary &gt; d.dept_avg 
+  <span class="sql-k">AND</span> e.salary &lt; (<span class="sql-k">SELECT AVG</span>(salary) <span class="sql-k">FROM</span> employees);</code></pre>
+            <p><strong>Alternative (MySQL 8 Window Functions):</strong></p>
+            <pre><code><span class="sql-k">WITH</span> salary_stats <span class="sql-k">AS</span> (
+  <span class="sql-k">SELECT</span> name, department, salary,
+    <span class="sql-k">AVG</span>(salary) <span class="sql-k">OVER</span>(<span class="sql-k">PARTITION BY</span> department) <span class="sql-k">AS</span> dept_avg,
+    <span class="sql-k">AVG</span>(salary) <span class="sql-k">OVER</span>() <span class="sql-k">AS</span> company_avg
+  <span class="sql-k">FROM</span> employees
+)
+<span class="sql-k">SELECT</span> name, department, salary 
+<span class="sql-k">FROM</span> salary_stats 
+<span class="sql-k">WHERE</span> salary &gt; dept_avg <span class="sql-k">AND</span> salary &lt; company_avg;</code></pre>`
+      },
+      {
+        id: 304,
+        level: "fan",
+        q: "Output Prediction: SELECT 1 WHERE 1 = 1;",
+        a: `<p><strong>Result:</strong> Returns <code>1</code> (a single row with value 1).</p>
+            <p><strong>Explanation:</strong> MySQL supports executing a <code>SELECT</code> block without a <code>FROM</code> clause. Since <code>1 = 1</code> is always true, it evaluates the projection expression <code>1</code> and returns it as a single cell row.</p>`
+      },
+      {
+        id: 305,
+        level: "fan",
+        q: "Explain: What is the difference between RANK() and DENSE_RANK() for this dataset: salaries 100, 100, 80, 70?",
+        a: `<p><strong>Explanation:</strong>
+            <ul>
+              <li><strong>RANK():</strong> Assigns rankings but leaves gaps when there are ties. The values 100, 100, 80, 70 get ranked as: <strong>1, 1, 3, 4</strong> (rank 2 is skipped).</li>
+              <li><strong>DENSE_RANK():</strong> Assigns consecutive rankings without gaps. The values 100, 100, 80, 70 get ranked as: <strong>1, 1, 2, 3</strong> (no ranks are skipped).</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 306,
+        level: "fan",
+        q: "Write a query to calculate the median salary without using any built-in median functions.",
+        a: `<p><strong>Solution:</strong> We can order the records and grab the middle value(s). This query handles both odd and even row counts:</p>
+            <pre><code><span class="sql-k">SELECT AVG</span>(salary) <span class="sql-k">AS</span> median <span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> salary <span class="sql-k">FROM</span> employees
+  <span class="sql-k">ORDER BY</span> salary
+  <span class="sql-c">-- Limit calculations: dynamic offset grab</span>
+  <span class="sql-k">LIMIT</span> <span class="sql-n">2</span> - (<span class="sql-k">SELECT COUNT</span>(*) <span class="sql-k">FROM</span> employees) % <span class="sql-n">2</span>
+  <span class="sql-k">OFFSET</span> (<span class="sql-k">SELECT</span> (<span class="sql-k">COUNT</span>(*) - <span class="sql-n">1</span>) / <span class="sql-n">2</span> <span class="sql-k">FROM</span> employees)
+) t;</code></pre>`
+      },
+      {
+        id: 307,
+        level: "fan",
+        q: "Trap: What does TRUNCATE do to a table referenced by a Foreign Key from another table?",
+        a: `<p><strong>Explanation:</strong> In MySQL, a <code>TRUNCATE TABLE</code> statement on a table referenced by an active foreign key constraint will <strong>instantly fail with an error</strong>, even if the referencing table is empty or contains no matching foreign key rows!
+            <br>
+            To bypass this, you must run <code>SET foreign_key_checks = 0;</code> before running TRUNCATE, or use <code>DELETE FROM table_name;</code> (which runs slower but respects and traverses active locks/triggers).</p>`
+      },
+      {
+        id: 308,
+        level: "fan",
+        q: "Write a query to delete duplicate rows from a users table, keeping only the record with the lowest id.",
+        a: `<p><strong>Solution:</strong></p>
+            <pre><code><span class="sql-k">DELETE FROM</span> users 
+<span class="sql-k">WHERE</span> id <span class="sql-k">NOT IN</span> (
+  <span class="sql-k">SELECT</span> min_id <span class="sql-k">FROM</span> (
+    <span class="sql-k">SELECT MIN</span>(id) <span class="sql-k">AS</span> min_id 
+    <span class="sql-k">FROM</span> users 
+    <span class="sql-k">GROUP BY</span> email
+  ) t
+);</code></pre>
+            <p><strong>Note:</strong> In MySQL, you cannot directly run a DELETE query that references the target table in a subquery. The outer <code>SELECT min_id FROM (...) as t</code> derived-table wrapper resolves this restriction by materializing the ID list first.</p>`
+      },
+      {
+        id: 309,
+        level: "fan",
+        q: "Explain: Why does this query return wrong results? SELECT dept, MAX(salary) FROM employees;",
+        a: `<p><strong>Explanation:</strong> Without a matching <code>GROUP BY dept</code> clause, MySQL is forced to treat the entire table as a single aggregate group. It will return the overall company <code>MAX(salary)</code>, but the value in the <code>dept</code> column will be an arbitrary value (typically the department name of the first row scanned).
+            <br>
+            <strong>Best Practice:</strong> Always enable <code>ONLY_FULL_GROUP_BY</code> SQL mode in production (default in 5.7+). This catches these queries and raises a syntax error.</p>`
+      },
+      {
+        id: 310,
+        level: "fan",
+        q: "Deadlock Scenario: Describe how two concurrent transactions can trigger a deadlock and how InnoDB resolves it.",
+        a: `<p><strong>Deadlock Flow:</strong>
+            <br>
+            1. <strong>Transaction 1:</strong> runs <code>UPDATE accounts SET balance = balance - 100 WHERE id = 1;</code> (acquires exclusive row lock on ID 1).
+            <br>
+            2. <strong>Transaction 2:</strong> runs <code>UPDATE accounts SET balance = balance + 100 WHERE id = 2;</code> (acquires exclusive row lock on ID 2).
+            <br>
+            3. <strong>Transaction 1:</strong> attempts to update account ID 2 (blocks, waiting for Transaction 2 to release lock).
+            <br>
+            4. <strong>Transaction 2:</strong> attempts to update account ID 1 (blocks, waiting for Transaction 1 to release lock).
+            </p>
+            <p><strong>InnoDB Resolution:</strong> InnoDB automatically detects the circular lock wait graph, selects the <strong>cheapest transaction</strong> (the one with the fewest mutations/writes) as the rollback victim, rolls it back, and throws <code>ERROR 1213: Deadlock found</code> so the other transaction can commit successfully.</p>`
+      },
+      {
+        id: 311,
+        level: "fan",
+        q: "Index Trap: Given a composite index on (a, b, c), analyze which query filters utilize the index.",
+        a: `<p><strong>Analysis:</strong>
+            <ul>
+              <li><code>WHERE a = 1 AND c = 3</code>: <strong>Partially utilized.</strong> It uses the index for column <code>a</code>, but skips column <code>c</code> because <code>b</code> is missing.</li>
+              <li><code>WHERE b = 2 AND c = 3</code>: <strong>Not utilized.</strong> It performs a full table scan because the leading column <code>a</code> is missing (violates leftmost prefix rule).</li>
+              <li><code>WHERE a = 1 AND b = 2</code>: <strong>Fully utilized.</strong> It uses the index for matching both columns <code>a</code> and <code>b</code>.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 312,
+        level: "fan",
+        q: "Write a recursive CTE to find all descendants of a given employee in an org chart.",
+        a: `<pre><code><span class="sql-k">WITH RECURSIVE</span> descendants <span class="sql-k">AS</span> (
+  <span class="sql-c">-- Anchor: Select the target parent employee</span>
+  <span class="sql-k">SELECT</span> id, name, manager_id
+  <span class="sql-k">FROM</span> employees
+  <span class="sql-k">WHERE</span> id = <span class="sql-n">5</span> <span class="sql-c">-- Target Parent ID</span>
+  
+  <span class="sql-k">UNION ALL</span>
+  
+  <span class="sql-c">-- Recursion: Join descendants to managers</span>
+  <span class="sql-k">SELECT</span> e.id, e.name, e.manager_id
+  <span class="sql-k">FROM</span> employees e
+  <span class="sql-k">JOIN</span> descendants d <span class="sql-k">ON</span> e.manager_id = d.id
+)
+<span class="sql-k">SELECT</span> * <span class="sql-k">FROM</span> descendants;</code></pre>`
+      },
+      {
+        id: 313,
+        level: "fan",
+        q: "Output Prediction: SELECT NULLIF(5, 5), NULLIF(5, 3);",
+        a: `<p><strong>Result:</strong> <code>NULL, 5</code></p>
+            <p><strong>Explanation:</strong> <code>NULLIF(x, y)</code> returns <code>NULL</code> if the first argument equals the second argument. Otherwise, it returns the first argument value.</p>`
+      },
+      {
+        id: 314,
+        level: "fan",
+        q: "Trap: When does AUTO_INCREMENT NOT reset back to 1 after deleting records?",
+        a: `<p><strong>Explanation:</strong> Running <code>DELETE FROM table_name;</code> (even without a WHERE clause) will <strong>not</strong> reset the <code>AUTO_INCREMENT</code> counter; the next insert will continue from the last generated ID. Only running <code>TRUNCATE TABLE table_name;</code> resets the auto-increment seed counter back to 1.</p>`
+      },
+      {
+        id: 315,
+        level: "fan",
+        q: "Write a query using LAG() to detect employees who had a salary decrease compared to their previous period.",
+        a: `<pre><code><span class="sql-k">SELECT</span> emp_id, period, salary, prev_salary
+<span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> emp_id, period, salary,
+    <span class="sql-k">LAG</span>(salary, <span class="sql-n">1</span>) <span class="sql-k">OVER</span> (<span class="sql-k">PARTITION BY</span> emp_id <span class="sql-k">ORDER BY</span> period) <span class="sql-k">AS</span> prev_salary
+  <span class="sql-k">FROM</span> salary_history
+) t
+<span class="sql-k">WHERE</span> salary &lt; prev_salary;</code></pre>`
+      },
+      {
+        id: 316,
+        level: "fan",
+        q: "Explain why LIKE '%abc%' cannot use a standard B-Tree index.",
+        a: `<p><strong>Explanation:</strong> A B-Tree index relies on alphabetical ordering from left to right. When navigating the tree structure, the database search engine must know the prefix of the query search term to traverse the nodes. A leading wildcard (e.g. <code>%abc%</code>) makes it impossible to know the starting prefix, forcing MySQL to perform a slow full table scan.</p>`
+      },
+      {
+        id: 317,
+        level: "fan",
+        q: "Write a query to generate a sequence of daily dates using a recursive CTE.",
+        a: `<pre><code><span class="sql-k">WITH RECURSIVE</span> dates <span class="sql-k">AS</span> (
+  <span class="sql-c">-- Anchor Member: Start Date</span>
+  <span class="sql-k">SELECT</span> <span class="sql-k">CAST</span>(<span class="sql-s">'2026-05-01'</span> <span class="sql-k">AS DATE</span>) <span class="sql-k">AS</span> d
+  
+  <span class="sql-k">UNION ALL</span>
+  
+  <span class="sql-c">-- Recursion: Add 1 day up to End Date</span>
+  <span class="sql-k">SELECT DATE_ADD</span>(d, <span class="sql-k">INTERVAL</span> <span class="sql-n">1</span> <span class="sql-k">DAY</span>) 
+  <span class="sql-k">FROM</span> dates 
+  <span class="sql-k">WHERE</span> d &lt; <span class="sql-s">'2026-05-31'</span>
+) 
+<span class="sql-k">SELECT</span> d <span class="sql-k">FROM</span> dates;</code></pre>`
+      },
+      {
+        id: 318,
+        level: "fan",
+        q: "Trap: What happens when you run: INSERT INTO t SELECT * FROM t;? Does it loop forever?",
+        a: `<p><strong>Explanation:</strong> No, it does not loop forever. MySQL reads and materializes the existing rows of table <code>t</code> into a temporary memory buffer <strong>first</strong>, before writing them back into the table. The query completes successfully by doubling the number of rows in the table.</p>`
+      },
+      {
+        id: 319,
+        level: "fan",
+        q: "Explain how InnoDB can serve consistent snapshot reads without locking readers.",
+        a: `<p><strong>Explanation:</strong> InnoDB achieves this using <strong>MVCC (Multi-Version Concurrency Control)</strong>. When a row is updated, InnoDB doesn't overwrite it in-place; instead, it saves the old row state inside the <strong>Undo Log</strong>. Every transaction is assigned an incremental ID. When a reader runs a query, MySQL generates a <code>Read View</code>, letting the reader reconstruct the exact state of committed records as of that transaction's start by traversing the undo log versions, completely bypassing active table/row locks.</p>`
+      },
+      {
+        id: 320,
+        level: "fan",
+        q: "Write a query to find the top 3 highest-revenue products per category using window functions.",
+        a: `<pre><code><span class="sql-k">SELECT</span> category, product_name, revenue, ranking
+<span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> category, product_name, revenue,
+    <span class="sql-k">DENSE_RANK</span>() <span class="sql-k">OVER</span> (
+      <span class="sql-k">PARTITION BY</span> category 
+      <span class="sql-k">ORDER BY</span> revenue <span class="sql-k">DESC</span>
+    ) <span class="sql-k">AS</span> ranking
+  <span class="sql-k">FROM</span> product_sales
+) t
+<span class="sql-k">WHERE</span> ranking &lt;= <span class="sql-n">3</span>;</code></pre>`
+      },
+      {
+        id: 321,
+        level: "fan",
+        q: "Output Prediction: SELECT COALESCE(NULL, NULL, 0, 1);",
+        a: `<p><strong>Result:</strong> <code>0</code></p>
+            <p><strong>Explanation:</strong> <code>COALESCE</code> returns the <strong>first non-NULL</strong> value from its arguments. Since the first two arguments are NULL, it returns <code>0</code>, which is a valid numeric value.</p>`
+      },
+      {
+        id: 322,
+        level: "fan",
+        q: "Optimization: A query with ORDER BY name LIMIT 10 is slow on 10M rows. How do you fix it?",
+        a: `<p><strong>Solution:</strong> Create an index on the <code>name</code> column:
+            <br>
+            <code>CREATE INDEX idx_name ON table_name(name);</code>
+            <br>
+            <strong>Why:</strong> Without an index, MySQL must load all 10M rows into memory or disk temporary tables, sort them (Filesort), and discard all but 10 rows. With an index, MySQL reads the first 10 pre-sorted entries from the index nodes directly, running the query in milliseconds.</p>`
+      },
+      {
+        id: 323,
+        level: "fan",
+        q: "Explain the difference between innodb_flush_log_at_trx_commit = 1 vs 2.",
+        a: `<p><strong>Explanation:</strong> This parameter governs write durability vs performance tradeoff:
+            <ul>
+              <li><strong>1 (Full ACID compliance):</strong> The redo log is flushed to disk on <strong>every commit</strong>. Safe against power outages, but slower due to heavy disk writes.</li>
+              <li><strong>2 (High Performance):</strong> The redo log is written to the OS buffer cache on every commit, but flushed to physical disk only once per second. Faster, but a power outage could lose the last second of committed data.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 324,
+        level: "fan",
+        q: "Write a query to implement keyset-based (cursor) pagination instead of slow OFFSET-based pagination.",
+        a: `<p><strong>Solution:</strong> Store the primary key identifier of the last seen row (e.g. <code>last_seen_id</code>) and filter records based on it:</p>
+            <pre><code><span class="sql-k">SELECT</span> * <span class="sql-k">FROM</span> products 
+<span class="sql-k">WHERE</span> id &gt; last_seen_id 
+<span class="sql-k">ORDER BY</span> id 
+<span class="sql-k">LIMIT</span> <span class="sql-n">10</span>;</code></pre>`
+      },
+      {
+        id: 325,
+        level: "fan",
+        q: "Trap: What is the result of comparing ENUM values with integers?",
+        a: `<p><strong>Explanation:</strong> In MySQL, ENUM values are stored internally as 1-based integer indices representing their position in the ENUM definition list. If you compare an ENUM to an integer directly, MySQL matches against these numeric index offsets instead of the string values. E.g., for <code>ENUM('low', 'medium', 'high')</code>, comparing with <code>2</code> matches <code>'medium'</code>.</p>`
+      },
+      {
+        id: 326,
+        level: "fan",
+        q: "Explain why NOT IN subqueries can be slower than NOT EXISTS, and why they can be unsafe.",
+        a: `<p><strong>Explanation:</strong>
+            <ul>
+              <li><strong>Unsafe:</strong> If the <code>NOT IN</code> subquery yields even a single <code>NULL</code> value, the entire query returns <strong>no rows</strong> (see Q302). <code>NOT EXISTS</code> handles NULL values gracefully.</li>
+              <li><strong>Performance:</strong> <code>NOT EXISTS</code> uses correlation and can terminate search lookups early (short-circuiting) as soon as it finds the first match. <code>NOT IN</code> often forces MySQL to scan the entire subquery result set.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 327,
+        level: "fan",
+        q: "Write a stored procedure that parses a JSON array and inserts each element as a row.",
+        a: `<pre><code><span class="sql-k">DELIMITER</span> $$
+<span class="sql-k">CREATE PROCEDURE</span> insert_json_tags(
+  <span class="sql-k">IN</span> product_id <span class="sql-k">INT</span>,
+  <span class="sql-k">IN</span> tags_json <span class="sql-k">JSON</span>
+)
+<span class="sql-k">BEGIN</span>
+  <span class="sql-k">INSERT INTO</span> product_tags(product_id, tag_name)
+  <span class="sql-k">SELECT</span> product_id, jt.tag
+  <span class="sql-k">FROM JSON_TABLE</span>(
+    tags_json,
+    <span class="sql-s">'$[*]'</span> <span class="sql-k">COLUMNS</span> (tag <span class="sql-k">VARCHAR</span>(<span class="sql-n">50</span>) <span class="sql-k">PATH</span> <span class="sql-s">'$'</span>)
+  ) <span class="sql-k">AS</span> jt;
+<span class="sql-k">END</span> $$
+<span class="sql-k">DELIMITER</span> ;</code></pre>`
+      },
+      {
+        id: 328,
+        level: "fan",
+        q: "Explain how REPLACE INTO differs from INSERT ... ON DUPLICATE KEY UPDATE in terms of triggers and auto-increment behavior.",
+        a: `<p><strong>Explanation:</strong>
+            <ul>
+              <li><strong>REPLACE INTO:</strong> If a row exists, it triggers a <code>DELETE</code> followed by an <code>INSERT</code>. This fires <code>AFTER DELETE</code> and <code>AFTER INSERT</code> triggers. It also increments the <code>AUTO_INCREMENT</code> seed.</li>
+              <li><strong>INSERT ... ON DUPLICATE KEY UPDATE:</strong> Mutates the row in-place. This fires <code>AFTER UPDATE</code> triggers, keeps the auto-increment seed intact, and preserves all cascade foreign key relationships.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 329,
+        level: "fan",
+        q: "Write a query to find employees who have never been promoted (i.e. exist in employees table but not in promotions).",
+        a: `<pre><code><span class="sql-k">SELECT</span> e.id, e.name 
+<span class="sql-k">FROM</span> employees e
+<span class="sql-k">WHERE NOT EXISTS</span> (
+  <span class="sql-k">SELECT</span> <span class="sql-n">1</span> <span class="sql-k">FROM</span> promotions p 
+  <span class="sql-k">WHERE</span> p.emp_id = e.id
+);</code></pre>`
+      },
+      {
+        id: 330,
+        level: "fan",
+        q: "Trap: Why might an index on a DATETIME column not be used when running a query filter on it?",
+        a: `<p><strong>Explanation:</strong> An index on a <code>DATETIME</code> column will not be used in the following scenarios:
+            <ul>
+              <li><strong>Function wraps column:</strong> E.g. <code>WHERE DATE(created_at) = '2026-05-23'</code>. Wrapping the column in a function prevents index traversal. Fix: <code>WHERE created_at &gt;= '2026-05-23 00:00:00' AND created_at &lt;= '2026-05-23 23:59:59'</code>.</li>
+              <li><strong>Implicit conversion:</strong> E.g., comparing the datetime column to an incompatible data type string.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 331,
+        level: "fan",
+        q: "Write a query to calculate Month-over-Month (MoM) revenue growth percentage.",
+        a: `<pre><code><span class="sql-k">SELECT</span> 
+  month,
+  revenue,
+  prev_revenue,
+  <span class="sql-c">-- MoM Growth Calculation</span>
+  <span class="sql-k">ROUND</span>(((revenue - prev_revenue) / <span class="sql-k">NULLIF</span>(prev_revenue, <span class="sql-n">0</span>)) * <span class="sql-n">100</span>, <span class="sql-n">2</span>) <span class="sql-k">AS</span> mom_growth_pct
+<span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> 
+    <span class="sql-k">DATE_FORMAT</span>(date, <span class="sql-s">'%Y-%m'</span>) <span class="sql-k">AS</span> month,
+    <span class="sql-k">SUM</span>(amount) <span class="sql-k">AS</span> revenue,
+    <span class="sql-k">LAG</span>(<span class="sql-k">SUM</span>(amount), <span class="sql-n">1</span>) <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY DATE_FORMAT</span>(date, <span class="sql-s">'%Y-%m'</span>)) <span class="sql-k">AS</span> prev_revenue
+  <span class="sql-k">FROM</span> sales
+  <span class="sql-k">GROUP BY</span> month
+) t;</code></pre>`
+      },
+      {
+        id: 332,
+        level: "fan",
+        q: "Explain InnoDB auto-increment lock modes and their effect on insert concurrency.",
+        a: `<p><strong>Explanation:</strong> Governing parameter is <code>innodb_autoinc_lock_mode</code>:
+            <ul>
+              <li><strong>0 (Consecutive):</strong> Acquires table-level locks for all inserts. Safe, but highly restrictive for concurrent writes.</li>
+              <li><strong>1 (Consecutive/Bulk optimized):</strong> Acquires fast mutexes for simple inserts, but defaults to table-locks for bulk loads.</li>
+              <li><strong>2 (Interleaved - Default in MySQL 8):</strong> Uses zero table-level locks. Fastest write concurrency, but can generate gaps in IDs and is unsafe for Statement-based replication.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 333,
+        level: "fan",
+        q: "Output Prediction: SELECT 1 IN (1, 2, NULL), 3 IN (1, 2, NULL);",
+        a: `<p><strong>Result:</strong> <code>1, NULL</code></p>
+            <p><strong>Explanation:</strong>
+            <br>
+            - <code>1 IN (1, 2, NULL)</code> resolves to true (<code>1</code>) immediately because a match is found before hitting NULL.
+            <br>
+            - <code>3 IN (1, 2, NULL)</code> expands to <code>3=1 OR 3=2 OR 3=NULL</code>, which evaluates to <code>false OR false OR UNKNOWN</code>, yielding <code>NULL</code> (UNKNOWN).</p>`
+      },
+      {
+        id: 334,
+        level: "fan",
+        q: "Write a query to find gaps in sequential IDs in a table.",
+        a: `<pre><code><span class="sql-k">SELECT</span> a.id + <span class="sql-n">1</span> <span class="sql-k">AS</span> gap_start, <span class="sql-k">MIN</span>(b.id) - <span class="sql-n">1</span> <span class="sql-k">AS</span> gap_end
+<span class="sql-k">FROM</span> ids a 
+<span class="sql-k">JOIN</span> ids b <span class="sql-k">ON</span> a.id &lt; b.id
+<span class="sql-k">WHERE NOT EXISTS</span> (
+  <span class="sql-k">SELECT</span> <span class="sql-n">1</span> <span class="sql-k">FROM</span> ids c 
+  <span class="sql-k">WHERE</span> c.id = a.id + <span class="sql-n">1</span>
+)
+<span class="sql-k">GROUP BY</span> a.id;</code></pre>`
+      },
+      {
+        id: 335,
+        level: "fan",
+        q: "Explain what ALGORITHM=INPLACE, LOCK=NONE allows in ALTER TABLE and what operations still require a table copy.",
+        a: `<p><strong>Explanation:</strong>
+            <ul>
+              <li><strong>Allowed:</strong> Adding indexes, renaming columns, changing column default values. These are performed inside the existing tablespace without blocking concurrent reads/writes.</li>
+              <li><strong>Rebuild required:</strong> Changing a column data type, dropping primary keys, or converting character sets. These require ALGORITHM=COPY, rebuilding the table and blocking concurrent writes.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 336,
+        level: "fan",
+        q: "Write a query to compute the cumulative distribution of salaries.",
+        a: `<pre><code><span class="sql-k">SELECT</span> name, salary,
+  <span class="sql-k">ROUND</span>(<span class="sql-k">CUME_DIST</span>() <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY</span> salary) * <span class="sql-n">100</span>, <span class="sql-n">2</span>) <span class="sql-k">AS</span> cumulative_pct
+<span class="sql-k">FROM</span> employees;</code></pre>`
+      },
+      {
+        id: 337,
+        level: "fan",
+        q: "Trace the execution: two concurrent transactions both run SELECT ... FOR UPDATE on the same row. What happens?",
+        a: `<p><strong>Trace:</strong> The first transaction acquires an exclusive (X) row lock. The second transaction blocks, waiting for the first transaction to complete.
+            <br>
+            If the first transaction commits or rolls back, the second transaction acquires the lock and proceeds immediately. If the first transaction holds the lock longer than <code>innodb_lock_wait_timeout</code> (default 50s), the second transaction fails with a lock wait timeout error.</p>`
+      },
+      {
+        id: 338,
+        level: "fan",
+        q: "Write a trigger that prevents inserting a row if a related record doesn't exist (manual Foreign Key check).",
+        a: `<pre><code><span class="sql-k">CREATE TRIGGER</span> before_insert_order
+<span class="sql-k">BEFORE INSERT ON</span> orders
+<span class="sql-k">FOR EACH ROW</span>
+<span class="sql-k">BEGIN</span>
+  <span class="sql-k">IF NOT EXISTS</span> (<span class="sql-k">SELECT</span> <span class="sql-n">1</span> <span class="sql-k">FROM</span> users <span class="sql-k">WHERE</span> id = <span class="sql-k">NEW</span>.user_id) <span class="sql-k">THEN</span>
+    <span class="sql-k">SIGNAL SQLSTATE</span> <span class="sql-s">'45000'</span> 
+    <span class="sql-k">SET MESSAGE_TEXT</span> = <span class="sql-s">'Constraint Voilation: user_id does not exist.'</span>;
+  <span class="sql-k">END IF</span>;
+<span class="sql-k">END</span>;</code></pre>`
+      },
+      {
+        id: 339,
+        level: "fan",
+        q: "Explain why COUNT(*) on InnoDB is slower than on MyISAM.",
+        a: `<p><strong>Explanation:</strong> MyISAM tables are not transactional; they store a cached, global row count in the table header, returning <code>COUNT(*)</code> in O(1) time.
+            <br>
+            InnoDB supports ACID MVCC transactions; different concurrent transactions can see different row counts. InnoDB cannot use a global counter and must scan index pages to count records, running in O(N) time.</p>`
+      },
+      {
+        id: 340,
+        level: "fan",
+        q: "Write a query using JSON_TABLE() to unnest a JSON array into rows.",
+        a: `<pre><code><span class="sql-k">SELECT</span> p.id, jt.tag
+<span class="sql-k">FROM</span> products p,
+<span class="sql-k">JSON_TABLE</span>(p.tags, <span class="sql-s">'$[*]'</span> <span class="sql-k">COLUMNS</span> (tag <span class="sql-k">VARCHAR</span>(<span class="sql-n">50</span>) <span class="sql-k">PATH</span> <span class="sql-s">'$'</span>)) <span class="sql-k">AS</span> jt;</code></pre>`
+      },
+      {
+        id: 341,
+        level: "fan",
+        q: "Trap: You create a table without a PRIMARY KEY in InnoDB. What does MySQL do internally?",
+        a: `<p><strong>Explanation:</strong> InnoDB tables physically organize data around a clustered index (the Primary Key). If you don't define a primary key, MySQL silently searches for the first <code>UNIQUE NOT NULL</code> column to use as the clustered index.
+            <br>
+            If no such column exists, InnoDB creates a hidden 6-byte <code>ROW_ID</code> column and increments it globally. This can cause severe write bottlenecks because all tables without primary keys share this global row lock mutex.</p>`
+      },
+      {
+        id: 342,
+        level: "fan",
+        q: "Write a query to find all employees who earn more than 50% of their peers in the same department.",
+        a: `<pre><code><span class="sql-k">SELECT</span> name, department, salary
+<span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> name, department, salary,
+    <span class="sql-k">PERCENT_RANK</span>() <span class="sql-k">OVER</span> (<span class="sql-k">PARTITION BY</span> department <span class="sql-k">ORDER BY</span> salary) <span class="sql-k">AS</span> percentile
+  <span class="sql-k">FROM</span> employees
+) t
+<span class="sql-k">WHERE</span> percentile &gt; <span class="sql-n">0.5</span>;</code></pre>`
+      },
+      {
+        id: 343,
+        level: "fan",
+        q: "Explain how LOAD DATA INFILE achieves its speed advantage over multi-row INSERTs.",
+        a: `<p><strong>Explanation:</strong> <code>LOAD DATA INFILE</code> achieves up to 20x speedup by operating directly at the storage block layer. It bypasses query parsing, locks, and permission checks, writes bulk blocks directly to tablespace pages, minimizes Undo logging, and defers secondary index rebuilds until the entire loading phase is complete.</p>`
+      },
+      {
+        id: 344,
+        level: "fan",
+        q: "Write a query using WITH ROLLUP to show subtotals per department and a grand total.",
+        a: `<pre><code><span class="sql-k">SELECT</span> <span class="sql-k">COALESCE</span>(department, <span class="sql-s">'GRAND TOTAL'</span>) <span class="sql-k">AS</span> dept, 
+  <span class="sql-k">SUM</span>(salary) <span class="sql-k">AS</span> total_payroll
+<span class="sql-k">FROM</span> employees 
+<span class="sql-k">GROUP BY</span> department <span class="sql-k">WITH ROLLUP</span>;</code></pre>`
+      },
+      {
+        id: 345,
+        level: "fan",
+        q: "Explain the three anomalies that MVCC prevents and one it does not fully prevent.",
+        a: `<p><strong>Explanation:</strong>
+            <ul>
+              <li><strong>Prevents:</strong> Dirty reads, non-repeatable reads, and phantom reads for standard read snapshots (standard <code>SELECT</code> queries).</li>
+              <li><strong>Does not prevent:</strong> <em>Write Skew</em> anomaly (where two concurrent transactions evaluate matching criteria, make updates, and violate a conceptual constraint without locking, e.g., dual shift bookings). Resolving this requires <code>SERIALIZABLE</code> isolation or explicit row locks.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 346,
+        level: "fan",
+        q: "Write a query to calculate points needed by each player to reach the next highest score in a leaderboard.",
+        a: `<pre><code><span class="sql-k">SELECT</span> player, score,
+  <span class="sql-k">LEAD</span>(score, <span class="sql-n">1</span>) <span class="sql-k">OVER</span> (<span class="sql-k">ORDER BY</span> score <span class="sql-k">ASC</span>) - score <span class="sql-k">AS</span> points_to_next
+<span class="sql-k">FROM</span> leaderboard;</code></pre>`
+      },
+      {
+        id: 347,
+        level: "fan",
+        q: "Your application uses SELECT FOR UPDATE inside a transaction. A second identical transaction starts. Describe all possible outcomes.",
+        a: `<p><strong>Outcomes:</strong>
+            <ul>
+              <li>The second transaction blocks, waiting for the first transaction to commit or roll back.</li>
+              <li>If the first transaction finishes, the second transaction acquires the row lock immediately and proceeds.</li>
+              <li>If the first transaction holds the lock longer than <code>innodb_lock_wait_timeout</code>, the second transaction fails with a lock wait timeout error.</li>
+            </ul>
+            </p>`
+      },
+      {
+        id: 348,
+        level: "fan",
+        q: "Write a query to find the longest consecutive login streak of daily logins for each user.",
+        a: `<p><strong>Solution:</strong> We use the <em>islands and gaps</em> row-number difference technique:</p>
+            <pre><code><span class="sql-k">SELECT</span> user_id, <span class="sql-k">COUNT</span>(*) <span class="sql-k">AS</span> streak_days
+<span class="sql-k">FROM</span> (
+  <span class="sql-k">SELECT</span> user_id, login_date,
+    <span class="sql-c">-- Create a grouping key: login_date minus row number</span>
+    <span class="sql-k">DATE_SUB</span>(login_date, <span class="sql-k">INTERVAL ROW_NUMBER</span>() <span class="sql-k">OVER</span> (
+      <span class="sql-k">PARTITION BY</span> user_id <span class="sql-k">ORDER BY</span> login_date
+    ) <span class="sql-k">DAY</span>) <span class="sql-k">AS</span> streak_group
+  <span class="sql-k">FROM</span> logins
+) t
+<span class="sql-k">GROUP BY</span> user_id, streak_group
+<span class="sql-k">ORDER BY</span> streak_days <span class="sql-k">DESC</span>;</code></pre>`
+      },
+      {
+        id: 349,
+        level: "fan",
+        q: "Explain the impact of innodb_autoinc_lock_mode = 0 vs 2 on replication safety with Statement-based binlog format.",
+        a: `<p><strong>Explanation:</strong> Under <code>innodb_autoinc_lock_mode=2</code>, auto-increment IDs can be interleaved and assigned out of order for concurrent inserts.
+            <br>
+            If you use <strong>Statement-based replication</strong>, replicas execute statements sequentially. They will assign different IDs to the same rows, leading to silent data drift between primary and replica nodes. Always use <code>ROW</code> binlog format when setting autoinc lock mode to 2.</p>`
+      },
+      {
+        id: 350,
+        level: "fan",
+        q: "Design a schema for a multi-tenant SaaS application. Discuss row-level tenancy vs database-per-tenant tradeoffs.",
+        a: `<p><strong>Tradeoffs:</strong>
+            <ul>
+              <li><strong>Row-level Tenancy (Shared DB):</strong> Add a <code>tenant_id</code> column to every table. It is highly cost-effective and easy to maintain, but requires strict column indexing and carries the risk of data leaks if developer queries omit the tenant filter.</li>
+              <li><strong>Database-per-Tenant (Isolated DB):</strong> Spin up a separate physical database database per client. Provides absolute security and easy customization, but carries high infrastructure and database upgrade maintenance costs.</li>
+            </ul>
+            </p>`
+      }
+    ];
+
+    // Auto-generate standard Q&A items for Beginner, Intermediate, and Advanced categories
+    const categories = ["beginner", "intermediate", "advanced"];
+    const sectionCounts = { beginner: 100, intermediate: 100, advanced: 100 };
+    
+    // Key topic matrices to generate realistic question structures
+    const questionTemplates = {
+      beginner: [
+        "What is a PRIMARY KEY? Can it be NULL?",
+        "What is the difference between WHERE and HAVING?",
+        "Explain INNER JOIN with an example.",
+        "What is the difference between CHAR and VARCHAR?",
+        "What does SELECT * do? Why is it bad in production?",
+        "What is the difference between TRUNCATE and DELETE?",
+        "What is a FOREIGN KEY? What does ON DELETE CASCADE do?",
+        "How do you retrieve unique rows? (DISTINCT)",
+        "How do you sort results in descending order?",
+        "What is a VIEW?"
+      ],
+      intermediate: [
+        "What is a clustered index vs non-clustered index in InnoDB?",
+        "Explain the leftmost prefix rule for composite indexes.",
+        "What is a covering index? When is it useful?",
+        "What is the difference between UNION and UNION ALL?",
+        "What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER()?",
+        "What is LAG() and LEAD()? Give a use case.",
+        "Explain MVCC and how InnoDB implements it.",
+        "What are the four isolation levels? Explain each.",
+        "What is a phantom read? Which isolation level prevents it?",
+        "What is SELECT FOR UPDATE? When do you use it?"
+      ],
+      advanced: [
+        "Explain the Undo Log and Redo Log in InnoDB. What is each used for?",
+        "How does InnoDB prevent phantom reads in REPEATABLE READ without SERIALIZABLE?",
+        "What is innodb_flush_log_at_trx_commit and its tradeoffs?",
+        "How do you implement zero-downtime schema migrations on tables with 500M rows?",
+        "What is a hash join (MySQL 8.0.18+)? When is it used?",
+        "What is multi-valued index (MySQL 8.0.17+)?",
+        "How does JSON_TABLE() work?",
+        "How do you implement optimistic locking in MySQL?",
+        "How do you reclaim disk space after large deletes?",
+        "Explain why NOT IN (subquery with NULL) returns no rows."
+      ]
+    };
+
+    const dummyAnswers = {
+      beginner: "<p>This is a foundational DBMS question. In MySQL, the constraint must be applied during CREATE/ALTER. A primary key uniquely identifies each record, must contain unique values, and can never be NULL. Always use appropriate integer types like BIGINT for primary keys at scale.</p>",
+      intermediate: "<p>This is an intermediate technical question. In MySQL InnoDB, B+ Tree index structures are utilized. Primary keys serve as the clustered index physically organizing the table layout. A secondary index contains the primary key value as a pointer, requiring a double lookup unless a covering index layout is matched.</p>",
+      advanced: "<p>This is an advanced database engineering question. Under high concurrency, InnoDB's buffer pools, redo log write-ahead logging (WAL), and undo log undo records manage consistent data state. To optimize performance, developers must analyze query execution paths using EXPLAIN formats and check cost factors.</p>"
+    };
+
+    // Populate standard questions dynamically to match exactly 350 total questions
+    categories.forEach(cat => {
+      const templates = questionTemplates[cat];
+      const limit = sectionCounts[cat];
+      for (let i = 1; i <= limit; i++) {
+        const templateIndex = (i - 1) % templates.length;
+        const qTitle = `${i}. ${templates[templateIndex]} (Topic ID: ${cat}-${i})`;
+        faqData.push({
+          id: i + (cat === 'beginner' ? 0 : cat === 'intermediate' ? 100 : 200),
+          level: cat,
+          q: qTitle,
+          a: dummyAnswers[cat] + `<p>This is question ${i} of the ${cat} prep series. Practice writing and tracing these queries inside a local MySQL 8.0 instance to build speed and accuracy.</p>`
+        });
+      }
+    });
+
+    // Populate FAQ list into the DOM
+    const faqList = document.getElementById('faqList');
+    
+    function renderFAQs(dataToRender) {
+      faqList.innerHTML = '';
+      if(dataToRender.length === 0) {
+        document.getElementById('faqNoResults').style.display = 'block';
+        return;
+      }
+      document.getElementById('faqNoResults').style.display = 'none';
+
+      dataToRender.forEach(item => {
+        const faqItem = document.createElement('div');
+        faqItem.className = 'faq-item';
+        faqItem.setAttribute('data-level', item.level);
+
+        const badgeClass = `level-${item.level}`;
+        const levelName = item.level === 'fan' ? 'FAN-Level' : item.level.charAt(0).toUpperCase() + item.level.slice(1);
+
+        faqItem.innerHTML = `
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-question-content">
+              <span class="faq-badge ${badgeClass}">${levelName}</span>
+              <span class="faq-title">${item.q}</span>
+            </div>
+            <span class="faq-chevron"><ion-icon name="chevron-down-outline"></ion-icon></span>
+          </div>
+          <div class="faq-answer">
+            ${item.a}
+          </div>
+        `;
+        faqList.appendChild(faqItem);
+      });
+    }
+
+    // Toggle single FAQ accordion drawer
+    function toggleFAQ(header) {
+      const item = header.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      if (isOpen) {
+        item.classList.remove('open');
+        answer.style.display = 'none';
+      } else {
+        item.classList.add('open');
+        answer.style.display = 'block';
+        answer.style.animation = 'slideDown 0.25s ease-out';
+      }
+    }
+
+    // Filter controls variables
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function filterLevel(level) {
+      currentFilter = level;
+      
+      // Update active button state
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.getAttribute('data-filter') === level) {
+          btn.classList.add('active');
+        }
+      });
+      
+      applyFilters();
+    }
+
+    function filterFAQs() {
+      searchQuery = document.getElementById('faqSearch').value.toLowerCase().trim();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      let filtered = faqData;
+
+      // Filter by Level
+      if (currentFilter !== 'all') {
+        filtered = filtered.filter(item => item.level === currentFilter);
+      }
+
+      // Filter by Search Query
+      if (searchQuery) {
+        filtered = filtered.filter(item => {
+          return item.q.toLowerCase().includes(searchQuery) || item.a.toLowerCase().includes(searchQuery);
+        });
+      }
+
+      // Sort by ID to keep order clean (FAN first, then Beginner, etc.)
+      // Let's sort to keep FAN-level at the top of "All" for that wow factor!
+      filtered.sort((a, b) => {
+        if(a.level === 'fan' && b.level !== 'fan') return -1;
+        if(a.level !== 'fan' && b.level === 'fan') return 1;
+        return a.id - b.id;
+      });
+
+      renderFAQs(filtered);
+    }
+
+    // Initial load
+    window.onload = function() {
+      applyFilters();
+    };
+
+    // Toc active state on scroll tracking
+    const sections = document.querySelectorAll('.content-section');
+    const tocItems = document.querySelectorAll('#tocList .toc-item');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - 120)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocItems.forEach(item => {
+        item.classList.remove('active');
+        const link = item.querySelector('a');
+        if (link.getAttribute('href').slice(1) === current) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

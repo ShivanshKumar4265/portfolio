@@ -16,7 +16,9 @@
   <!-- google font link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     /* Premium Roadmap Specific CSS */
@@ -91,19 +93,21 @@
     /* Fully Responsive premium widescreen database banner styling */
     .blog-banner-img {
       width: 100%;
-      height: 220px; /* Elegant mobile height */
+      height: 220px;
+      /* Elegant mobile height */
       border-radius: 16px;
       overflow: hidden;
       margin-bottom: 25px;
       border: 1px solid var(--jet);
       box-shadow: var(--shadow-2);
     }
-    
+
     .blog-banner-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 25%; /* Keeps the critical tables and connections in view */
+      object-position: center 25%;
+      /* Keeps the critical tables and connections in view */
       display: block;
       transition: transform var(--transition-2);
     }
@@ -114,13 +118,15 @@
 
     @media (min-width: 576px) {
       .blog-banner-img {
-        height: 280px; /* Tablet view height */
+        height: 280px;
+        /* Tablet view height */
       }
     }
 
     @media (min-width: 1024px) {
       .blog-banner-img {
-        height: 340px; /* Desktop view height - clips square into wide banner */
+        height: 340px;
+        /* Desktop view height - clips square into wide banner */
       }
     }
 
@@ -247,6 +253,7 @@
         opacity: 0;
         transform: translateY(-8px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -340,34 +347,90 @@
     }
 
     /* Phase specific banner backgrounds */
-    .p1 .phase-header { background: linear-gradient(135deg, rgba(234, 243, 222, 0.04) 0%, rgba(192, 221, 151, 0.02) 100%); border-left: 4px solid #C0DD97; } 
-    .p1 .phase-badge { background: rgba(192, 221, 151, 0.12); color: #C0DD97; border: 1px solid rgba(192, 221, 151, 0.2); }
-    
-    .p2 .phase-header { background: linear-gradient(135deg, rgba(230, 241, 251, 0.04) 0%, rgba(181, 212, 244, 0.02) 100%); border-left: 4px solid #B5D4F4; } 
-    .p2 .phase-badge { background: rgba(181, 212, 244, 0.12); color: #B5D4F4; border: 1px solid rgba(181, 212, 244, 0.2); }
-    
-    .p3 .phase-header { background: linear-gradient(135deg, rgba(238, 237, 254, 0.04) 0%, rgba(206, 203, 246, 0.02) 100%); border-left: 4px solid #CECBF6; } 
-    .p3 .phase-badge { background: rgba(206, 203, 246, 0.12); color: #CECBF6; border: 1px solid rgba(206, 203, 246, 0.2); }
-    
-    .p4 .phase-header { background: linear-gradient(135deg, rgba(250, 238, 218, 0.04) 0%, rgba(250, 199, 117, 0.02) 100%); border-left: 4px solid #FAC775; } 
-    .p4 .phase-badge { background: rgba(250, 199, 117, 0.12); color: #FAC775; border: 1px solid rgba(250, 199, 117, 0.2); }
-    
-    .p5 .phase-header { background: linear-gradient(135deg, rgba(250, 236, 231, 0.04) 0%, rgba(245, 196, 179, 0.02) 100%); border-left: 4px solid #F5C4B3; } 
-    .p5 .phase-badge { background: rgba(245, 196, 179, 0.12); color: #F5C4B3; border: 1px solid rgba(245, 196, 179, 0.2); }
-    
-    .p6 .phase-header { background: linear-gradient(135deg, rgba(225, 245, 238, 0.04) 0%, rgba(159, 225, 203, 0.02) 100%); border-left: 4px solid #9FE1CB; } 
-    .p6 .phase-badge { background: rgba(159, 225, 203, 0.12); color: #9FE1CB; border: 1px solid rgba(159, 225, 203, 0.2); }
-    
-    .p7 .phase-header { background: linear-gradient(135deg, rgba(251, 234, 240, 0.04) 0%, rgba(244, 192, 209, 0.02) 100%); border-left: 4px solid #F4C0D1; } 
-    .p7 .phase-badge { background: rgba(244, 192, 209, 0.12); color: #F4C0D1; border: 1px solid rgba(244, 192, 209, 0.2); }
+    .p1 .phase-header {
+      background: linear-gradient(135deg, rgba(234, 243, 222, 0.04) 0%, rgba(192, 221, 151, 0.02) 100%);
+      border-left: 4px solid #C0DD97;
+    }
 
-    .faang-tip { 
-      background: rgba(239, 159, 39, 0.04); 
-      border-left: 4px solid #EF9F27; 
-      border-radius: 0 12px 12px 0; 
-      padding: 14px 18px; 
-      margin-top: 20px; 
-      font-size: 13px; 
+    .p1 .phase-badge {
+      background: rgba(192, 221, 151, 0.12);
+      color: #C0DD97;
+      border: 1px solid rgba(192, 221, 151, 0.2);
+    }
+
+    .p2 .phase-header {
+      background: linear-gradient(135deg, rgba(230, 241, 251, 0.04) 0%, rgba(181, 212, 244, 0.02) 100%);
+      border-left: 4px solid #B5D4F4;
+    }
+
+    .p2 .phase-badge {
+      background: rgba(181, 212, 244, 0.12);
+      color: #B5D4F4;
+      border: 1px solid rgba(181, 212, 244, 0.2);
+    }
+
+    .p3 .phase-header {
+      background: linear-gradient(135deg, rgba(238, 237, 254, 0.04) 0%, rgba(206, 203, 246, 0.02) 100%);
+      border-left: 4px solid #CECBF6;
+    }
+
+    .p3 .phase-badge {
+      background: rgba(206, 203, 246, 0.12);
+      color: #CECBF6;
+      border: 1px solid rgba(206, 203, 246, 0.2);
+    }
+
+    .p4 .phase-header {
+      background: linear-gradient(135deg, rgba(250, 238, 218, 0.04) 0%, rgba(250, 199, 117, 0.02) 100%);
+      border-left: 4px solid #FAC775;
+    }
+
+    .p4 .phase-badge {
+      background: rgba(250, 199, 117, 0.12);
+      color: #FAC775;
+      border: 1px solid rgba(250, 199, 117, 0.2);
+    }
+
+    .p5 .phase-header {
+      background: linear-gradient(135deg, rgba(250, 236, 231, 0.04) 0%, rgba(245, 196, 179, 0.02) 100%);
+      border-left: 4px solid #F5C4B3;
+    }
+
+    .p5 .phase-badge {
+      background: rgba(245, 196, 179, 0.12);
+      color: #F5C4B3;
+      border: 1px solid rgba(245, 196, 179, 0.2);
+    }
+
+    .p6 .phase-header {
+      background: linear-gradient(135deg, rgba(225, 245, 238, 0.04) 0%, rgba(159, 225, 203, 0.02) 100%);
+      border-left: 4px solid #9FE1CB;
+    }
+
+    .p6 .phase-badge {
+      background: rgba(159, 225, 203, 0.12);
+      color: #9FE1CB;
+      border: 1px solid rgba(159, 225, 203, 0.2);
+    }
+
+    .p7 .phase-header {
+      background: linear-gradient(135deg, rgba(251, 234, 240, 0.04) 0%, rgba(244, 192, 209, 0.02) 100%);
+      border-left: 4px solid #F4C0D1;
+    }
+
+    .p7 .phase-badge {
+      background: rgba(244, 192, 209, 0.12);
+      color: #F4C0D1;
+      border: 1px solid rgba(244, 192, 209, 0.2);
+    }
+
+    .faang-tip {
+      background: rgba(239, 159, 39, 0.04);
+      border-left: 4px solid #EF9F27;
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 13px;
       color: var(--light-gray);
       line-height: 1.6;
       display: flex;
@@ -381,10 +444,10 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-    
-    .faang-tip strong { 
-      color: var(--white-1); 
-      font-weight: 600; 
+
+    .faang-tip strong {
+      color: var(--white-1);
+      font-weight: 600;
     }
 
     /* Responsiveness updates */
@@ -392,19 +455,24 @@
       .phase-header {
         padding: 14px 16px;
       }
+
       .phase-badge {
         padding: 2px 8px;
         font-size: 9px;
       }
+
       .phase-title {
         font-size: 14px;
       }
+
       .phase-sub {
         font-size: 11px;
       }
+
       .topics-grid {
         grid-template-columns: 1fr;
       }
+
       .back-to-blog {
         width: 100%;
         justify-content: center;
@@ -508,15 +576,18 @@
         <header class="blog-header">
           <div class="blog-meta-wrapper">
             <span class="category">Databases</span>
-            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span class="dot"
+              style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
             <time datetime="2026-05-23">May 23, 2026</time>
-            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span class="dot"
+              style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
             <span>15 min read</span>
           </div>
 
           <h1 class="blog-title">MySQL & DBMS — FAANG Roadmap</h1>
           <p class="blog-subtitle">
-            A comprehensive, rigorous preparation roadmap structured in 7 distinct phases, taking you from relational foundation to advanced system design mastery.
+            A comprehensive, rigorous preparation roadmap structured in 7 distinct phases, taking you from relational
+            foundation to advanced system design mastery.
           </p>
 
           <a href="./index.html#blog" class="back-to-blog">
@@ -532,7 +603,7 @@
 
         <!-- Roadmap Content Wrapper -->
         <div class="roadmap">
-          
+
           <div class="header-block">
             <h1>MySQL & DBMS FAANG Interview Preparation</h1>
             <p>7 phases · Absolute basics → Interview-ready advanced mastery</p>
@@ -637,7 +708,8 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> Know WHY relational databases use the relational model — Codd's rules and the math behind it (relational algebra) come up in system design rounds.
+                  <strong>FAANG tip:</strong> Know WHY relational databases use the relational model — Codd's rules and
+                  the math behind it (relational algebra) come up in system design rounds.
                 </div>
               </div>
             </div>
@@ -838,7 +910,8 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> JOIN and subquery questions are the #1 SQL interview topic. Practice writing all 6 join types from memory, and know when to use EXISTS vs IN vs JOIN for performance.
+                  <strong>FAANG tip:</strong> JOIN and subquery questions are the #1 SQL interview topic. Practice
+                  writing all 6 join types from memory, and know when to use EXISTS vs IN vs JOIN for performance.
                 </div>
               </div>
             </div>
@@ -901,7 +974,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="help-circle-outline"></ion-icon> Conditional & NULL Functions</div>
+                    <div class="topic-name"><ion-icon name="help-circle-outline"></ion-icon> Conditional & NULL
+                      Functions</div>
                     <ul class="subtopics">
                       <li>IF(condition, then, else)</li>
                       <li>IIF (alias)</li>
@@ -913,7 +987,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon> Other Functions</div>
+                    <div class="topic-name"><ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon> Other
+                      Functions</div>
                     <ul class="subtopics">
                       <li>CAST, CONVERT (type conversion)</li>
                       <li>LAST_INSERT_ID()</li>
@@ -971,7 +1046,8 @@
                 <div class="section-title">CTEs & Advanced Query Techniques</div>
                 <div class="topics-grid">
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Common Table Expressions</div>
+                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Common Table Expressions
+                    </div>
                     <ul class="subtopics">
                       <li>WITH clause syntax</li>
                       <li>Multiple CTEs in one query</li>
@@ -1013,7 +1089,9 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> Window functions are asked in almost every SQL interview at FAANG. Master RANK, DENSE_RANK, LAG/LEAD, and SUM OVER (PARTITION BY...) cold. Recursive CTEs come up for hierarchical data problems.
+                  <strong>FAANG tip:</strong> Window functions are asked in almost every SQL interview at FAANG. Master
+                  RANK, DENSE_RANK, LAG/LEAD, and SUM OVER (PARTITION BY...) cold. Recursive CTEs come up for
+                  hierarchical data problems.
                 </div>
               </div>
             </div>
@@ -1048,7 +1126,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="git-commit-outline"></ion-icon> ER → Relational Mapping</div>
+                    <div class="topic-name"><ion-icon name="git-commit-outline"></ion-icon> ER → Relational Mapping
+                    </div>
                     <ul class="subtopics">
                       <li>Mapping strong entities</li>
                       <li>Mapping weak entities</li>
@@ -1103,7 +1182,8 @@
                     <ul class="subtopics">
                       <li>When to denormalize (read performance)</li>
                       <li>Data redundancy tradeoffs</li>
-                      <li>Denormalization patterns: duplicated columns, pre-aggregated tables, flattened hierarchies</li>
+                      <li>Denormalization patterns: duplicated columns, pre-aggregated tables, flattened hierarchies
+                      </li>
                       <li>OLTP (normalized) vs OLAP (denormalized)</li>
                     </ul>
                   </div>
@@ -1112,7 +1192,9 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> In system design interviews, you'll be asked to design schemas for products like Twitter, Uber, or Instagram. Knowing 3NF vs denormalization tradeoffs is essential for justifying your choices.
+                  <strong>FAANG tip:</strong> In system design interviews, you'll be asked to design schemas for
+                  products like Twitter, Uber, or Instagram. Knowing 3NF vs denormalization tradeoffs is essential for
+                  justifying your choices.
                 </div>
               </div>
             </div>
@@ -1228,7 +1310,9 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> Isolation levels and deadlocks are hot topics in backend/infra interviews. Be ready to explain MVCC in InnoDB, why REPEATABLE READ doesn't prevent phantom reads with SELECT, and how gap locks work.
+                  <strong>FAANG tip:</strong> Isolation levels and deadlocks are hot topics in backend/infra interviews.
+                  Be ready to explain MVCC in InnoDB, why REPEATABLE READ doesn't prevent phantom reads with SELECT, and
+                  how gap locks work.
                 </div>
               </div>
             </div>
@@ -1268,7 +1352,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="git-pull-request-outline"></ion-icon> B+ Tree Internals</div>
+                    <div class="topic-name"><ion-icon name="git-pull-request-outline"></ion-icon> B+ Tree Internals
+                    </div>
                     <ul class="subtopics">
                       <li>Tree structure: root, internal nodes, leaf nodes</li>
                       <li>All data at leaf level</li>
@@ -1327,7 +1412,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="bar-chart-outline"></ion-icon> Performance Schema & Profiling</div>
+                    <div class="topic-name"><ion-icon name="bar-chart-outline"></ion-icon> Performance Schema &
+                      Profiling</div>
                     <ul class="subtopics">
                       <li>SHOW PROFILES / SHOW PROFILE</li>
                       <li>Performance schema tables: events_statements_summary</li>
@@ -1383,7 +1469,9 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> "How would you debug a slow query?" is an almost universal interview question. Walk through: EXPLAIN, check access type (avoid ALL/index), look for Using filesort, check index selectivity, consider covering indexes.
+                  <strong>FAANG tip:</strong> "How would you debug a slow query?" is an almost universal interview
+                  question. Walk through: EXPLAIN, check access type (avoid ALL/index), look for Using filesort, check
+                  index selectivity, consider covering indexes.
                 </div>
               </div>
             </div>
@@ -1450,7 +1538,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="server-outline"></ion-icon> Sharding (Application-level)</div>
+                    <div class="topic-name"><ion-icon name="server-outline"></ion-icon> Sharding (Application-level)
+                    </div>
                     <ul class="subtopics">
                       <li>Horizontal vs vertical sharding</li>
                       <li>Shard key selection</li>
@@ -1464,7 +1553,8 @@
                     </ul>
                   </div>
                   <div class="topic-card">
-                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Distributed Transactions</div>
+                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Distributed Transactions
+                    </div>
                     <ul class="subtopics">
                       <li>Two-phase commit (2PC)</li>
                       <li>Three-phase commit (3PC)</li>
@@ -1548,7 +1638,9 @@
               <div class="faang-tip">
                 <ion-icon name="flash"></ion-icon>
                 <div>
-                  <strong>FAANG tip:</strong> System design rounds will test sharding strategy, replication topology, and consistency tradeoffs. Know how companies like Pinterest, Twitter, and Shopify shard MySQL. Know when to say "I'd use Vitess" and why.
+                  <strong>FAANG tip:</strong> System design rounds will test sharding strategy, replication topology,
+                  and consistency tradeoffs. Know how companies like Pinterest, Twitter, and Shopify shard MySQL. Know
+                  when to say "I'd use Vitess" and why.
                 </div>
               </div>
             </div>
@@ -1601,19 +1693,19 @@
       const body = header.nextElementSibling;
       const chevron = header.querySelector('.chevron');
       const isOpen = body.classList.contains('open');
-      
+
       // Close all other phases for a highly premium, clean user experience
       document.querySelectorAll('.phase-body').forEach(el => {
-        if(el !== body) {
+        if (el !== body) {
           el.classList.remove('open');
         }
       });
       document.querySelectorAll('.chevron').forEach(el => {
-        if(el !== chevron) {
+        if (el !== chevron) {
           el.classList.remove('open');
         }
       });
-      
+
       // Toggle current phase
       body.classList.toggle('open', !isOpen);
       chevron.classList.toggle('open', !isOpen);
