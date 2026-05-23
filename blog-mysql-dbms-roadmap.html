@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySQL & DBMS FAANG Interview Preparation Roadmap — Shivansh Kumar</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="./assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Premium Roadmap Specific CSS */
+    .roadmap-container {
+      font-family: 'Outfit', 'Poppins', sans-serif;
+      color: var(--white-1);
+    }
+
+    .blog-header {
+      margin-bottom: 25px;
+    }
+
+    .blog-meta-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--fs-7);
+      color: var(--light-gray-70);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .blog-meta-wrapper .category {
+      color: var(--orange-yellow-crayola);
+      background: var(--accent-soft-glow);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .blog-title {
+      font-size: clamp(22px, 5vw, 32px);
+      font-weight: 600;
+      color: var(--white-1);
+      line-height: 1.25;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .blog-subtitle {
+      font-size: var(--fs-6);
+      color: var(--light-gray);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+
+    .back-to-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-yellow-crayola);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-500);
+      border: 1px solid var(--orange-yellow-crayola);
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: var(--transition-1);
+      margin-bottom: 20px;
+      background: transparent;
+    }
+
+    .back-to-blog:hover {
+      background: var(--orange-yellow-crayola);
+      color: var(--smoky-black);
+      transform: translateX(-4px);
+    }
+
+    /* Fully Responsive premium widescreen database banner styling */
+    .blog-banner-img {
+      width: 100%;
+      height: 220px; /* Elegant mobile height */
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      border: 1px solid var(--jet);
+      box-shadow: var(--shadow-2);
+    }
+    
+    .blog-banner-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%; /* Keeps the critical tables and connections in view */
+      display: block;
+      transition: transform var(--transition-2);
+    }
+
+    .blog-banner-img:hover img {
+      transform: scale(1.03);
+    }
+
+    @media (min-width: 576px) {
+      .blog-banner-img {
+        height: 280px; /* Tablet view height */
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .blog-banner-img {
+        height: 340px; /* Desktop view height - clips square into wide banner */
+      }
+    }
+
+    /* Roadmap UI Elements */
+    .roadmap {
+      padding: 10px 0 30px;
+      max-width: 100%;
+    }
+
+    .header-block {
+      margin-bottom: 20px;
+      border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 15px;
+    }
+
+    .header-block h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--white-1);
+    }
+
+    .header-block p {
+      font-size: 13px;
+      color: var(--light-gray);
+      margin-top: 4px;
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .prog-seg {
+      height: 100%;
+      flex: 1;
+      border-radius: 3px;
+    }
+
+    .phase {
+      margin-bottom: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--jet);
+      background: var(--eerie-black-1);
+      box-shadow: var(--shadow-2);
+      transition: border-color var(--transition-1), transform var(--transition-1);
+    }
+
+    .phase:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .phase-header {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: background-color var(--transition-1);
+    }
+
+    .phase-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .phase-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white-1);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .phase-sub {
+      font-size: 12px;
+      color: var(--light-gray);
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    .chevron {
+      font-size: 14px;
+      color: var(--light-gray-70);
+      transition: transform 0.25s ease, color 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .chevron.open {
+      transform: rotate(180deg);
+      color: var(--orange-yellow-crayola);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .phase-body {
+      display: none;
+      padding: 10px 20px 24px;
+      background: var(--eerie-black-2);
+      border-top: 1px solid var(--jet);
+    }
+
+    .phase-body.open {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section:first-child {
+      margin-top: 5px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange-yellow-crayola);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 1px solid var(--jet);
+      padding-bottom: 6px;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .topic-card {
+      border: 1px solid var(--jet);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--eerie-black-1);
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .topic-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-1);
+    }
+
+    .topic-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white-1);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding-bottom: 6px;
+    }
+
+    .topic-name ion-icon {
+      font-size: 16px;
+      color: var(--orange-yellow-crayola);
+    }
+
+    .subtopics {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .subtopics li {
+      font-size: 12.5px;
+      color: var(--light-gray);
+      padding: 4px 0 4px 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .subtopics li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: 3px;
+      color: var(--orange-yellow-crayola);
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .subtopics li span {
+      color: var(--light-gray-70);
+      font-size: 11px;
+      display: block;
+      margin-top: 1px;
+    }
+
+    /* Phase specific banner backgrounds */
+    .p1 .phase-header { background: linear-gradient(135deg, rgba(234, 243, 222, 0.04) 0%, rgba(192, 221, 151, 0.02) 100%); border-left: 4px solid #C0DD97; } 
+    .p1 .phase-badge { background: rgba(192, 221, 151, 0.12); color: #C0DD97; border: 1px solid rgba(192, 221, 151, 0.2); }
+    
+    .p2 .phase-header { background: linear-gradient(135deg, rgba(230, 241, 251, 0.04) 0%, rgba(181, 212, 244, 0.02) 100%); border-left: 4px solid #B5D4F4; } 
+    .p2 .phase-badge { background: rgba(181, 212, 244, 0.12); color: #B5D4F4; border: 1px solid rgba(181, 212, 244, 0.2); }
+    
+    .p3 .phase-header { background: linear-gradient(135deg, rgba(238, 237, 254, 0.04) 0%, rgba(206, 203, 246, 0.02) 100%); border-left: 4px solid #CECBF6; } 
+    .p3 .phase-badge { background: rgba(206, 203, 246, 0.12); color: #CECBF6; border: 1px solid rgba(206, 203, 246, 0.2); }
+    
+    .p4 .phase-header { background: linear-gradient(135deg, rgba(250, 238, 218, 0.04) 0%, rgba(250, 199, 117, 0.02) 100%); border-left: 4px solid #FAC775; } 
+    .p4 .phase-badge { background: rgba(250, 199, 117, 0.12); color: #FAC775; border: 1px solid rgba(250, 199, 117, 0.2); }
+    
+    .p5 .phase-header { background: linear-gradient(135deg, rgba(250, 236, 231, 0.04) 0%, rgba(245, 196, 179, 0.02) 100%); border-left: 4px solid #F5C4B3; } 
+    .p5 .phase-badge { background: rgba(245, 196, 179, 0.12); color: #F5C4B3; border: 1px solid rgba(245, 196, 179, 0.2); }
+    
+    .p6 .phase-header { background: linear-gradient(135deg, rgba(225, 245, 238, 0.04) 0%, rgba(159, 225, 203, 0.02) 100%); border-left: 4px solid #9FE1CB; } 
+    .p6 .phase-badge { background: rgba(159, 225, 203, 0.12); color: #9FE1CB; border: 1px solid rgba(159, 225, 203, 0.2); }
+    
+    .p7 .phase-header { background: linear-gradient(135deg, rgba(251, 234, 240, 0.04) 0%, rgba(244, 192, 209, 0.02) 100%); border-left: 4px solid #F4C0D1; } 
+    .p7 .phase-badge { background: rgba(244, 192, 209, 0.12); color: #F4C0D1; border: 1px solid rgba(244, 192, 209, 0.2); }
+
+    .faang-tip { 
+      background: rgba(239, 159, 39, 0.04); 
+      border-left: 4px solid #EF9F27; 
+      border-radius: 0 12px 12px 0; 
+      padding: 14px 18px; 
+      margin-top: 20px; 
+      font-size: 13px; 
+      color: var(--light-gray);
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .faang-tip ion-icon {
+      font-size: 18px;
+      color: #EF9F27;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    
+    .faang-tip strong { 
+      color: var(--white-1); 
+      font-weight: 600; 
+    }
+
+    /* Responsiveness updates */
+    @media (max-width: 768px) {
+      .phase-header {
+        padding: 14px 16px;
+      }
+      .phase-badge {
+        padding: 2px 8px;
+        font-size: 9px;
+      }
+      .phase-title {
+        font-size: 14px;
+      }
+      .phase-sub {
+        font-size: 11px;
+      }
+      .topics-grid {
+        grid-template-columns: 1fr;
+      }
+      .back-to-blog {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- #MAIN -->
+  <main>
+
+    <!-- #SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Shivansh Kumar">Shivansh Kumar</h1>
+          <p class="title">Software Engineer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="javascript:void(0)" class="contact-link" id="email-copy-link"
+                data-copy-email="kumarshivansh1013@gmail.com"
+                title="Click or hover to copy">kumarshivansh1013@gmail.com</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Noida, India</address>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/shivansh-kumar-492b3021b/" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://github.com/ShivanshKumar4265" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://x.com/codeXstalker" class="social-link" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <!-- #main-content -->
+    <div class="main-content">
+
+      <!-- ROADMAP ARTICLE -->
+      <article class="active roadmap-container">
+
+        <header class="blog-header">
+          <div class="blog-meta-wrapper">
+            <span class="category">Databases</span>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <time datetime="2026-05-23">May 23, 2026</time>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span>15 min read</span>
+          </div>
+
+          <h1 class="blog-title">MySQL & DBMS — FAANG Roadmap</h1>
+          <p class="blog-subtitle">
+            A comprehensive, rigorous preparation roadmap structured in 7 distinct phases, taking you from relational foundation to advanced system design mastery.
+          </p>
+
+          <a href="./index.html#blog" class="back-to-blog">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Portfolio</span>
+          </a>
+        </header>
+
+        <!-- Blog post banner -->
+        <figure class="blog-banner-img">
+          <img src="./assets/images/blog-mysql-dbms-banner.png" alt="MySQL & DBMS FAANG Roadmap Banner">
+        </figure>
+
+        <!-- Roadmap Content Wrapper -->
+        <div class="roadmap">
+          
+          <div class="header-block">
+            <h1>MySQL & DBMS FAANG Interview Preparation</h1>
+            <p>7 phases · Absolute basics → Interview-ready advanced mastery</p>
+          </div>
+
+          <div class="progress-bar">
+            <div class="prog-seg" style="background:#639922"></div>
+            <div class="prog-seg" style="background:#378ADD"></div>
+            <div class="prog-seg" style="background:#7F77DD"></div>
+            <div class="prog-seg" style="background:#BA7517"></div>
+            <div class="prog-seg" style="background:#D85A30"></div>
+            <div class="prog-seg" style="background:#1D9E75"></div>
+            <div class="prog-seg" style="background:#D4537E"></div>
+          </div>
+
+          <!-- PHASE 1 -->
+          <div class="phase p1">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 1</span>
+                  <span class="phase-title">DBMS Foundations & Basics</span>
+                </div>
+                <div class="phase-sub">What is a database · Core concepts · How MySQL works</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body open">
+              <div class="section">
+                <div class="section-title">Core DBMS Concepts</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="server-outline"></ion-icon> What is a DBMS?</div>
+                    <ul class="subtopics">
+                      <li>Data vs Information vs Database</li>
+                      <li>DBMS vs File System</li>
+                      <li>Types: RDBMS, NoSQL, NewSQL</li>
+                      <li>Why relational databases dominate</li>
+                      <li>Popular DBMS: MySQL, PostgreSQL, Oracle, SQL Server</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="grid-outline"></ion-icon> Data Models</div>
+                    <ul class="subtopics">
+                      <li>Relational model (Codd's 12 rules)</li>
+                      <li>Hierarchical model</li>
+                      <li>Network model</li>
+                      <li>Entity-Relationship (ER) model</li>
+                      <li>Object-oriented model</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="layers-outline"></ion-icon> DBMS Architecture</div>
+                    <ul class="subtopics">
+                      <li>3-tier schema: External, Conceptual, Internal</li>
+                      <li>Data independence: Logical & Physical</li>
+                      <li>DBMS components: Parser, Optimizer, Buffer Manager</li>
+                      <li>Client-Server architecture</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="table-outline"></ion-icon> Relational Model Basics</div>
+                    <ul class="subtopics">
+                      <li>Tables, Rows (tuples), Columns (attributes)</li>
+                      <li>Domain, Degree, Cardinality</li>
+                      <li>Schema vs Instance</li>
+                      <li>Keys: Primary, Foreign, Candidate, Super, Alternate, Composite</li>
+                      <li>NULL values and their meaning</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">MySQL Setup & First Steps</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="terminal-outline"></ion-icon> MySQL Basics</div>
+                    <ul class="subtopics">
+                      <li>Installing MySQL (local, Docker)</li>
+                      <li>MySQL CLI: mysql, mysqladmin, mysqldump</li>
+                      <li>MySQL Workbench overview</li>
+                      <li>Connecting: host, port, user, password</li>
+                      <li>SHOW DATABASES / SHOW TABLES</li>
+                      <li>USE database_name</li>
+                      <li>MySQL data directory & config (my.cnf)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="cube-outline"></ion-icon> Data Types</div>
+                    <ul class="subtopics">
+                      <li>Numeric: INT, TINYINT, SMALLINT, BIGINT, DECIMAL, FLOAT, DOUBLE</li>
+                      <li>String: CHAR, VARCHAR, TEXT, TINYTEXT, MEDIUMTEXT, LONGTEXT</li>
+                      <li>Date/Time: DATE, TIME, DATETIME, TIMESTAMP, YEAR</li>
+                      <li>Binary: BLOB, BINARY, VARBINARY</li>
+                      <li>Other: ENUM, SET, JSON, BIT</li>
+                      <li>Choosing right type: storage size, range, precision</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> Know WHY relational databases use the relational model — Codd's rules and the math behind it (relational algebra) come up in system design rounds.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 2 -->
+          <div class="phase p2">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 2</span>
+                  <span class="phase-title">SQL Fundamentals</span>
+                </div>
+                <div class="phase-sub">DDL · DML · DQL · DCL · TCL — every SQL command</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">DDL — Data Definition Language</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="add-circle-outline"></ion-icon> CREATE</div>
+                    <ul class="subtopics">
+                      <li>CREATE DATABASE / SCHEMA</li>
+                      <li>CREATE TABLE with all constraints</li>
+                      <li>CREATE TABLE AS SELECT (CTAS)</li>
+                      <li>CREATE INDEX</li>
+                      <li>CREATE VIEW</li>
+                      <li>Temporary tables: CREATE TEMPORARY TABLE</li>
+                      <li>CHARACTER SET & COLLATION</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="create-outline"></ion-icon> ALTER & DROP</div>
+                    <ul class="subtopics">
+                      <li>ALTER TABLE: ADD, DROP, MODIFY, RENAME COLUMN</li>
+                      <li>ALTER TABLE: ADD/DROP CONSTRAINT</li>
+                      <li>ALTER TABLE: CHANGE vs MODIFY</li>
+                      <li>DROP TABLE / DROP DATABASE</li>
+                      <li>TRUNCATE TABLE vs DELETE</li>
+                      <li>RENAME TABLE</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="shield-checkmark-outline"></ion-icon> Constraints</div>
+                    <ul class="subtopics">
+                      <li>PRIMARY KEY (single & composite)</li>
+                      <li>FOREIGN KEY + ON DELETE / ON UPDATE actions</li>
+                      <li>NOT NULL</li>
+                      <li>UNIQUE</li>
+                      <li>CHECK constraint</li>
+                      <li>DEFAULT value</li>
+                      <li>AUTO_INCREMENT</li>
+                      <li>Named vs unnamed constraints</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">DML — Data Manipulation Language</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="cloud-upload-outline"></ion-icon> INSERT</div>
+                    <ul class="subtopics">
+                      <li>INSERT INTO ... VALUES</li>
+                      <li>INSERT INTO ... SELECT</li>
+                      <li>Multi-row INSERT</li>
+                      <li>INSERT IGNORE</li>
+                      <li>INSERT ... ON DUPLICATE KEY UPDATE</li>
+                      <li>REPLACE INTO</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="trash-outline"></ion-icon> UPDATE & DELETE</div>
+                    <ul class="subtopics">
+                      <li>UPDATE single/multiple rows</li>
+                      <li>UPDATE with JOIN</li>
+                      <li>Multi-table UPDATE</li>
+                      <li>DELETE with WHERE</li>
+                      <li>DELETE with JOIN</li>
+                      <li>DELETE vs TRUNCATE vs DROP</li>
+                      <li>Safe updates mode</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">DQL — Data Query Language</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="search-outline"></ion-icon> Basic SELECT</div>
+                    <ul class="subtopics">
+                      <li>SELECT, FROM, WHERE</li>
+                      <li>Column aliases (AS)</li>
+                      <li>Arithmetic in SELECT</li>
+                      <li>DISTINCT</li>
+                      <li>Logical operators: AND, OR, NOT</li>
+                      <li>Comparison: =, !=, &lt;, &gt;, &lt;=, &gt;=, &lt;&gt;</li>
+                      <li>BETWEEN ... AND</li>
+                      <li>IN, NOT IN</li>
+                      <li>LIKE, NOT LIKE (%, _ wildcards)</li>
+                      <li>IS NULL, IS NOT NULL</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="funnel-outline"></ion-icon> ORDER & LIMIT</div>
+                    <ul class="subtopics">
+                      <li>ORDER BY: ASC, DESC</li>
+                      <li>ORDER BY multiple columns</li>
+                      <li>LIMIT, OFFSET</li>
+                      <li>LIMIT with ORDER BY (pagination)</li>
+                      <li>LIMIT ... OFFSET vs LIMIT x,y syntax</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="people-outline"></ion-icon> GROUP BY & Aggregates</div>
+                    <ul class="subtopics">
+                      <li>GROUP BY single/multiple columns</li>
+                      <li>COUNT, SUM, AVG, MIN, MAX</li>
+                      <li>COUNT(*) vs COUNT(col) vs COUNT(DISTINCT col)</li>
+                      <li>HAVING clause (vs WHERE)</li>
+                      <li>GROUP BY with ROLLUP</li>
+                      <li>GROUP BY with GROUPING SETS</li>
+                      <li>MySQL ONLY_FULL_GROUP_BY mode</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="link-outline"></ion-icon> JOINs (all types)</div>
+                    <ul class="subtopics">
+                      <li>INNER JOIN</li>
+                      <li>LEFT OUTER JOIN</li>
+                      <li>RIGHT OUTER JOIN</li>
+                      <li>FULL OUTER JOIN (workaround in MySQL)</li>
+                      <li>CROSS JOIN (cartesian product)</li>
+                      <li>SELF JOIN</li>
+                      <li>NATURAL JOIN</li>
+                      <li>JOIN with ON vs USING</li>
+                      <li>Multi-table JOINs</li>
+                      <li>JOIN with aggregate functions</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="copy-outline"></ion-icon> Subqueries</div>
+                    <ul class="subtopics">
+                      <li>Scalar subquery</li>
+                      <li>Row subquery</li>
+                      <li>Table subquery (derived tables)</li>
+                      <li>Correlated vs uncorrelated subquery</li>
+                      <li>Subquery in WHERE, FROM, SELECT, HAVING</li>
+                      <li>EXISTS, NOT EXISTS</li>
+                      <li>ANY, ALL, SOME</li>
+                      <li>Subquery vs JOIN (performance)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-merge-outline"></ion-icon> Set Operations</div>
+                    <ul class="subtopics">
+                      <li>UNION (removes duplicates)</li>
+                      <li>UNION ALL (keeps duplicates)</li>
+                      <li>INTERSECT (emulated in MySQL)</li>
+                      <li>EXCEPT / MINUS (emulated)</li>
+                      <li>Rules: same column count & types</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">DCL & TCL</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="lock-open-outline"></ion-icon> DCL — Privileges</div>
+                    <ul class="subtopics">
+                      <li>GRANT privileges</li>
+                      <li>REVOKE privileges</li>
+                      <li>Creating users: CREATE USER</li>
+                      <li>Privilege levels: global, db, table, column</li>
+                      <li>SHOW GRANTS</li>
+                      <li>Roles in MySQL 8+</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="sync-outline"></ion-icon> TCL — Transactions</div>
+                    <ul class="subtopics">
+                      <li>BEGIN / START TRANSACTION</li>
+                      <li>COMMIT</li>
+                      <li>ROLLBACK</li>
+                      <li>SAVEPOINT, ROLLBACK TO SAVEPOINT</li>
+                      <li>RELEASE SAVEPOINT</li>
+                      <li>Autocommit mode</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> JOIN and subquery questions are the #1 SQL interview topic. Practice writing all 6 join types from memory, and know when to use EXISTS vs IN vs JOIN for performance.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 3 -->
+          <div class="phase p3">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 3</span>
+                  <span class="phase-title">Functions, Operators & Advanced SQL</span>
+                </div>
+                <div class="phase-sub">Built-in functions · Window functions · CTEs · Stored routines</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">Built-in Functions</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="text-outline"></ion-icon> String Functions</div>
+                    <ul class="subtopics">
+                      <li>CONCAT, CONCAT_WS, GROUP_CONCAT</li>
+                      <li>LENGTH, CHAR_LENGTH</li>
+                      <li>UPPER, LOWER, INITCAP</li>
+                      <li>TRIM, LTRIM, RTRIM</li>
+                      <li>SUBSTRING, MID, LEFT, RIGHT</li>
+                      <li>REPLACE, LOCATE, INSTR, POSITION</li>
+                      <li>LPAD, RPAD, REPEAT, REVERSE</li>
+                      <li>FORMAT, FIELD, FIND_IN_SET</li>
+                      <li>REGEXP, RLIKE, REGEXP_REPLACE, REGEXP_SUBSTR</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="calculator-outline"></ion-icon> Numeric Functions</div>
+                    <ul class="subtopics">
+                      <li>ROUND, CEIL, FLOOR, TRUNCATE</li>
+                      <li>ABS, SIGN, MOD</li>
+                      <li>POWER, SQRT, EXP, LOG, LOG10</li>
+                      <li>RAND() — random numbers</li>
+                      <li>DIV — integer division</li>
+                      <li>GREATEST, LEAST</li>
+                      <li>PI, SIN, COS, TAN</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="time-outline"></ion-icon> Date & Time Functions</div>
+                    <ul class="subtopics">
+                      <li>NOW(), CURDATE(), CURTIME(), SYSDATE()</li>
+                      <li>DATE(), TIME(), YEAR(), MONTH(), DAY()</li>
+                      <li>HOUR, MINUTE, SECOND, MICROSECOND</li>
+                      <li>DATE_ADD, DATE_SUB, ADDDATE, SUBDATE</li>
+                      <li>DATEDIFF, TIMESTAMPDIFF</li>
+                      <li>DATE_FORMAT, STR_TO_DATE</li>
+                      <li>DAYOFWEEK, DAYOFMONTH, WEEK, QUARTER</li>
+                      <li>EXTRACT(), INTERVAL keyword</li>
+                      <li>CONVERT_TZ, UTC_TIMESTAMP</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="help-circle-outline"></ion-icon> Conditional & NULL Functions</div>
+                    <ul class="subtopics">
+                      <li>IF(condition, then, else)</li>
+                      <li>IIF (alias)</li>
+                      <li>IFNULL, NULLIF</li>
+                      <li>COALESCE (first non-null)</li>
+                      <li>CASE WHEN ... THEN ... ELSE ... END</li>
+                      <li>CASE value WHEN ... (simple CASE)</li>
+                      <li>ISNULL</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon> Other Functions</div>
+                    <ul class="subtopics">
+                      <li>CAST, CONVERT (type conversion)</li>
+                      <li>LAST_INSERT_ID()</li>
+                      <li>ROW_COUNT()</li>
+                      <li>FOUND_ROWS()</li>
+                      <li>UUID()</li>
+                      <li>VERSION(), DATABASE(), USER()</li>
+                      <li>BIT_AND, BIT_OR, BIT_XOR</li>
+                      <li>JSON_OBJECT, JSON_ARRAY, JSON_EXTRACT, -&gt;&gt;</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Window Functions (critical for FAANG)</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="stats-chart-outline"></ion-icon> Ranking Functions</div>
+                    <ul class="subtopics">
+                      <li>ROW_NUMBER()</li>
+                      <li>RANK() — gaps on ties</li>
+                      <li>DENSE_RANK() — no gaps</li>
+                      <li>NTILE(n) — bucket assignment</li>
+                      <li>PERCENT_RANK()</li>
+                      <li>CUME_DIST()</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="play-back-outline"></ion-icon> Value Functions</div>
+                    <ul class="subtopics">
+                      <li>LAG(col, offset, default) — previous row</li>
+                      <li>LEAD(col, offset, default) — next row</li>
+                      <li>FIRST_VALUE(col)</li>
+                      <li>LAST_VALUE(col)</li>
+                      <li>NTH_VALUE(col, n)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="expand-outline"></ion-icon> OVER clause deep dive</div>
+                    <ul class="subtopics">
+                      <li>PARTITION BY</li>
+                      <li>ORDER BY inside OVER</li>
+                      <li>Frame: ROWS vs RANGE</li>
+                      <li>UNBOUNDED PRECEDING / FOLLOWING</li>
+                      <li>CURRENT ROW</li>
+                      <li>Named windows (WINDOW clause)</li>
+                      <li>Aggregate functions as window functions: SUM, AVG, COUNT over a window</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">CTEs & Advanced Query Techniques</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Common Table Expressions</div>
+                    <ul class="subtopics">
+                      <li>WITH clause syntax</li>
+                      <li>Multiple CTEs in one query</li>
+                      <li>Recursive CTEs</li>
+                      <li>Recursive CTE: hierarchy traversal (org chart, tree)</li>
+                      <li>Recursive CTE: number series generation</li>
+                      <li>CTE vs subquery vs temp table</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="code-working-outline"></ion-icon> Advanced Techniques</div>
+                    <ul class="subtopics">
+                      <li>Pivot table: CASE + GROUP BY pattern</li>
+                      <li>Running totals with window SUM</li>
+                      <li>Moving averages</li>
+                      <li>Gaps & islands problem</li>
+                      <li>Finding Nth highest/lowest value</li>
+                      <li>Consecutive rows detection</li>
+                      <li>Date spine generation</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="play-outline"></ion-icon> Stored Routines</div>
+                    <ul class="subtopics">
+                      <li>Stored Procedures: CREATE PROCEDURE, CALL</li>
+                      <li>IN, OUT, INOUT parameters</li>
+                      <li>Stored Functions: RETURNS type, RETURN value</li>
+                      <li>DELIMITER keyword</li>
+                      <li>Variables: DECLARE, SET, SELECT INTO</li>
+                      <li>Control flow: IF, CASE, LOOP, WHILE, REPEAT</li>
+                      <li>Cursors: DECLARE, OPEN, FETCH, CLOSE</li>
+                      <li>Error handling: DECLARE HANDLER, CONDITION</li>
+                      <li>Triggers: BEFORE/AFTER INSERT/UPDATE/DELETE</li>
+                      <li>Events: CREATE EVENT, scheduler</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> Window functions are asked in almost every SQL interview at FAANG. Master RANK, DENSE_RANK, LAG/LEAD, and SUM OVER (PARTITION BY...) cold. Recursive CTEs come up for hierarchical data problems.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 4 -->
+          <div class="phase p4">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 4</span>
+                  <span class="phase-title">Schema Design & Normalization</span>
+                </div>
+                <div class="phase-sub">ER diagrams · Normal forms · Relationships · Denormalization</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">Entity-Relationship Modeling</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-network-outline"></ion-icon> ER Concepts</div>
+                    <ul class="subtopics">
+                      <li>Entities (strong, weak)</li>
+                      <li>Attributes: simple, composite, multivalued, derived</li>
+                      <li>Relationships: binary, ternary, n-ary</li>
+                      <li>Cardinality: 1:1, 1:N, M:N</li>
+                      <li>Participation: partial vs total</li>
+                      <li>ISA (inheritance) relationships</li>
+                      <li>Chen notation vs Crow's Foot notation</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-commit-outline"></ion-icon> ER → Relational Mapping</div>
+                    <ul class="subtopics">
+                      <li>Mapping strong entities</li>
+                      <li>Mapping weak entities</li>
+                      <li>Mapping 1:1 relationships</li>
+                      <li>Mapping 1:N relationships</li>
+                      <li>Mapping M:N (junction/bridge table)</li>
+                      <li>Mapping multivalued attributes</li>
+                      <li>Mapping ISA hierarchies</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Normalization (all normal forms)</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="link-outline"></ion-icon> Functional Dependencies</div>
+                    <ul class="subtopics">
+                      <li>What is a functional dependency (FD)</li>
+                      <li>Trivial vs non-trivial FDs</li>
+                      <li>Armstrong's axioms: Reflexivity, Augmentation, Transitivity</li>
+                      <li>Closure of attributes</li>
+                      <li>Minimal cover (canonical cover)</li>
+                      <li>Finding candidate keys from FDs</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="analytics-outline"></ion-icon> 1NF, 2NF, 3NF</div>
+                    <ul class="subtopics">
+                      <li>1NF: atomic values, no repeating groups</li>
+                      <li>2NF: no partial dependency (on composite key)</li>
+                      <li>3NF: no transitive dependency</li>
+                      <li>Decomposing to 1NF, 2NF, 3NF with examples</li>
+                      <li>Lossless-join decomposition</li>
+                      <li>Dependency preservation</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="options-outline"></ion-icon> BCNF, 4NF, 5NF, 6NF</div>
+                    <ul class="subtopics">
+                      <li>BCNF (Boyce-Codd): every determinant is a superkey</li>
+                      <li>BCNF vs 3NF: when they differ</li>
+                      <li>4NF: no multi-valued dependencies (MVD)</li>
+                      <li>5NF (PJNF): join dependencies</li>
+                      <li>6NF: temporal databases</li>
+                      <li>DKNF (Domain-Key Normal Form)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-compare-outline"></ion-icon> Denormalization</div>
+                    <ul class="subtopics">
+                      <li>When to denormalize (read performance)</li>
+                      <li>Data redundancy tradeoffs</li>
+                      <li>Denormalization patterns: duplicated columns, pre-aggregated tables, flattened hierarchies</li>
+                      <li>OLTP (normalized) vs OLAP (denormalized)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> In system design interviews, you'll be asked to design schemas for products like Twitter, Uber, or Instagram. Knowing 3NF vs denormalization tradeoffs is essential for justifying your choices.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 5 -->
+          <div class="phase p5">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 5</span>
+                  <span class="phase-title">Transactions, Concurrency & ACID</span>
+                </div>
+                <div class="phase-sub">ACID properties · Isolation levels · Locking · MVCC</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">ACID & Transactions</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="key-outline"></ion-icon> ACID Properties</div>
+                    <ul class="subtopics">
+                      <li>Atomicity — all or nothing</li>
+                      <li>Consistency — valid state to valid state</li>
+                      <li>Isolation — concurrent execution</li>
+                      <li>Durability — committed = permanent</li>
+                      <li>BASE vs ACID (NoSQL tradeoff)</li>
+                      <li>CAP theorem: Consistency, Availability, Partition tolerance</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="alert-circle-outline"></ion-icon> Concurrency Problems</div>
+                    <ul class="subtopics">
+                      <li>Dirty read</li>
+                      <li>Non-repeatable read</li>
+                      <li>Phantom read</li>
+                      <li>Lost update</li>
+                      <li>Write skew</li>
+                      <li>Read skew</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-pull-request-outline"></ion-icon> Isolation Levels</div>
+                    <ul class="subtopics">
+                      <li>READ UNCOMMITTED — allows dirty reads</li>
+                      <li>READ COMMITTED — no dirty reads</li>
+                      <li>REPEATABLE READ — MySQL default (InnoDB)</li>
+                      <li>SERIALIZABLE — strictest, slowest</li>
+                      <li>Which problems each level prevents</li>
+                      <li>SET TRANSACTION ISOLATION LEVEL</li>
+                      <li>@@transaction_isolation system variable</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Locking & MVCC</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="lock-closed-outline"></ion-icon> Lock Types</div>
+                    <ul class="subtopics">
+                      <li>Shared (S) lock — read lock</li>
+                      <li>Exclusive (X) lock — write lock</li>
+                      <li>Intention locks: IS, IX, SIX</li>
+                      <li>Row-level locks vs table-level locks</li>
+                      <li>Gap locks, Next-key locks, Record locks</li>
+                      <li>Page-level locking</li>
+                      <li>SELECT ... FOR UPDATE (X lock)</li>
+                      <li>SELECT ... LOCK IN SHARE MODE (S lock)</li>
+                      <li>LOCK TABLES / UNLOCK TABLES</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="close-circle-outline"></ion-icon> Deadlocks</div>
+                    <ul class="subtopics">
+                      <li>What is a deadlock</li>
+                      <li>Deadlock detection in InnoDB</li>
+                      <li>SHOW ENGINE INNODB STATUS</li>
+                      <li>innodb_deadlock_detect variable</li>
+                      <li>Deadlock prevention strategies</li>
+                      <li>Wait-for graph</li>
+                      <li>Lock timeout: innodb_lock_wait_timeout</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="copy-outline"></ion-icon> MVCC</div>
+                    <ul class="subtopics">
+                      <li>Multi-Version Concurrency Control concept</li>
+                      <li>Undo log — old row versions</li>
+                      <li>Read view — snapshot at transaction start</li>
+                      <li>Consistent non-locking reads</li>
+                      <li>How REPEATABLE READ uses MVCC</li>
+                      <li>Purge thread — old version cleanup</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="pulse-outline"></ion-icon> Schedule Theory</div>
+                    <ul class="subtopics">
+                      <li>Serial vs Serializable schedules</li>
+                      <li>Conflict serializability</li>
+                      <li>Precedence graph (test for conflict serializability)</li>
+                      <li>View serializability</li>
+                      <li>Recoverability, Cascadeless, Strict schedules</li>
+                      <li>Two-Phase Locking (2PL): growing + shrinking</li>
+                      <li>Strict 2PL</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> Isolation levels and deadlocks are hot topics in backend/infra interviews. Be ready to explain MVCC in InnoDB, why REPEATABLE READ doesn't prevent phantom reads with SELECT, and how gap locks work.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 6 -->
+          <div class="phase p6">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 6</span>
+                  <span class="phase-title">Indexing, Query Optimization & Storage</span>
+                </div>
+                <div class="phase-sub">B+ Tree · Query execution · EXPLAIN · InnoDB internals</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">Indexes — Deep Dive</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="list-outline"></ion-icon> Index Types</div>
+                    <ul class="subtopics">
+                      <li>B-Tree index (default in InnoDB)</li>
+                      <li>Hash index (MEMORY engine)</li>
+                      <li>Full-text index (MATCH ... AGAINST)</li>
+                      <li>Spatial index (R-Tree, for geometry)</li>
+                      <li>Primary index (clustered)</li>
+                      <li>Secondary index (non-clustered)</li>
+                      <li>Unique index</li>
+                      <li>Composite (multi-column) index</li>
+                      <li>Covering index</li>
+                      <li>Prefix index</li>
+                      <li>Invisible index (MySQL 8+)</li>
+                      <li>Functional/Expression index (MySQL 8.0.13+)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-pull-request-outline"></ion-icon> B+ Tree Internals</div>
+                    <ul class="subtopics">
+                      <li>Tree structure: root, internal nodes, leaf nodes</li>
+                      <li>All data at leaf level</li>
+                      <li>Doubly linked leaf nodes (range scans)</li>
+                      <li>Page size (default 16KB)</li>
+                      <li>Fill factor and page splits</li>
+                      <li>Height and its impact on lookups</li>
+                      <li>Clustered index: data IS the index</li>
+                      <li>Secondary index: stores primary key value</li>
+                      <li>Double lookup for secondary indexes</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="construct-outline"></ion-icon> Index Design Rules</div>
+                    <ul class="subtopics">
+                      <li>Selectivity: high cardinality = better index</li>
+                      <li>Left-prefix rule for composite indexes</li>
+                      <li>Index merge optimization</li>
+                      <li>When MySQL doesn't use an index</li>
+                      <li>Index bloat from writes</li>
+                      <li>Too many indexes = slow writes</li>
+                      <li>Index on foreign keys</li>
+                      <li>FORCE INDEX, USE INDEX, IGNORE INDEX hints</li>
+                      <li>Covering index: avoids table access</li>
+                      <li>Index condition pushdown (ICP)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Query Optimization</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="eye-outline"></ion-icon> EXPLAIN & EXPLAIN ANALYZE</div>
+                    <ul class="subtopics">
+                      <li>EXPLAIN columns: id, select_type, type, key, rows, Extra</li>
+                      <li>Access types: system, const, eq_ref, ref, range, index, ALL</li>
+                      <li>select_type: SIMPLE, PRIMARY, SUBQUERY, DERIVED, UNION</li>
+                      <li>Extra values: Using index, Using filesort, Using temporary</li>
+                      <li>EXPLAIN FORMAT=JSON</li>
+                      <li>EXPLAIN ANALYZE (MySQL 8.0.18+, actual timing)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="speedometer-outline"></ion-icon> Query Execution</div>
+                    <ul class="subtopics">
+                      <li>Query parsing → validation → optimization → execution</li>
+                      <li>Cost-based optimizer (CBO)</li>
+                      <li>Join order optimization</li>
+                      <li>Statistics: ANALYZE TABLE, information_schema.INNODB_TABLE_STATS</li>
+                      <li>Optimizer hints (MySQL 8+): INDEX_MERGE, JOIN_ORDER, etc.</li>
+                      <li>Query cache (removed in MySQL 8)</li>
+                      <li>Subquery flattening / materialization</li>
+                      <li>Derived condition pushdown</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="bar-chart-outline"></ion-icon> Performance Schema & Profiling</div>
+                    <ul class="subtopics">
+                      <li>SHOW PROFILES / SHOW PROFILE</li>
+                      <li>Performance schema tables: events_statements_summary</li>
+                      <li>sys schema views: sys.statements_with_full_table_scans</li>
+                      <li>Slow query log: slow_query_log, long_query_time</li>
+                      <li>pt-query-digest (Percona tool)</li>
+                      <li>INFORMATION_SCHEMA queries</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Storage Engine Internals (InnoDB)</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="hardware-chip-outline"></ion-icon> InnoDB Architecture</div>
+                    <ul class="subtopics">
+                      <li>Buffer pool: pages, LRU list, dirty pages</li>
+                      <li>Change buffer (secondary index buffering)</li>
+                      <li>Adaptive hash index (AHI)</li>
+                      <li>Log buffer → redo log files</li>
+                      <li>Undo tablespace</li>
+                      <li>Doublewrite buffer</li>
+                      <li>Page: 16KB, header + data + trailer</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="document-outline"></ion-icon> InnoDB Files & Config</div>
+                    <ul class="subtopics">
+                      <li>ibdata1: system tablespace</li>
+                      <li>ibd files: per-table tablespace (innodb_file_per_table)</li>
+                      <li>ib_logfile0/1: redo log</li>
+                      <li>innodb_buffer_pool_size (most critical)</li>
+                      <li>innodb_flush_log_at_trx_commit (0,1,2)</li>
+                      <li>innodb_flush_method</li>
+                      <li>Other storage engines: MyISAM, MEMORY, ARCHIVE, CSV</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="warning-outline"></ion-icon> WAL & Crash Recovery</div>
+                    <ul class="subtopics">
+                      <li>Write-ahead logging (WAL) concept</li>
+                      <li>Redo log: how writes are guaranteed durable</li>
+                      <li>Undo log: rollback and MVCC</li>
+                      <li>Checkpoint: LSN (log sequence number)</li>
+                      <li>Crash recovery: redo then undo</li>
+                      <li>Fuzzy checkpoint</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> "How would you debug a slow query?" is an almost universal interview question. Walk through: EXPLAIN, check access type (avoid ALL/index), look for Using filesort, check index selectivity, consider covering indexes.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 7 -->
+          <div class="phase p7">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 7</span>
+                  <span class="phase-title">Advanced & FAANG-Level Topics</span>
+                </div>
+                <div class="phase-sub">Replication · Sharding · Partitioning · Distributed DB · System Design</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <div class="section">
+                <div class="section-title">Replication & High Availability</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="share-social-outline"></ion-icon> Replication</div>
+                    <ul class="subtopics">
+                      <li>Primary-replica (master-slave) architecture</li>
+                      <li>Binary log (binlog): STATEMENT, ROW, MIXED format</li>
+                      <li>Relay log, I/O thread, SQL thread</li>
+                      <li>Async vs semi-sync vs sync replication</li>
+                      <li>GTID-based replication (Global Transaction Identifiers)</li>
+                      <li>Replication lag: causes and monitoring</li>
+                      <li>Multi-source replication</li>
+                      <li>Group Replication (InnoDB Cluster)</li>
+                      <li>Read scaling: route reads to replicas</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="save-outline"></ion-icon> Backup & Recovery</div>
+                    <ul class="subtopics">
+                      <li>Logical backup: mysqldump, mysqlpump</li>
+                      <li>Physical backup: Percona XtraBackup</li>
+                      <li>Point-in-time recovery (PITR) with binlog</li>
+                      <li>Hot vs cold backup</li>
+                      <li>RTO and RPO concepts</li>
+                      <li>MySQL Enterprise Backup</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Partitioning & Sharding</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="grid-outline"></ion-icon> MySQL Partitioning</div>
+                    <ul class="subtopics">
+                      <li>RANGE partitioning</li>
+                      <li>LIST partitioning</li>
+                      <li>HASH partitioning</li>
+                      <li>KEY partitioning</li>
+                      <li>Sub-partitioning (composite)</li>
+                      <li>Partition pruning</li>
+                      <li>Adding, dropping, merging partitions</li>
+                      <li>Partition limitations in MySQL</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="server-outline"></ion-icon> Sharding (Application-level)</div>
+                    <ul class="subtopics">
+                      <li>Horizontal vs vertical sharding</li>
+                      <li>Shard key selection</li>
+                      <li>Range sharding</li>
+                      <li>Hash sharding (consistent hashing)</li>
+                      <li>Directory-based sharding</li>
+                      <li>Cross-shard joins and transactions</li>
+                      <li>Resharding / rebalancing</li>
+                      <li>Hotspot problems</li>
+                      <li>ProxySQL, Vitess for MySQL sharding</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-branch-outline"></ion-icon> Distributed Transactions</div>
+                    <ul class="subtopics">
+                      <li>Two-phase commit (2PC)</li>
+                      <li>Three-phase commit (3PC)</li>
+                      <li>Saga pattern (compensating transactions)</li>
+                      <li>XA Transactions in MySQL</li>
+                      <li>Eventual consistency</li>
+                      <li>Paxos and Raft consensus algorithms</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Relational Algebra & Query Theory</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="analytics-outline"></ion-icon> Relational Algebra</div>
+                    <ul class="subtopics">
+                      <li>Selection (σ) — filter rows</li>
+                      <li>Projection (π) — filter columns</li>
+                      <li>Union (∪), Intersection (∩), Difference (−)</li>
+                      <li>Cartesian Product (×)</li>
+                      <li>Rename (ρ)</li>
+                      <li>Join (⋈), Natural join, Theta join, Equijoin</li>
+                      <li>Division (÷) — "for all" queries</li>
+                      <li>Outer joins in relational algebra</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="flask-outline"></ion-icon> Relational Calculus</div>
+                    <ul class="subtopics">
+                      <li>Tuple Relational Calculus (TRC)</li>
+                      <li>Domain Relational Calculus (DRC)</li>
+                      <li>Datalog basics</li>
+                      <li>Safe expressions</li>
+                      <li>Equivalence with relational algebra</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">MySQL 8 Specific Features</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="logo-octocat"></ion-icon> New in MySQL 8</div>
+                    <ul class="subtopics">
+                      <li>Window functions (native support)</li>
+                      <li>CTEs including recursive</li>
+                      <li>Roles for privilege management</li>
+                      <li>JSON table functions: JSON_TABLE()</li>
+                      <li>Invisible columns (MySQL 8.0.23+)</li>
+                      <li>Atomic DDL statements</li>
+                      <li>Descending indexes</li>
+                      <li>EXPLAIN ANALYZE</li>
+                      <li>Histogram statistics</li>
+                      <li>Hash join algorithm</li>
+                      <li>SKIP LOCKED, NOWAIT for SELECT FOR UPDATE</li>
+                      <li>Default authentication: caching_sha2_password</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-merge-outline"></ion-icon> System Design Patterns</div>
+                    <ul class="subtopics">
+                      <li>Read replicas for read scaling</li>
+                      <li>Write to primary, read from replica pattern</li>
+                      <li>Connection pooling: ProxySQL, PgBouncer concept</li>
+                      <li>Caching layer: Redis in front of MySQL</li>
+                      <li>Cache invalidation strategies</li>
+                      <li>CQRS pattern (Command Query Responsibility Segregation)</li>
+                      <li>Event sourcing with DB</li>
+                      <li>Time-series data patterns</li>
+                      <li>Soft deletes pattern</li>
+                      <li>Pagination: keyset vs offset</li>
+                      <li>Optimistic locking (version column)</li>
+                      <li>Pessimistic locking (SELECT FOR UPDATE)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="faang-tip">
+                <ion-icon name="flash"></ion-icon>
+                <div>
+                  <strong>FAANG tip:</strong> System design rounds will test sharding strategy, replication topology, and consistency tradeoffs. Know how companies like Pinterest, Twitter, and Shopify shard MySQL. Know when to say "I'd use Vitess" and why.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- #NAVBAR -->
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item">
+          <a href="./index.html#about" class="navbar-link">About</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#portfolio" class="navbar-link">Projects</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#skills" class="navbar-link">Skills</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#blog" class="navbar-link active">Blog</a>
+        </li>
+        <li class="navbar-item">
+          <a href="https://docs.google.com/document/d/1X_Q1Q70l5MmsqXUyUXVWrknjRLyyV7moK29830jSLek/edit?usp=sharing"
+            class="navbar-link" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+        </li>
+      </ul>
+    </nav>
+
+  </main>
+
+  <div id="avatarLightbox" class="avatar-lightbox">
+    <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar">
+  </div>
+
+  <!-- custom js link -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- ionicon link -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Accordion Toggle Script
+    function togglePhase(header) {
+      const body = header.nextElementSibling;
+      const chevron = header.querySelector('.chevron');
+      const isOpen = body.classList.contains('open');
+      
+      // Close all other phases for a highly premium, clean user experience
+      document.querySelectorAll('.phase-body').forEach(el => {
+        if(el !== body) {
+          el.classList.remove('open');
+        }
+      });
+      document.querySelectorAll('.chevron').forEach(el => {
+        if(el !== chevron) {
+          el.classList.remove('open');
+        }
+      });
+      
+      // Toggle current phase
+      body.classList.toggle('open', !isOpen);
+      chevron.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+
+</html>
