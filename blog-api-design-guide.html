@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Design: Basic to Advanced — SDE Interview Guide — Shivansh Kumar</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="./assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* Custom CSS Variables & Overrides for the API Design Blog */
+    :root {
+      --code-bg: #090d14;
+      --accent-green: #10B981;
+      --accent-green-glow: rgba(16, 185, 129, 0.15);
+      --card-bg-solid: #1C2233;
+      --card-bg-gradient: linear-gradient(135deg, #1C2233 0%, #161B27 100%);
+      --border-accent: rgba(16, 185, 129, 0.3);
+      --glass-blur: blur(12px);
+    }
+
+    .api-guide-container {
+      font-family: 'Outfit', 'Poppins', sans-serif;
+      color: var(--white-1);
+    }
+
+    .blog-header {
+      margin-bottom: 25px;
+    }
+
+    .blog-meta-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--fs-7);
+      color: var(--light-gray-70);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .blog-meta-wrapper .category {
+      color: var(--accent-green);
+      background: var(--accent-soft-glow);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .blog-title {
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--white-1);
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .blog-subtitle {
+      font-size: var(--fs-6);
+      color: var(--light-gray);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+
+    .back-to-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-green);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-500);
+      border: 1px solid var(--accent-green);
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: var(--transition-1);
+      margin-bottom: 20px;
+      background: transparent;
+    }
+
+    .back-to-blog:hover {
+      background: var(--accent-green);
+      color: var(--smoky-black);
+      transform: translateX(-4px);
+    }
+
+    /* Premium widescreen SQL masterclass banner */
+    .blog-banner-img {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      border: 1px solid var(--jet);
+      box-shadow: var(--shadow-3);
+    }
+    
+    .blog-banner-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform var(--transition-2);
+    }
+
+    .blog-banner-img:hover img {
+      transform: scale(1.02);
+    }
+
+    @media (min-width: 576px) {
+      .blog-banner-img { height: 280px; }
+    }
+
+    @media (min-width: 1024px) {
+      .blog-banner-img { height: 350px; }
+    }
+
+    /* 2-Column Responsive Layout: Content + Sticky Sidebar TOC */
+    .layout-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .main-article-content {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    @media (min-width: 1024px) {
+      .layout-wrapper {
+        flex-direction: row-reverse;
+        align-items: flex-start;
+      }
+      
+      .toc-sidebar {
+        width: 280px;
+        position: sticky;
+        top: 20px;
+        flex-shrink: 0;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      
+      .main-article-content {
+        flex: 1;
+      }
+    }
+
+    /* Table of Contents Styling */
+    .toc-card {
+      background: var(--card-bg-gradient);
+      border: 1px solid var(--jet);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .toc-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white-1);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--jet);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-title ion-icon {
+      color: var(--accent-green);
+      font-size: 18px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .toc-item a {
+      color: var(--light-gray);
+      transition: var(--transition-1);
+      display: block;
+      line-height: 1.4;
+      padding: 4px 0;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+    }
+
+    .toc-item a:hover {
+      color: var(--accent-green);
+      padding-left: 14px;
+    }
+
+    .toc-item.active a {
+      color: var(--accent-green);
+      border-left-color: var(--accent-green);
+      padding-left: 14px;
+      font-weight: 500;
+    }
+
+    /* Article Typography & Elements */
+    .content-section {
+      margin-bottom: 45px;
+      scroll-margin-top: 20px; /* Offset for sticky navs when anchor jumping */
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--jet);
+      padding-bottom: 10px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(18px, 4vw, 24px);
+      font-weight: 600;
+      color: var(--white-1);
+    }
+
+    .section-header .section-num {
+      background: var(--accent-soft-glow);
+      color: var(--accent-green);
+      border: 1px solid var(--border-accent);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .content-section p {
+      font-size: 15px;
+      color: var(--light-gray);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .content-section h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--white-2);
+      margin: 25px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .content-section h3::before {
+      content: "";
+      width: 4px;
+      height: 14px;
+      background: var(--accent-green);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* Premium Callout Boxes */
+    .callout {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .callout.trap {
+      background: rgba(239, 68, 68, 0.04);
+      border-left: 4px solid #EF4444;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.trap h4 {
+      color: #FCA5A5;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout.performance {
+      background: rgba(245, 158, 11, 0.04);
+      border-left: 4px solid #F59E0B;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.performance h4 {
+      color: #FCD34D;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout.internals {
+      background: rgba(59, 130, 246, 0.04);
+      border-left: 4px solid #3B82F6;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .callout.internals h4 {
+      color: #93C5FD;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Beautiful Responsive Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--jet);
+      margin: 20px 0;
+      box-shadow: var(--shadow-1);
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+      min-width: 500px;
+    }
+
+    .custom-table th {
+      background: var(--eerie-black-1);
+      color: var(--white-1);
+      font-weight: 600;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--jet);
+    }
+
+    .custom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      color: var(--light-gray);
+      vertical-align: middle;
+    }
+
+    .custom-table tr:hover td {
+      background: rgba(255, 255, 255, 0.01);
+      color: var(--white-2);
+    }
+
+    /* Interactive Code Block Container */
+    .code-container {
+      position: relative;
+      background: var(--code-bg);
+      border-radius: 12px;
+      border: 1px solid var(--jet);
+      margin: 18px 0;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 11px;
+      color: var(--light-gray-70);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .code-header .lang-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      color: var(--light-gray);
+    }
+
+    .code-header .lang-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--accent-green);
+      border-radius: 50%;
+    }
+
+    .copy-btn {
+      background: rgba(255,255,255,0.04);
+      color: var(--light-gray);
+      border: 1px solid var(--jet);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition-1);
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-green-glow);
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border-color: #10B981;
+    }
+
+    .code-container pre {
+      padding: 16px;
+      overflow-x: auto !important;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+      margin: 0;
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+      font-size: 13.5px;
+      line-height: 1.5;
+      width: 100%;
+      max-width: 100%;
+      display: block;
+    }
+
+    .code-container pre code {
+      color: #E2E8F0;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      white-space: pre !important;
+      word-wrap: normal !important;
+      word-break: normal !important;
+    }
+
+    /* Force all pre and code spans to display inline, overriding style.css global display: block */
+    pre span,
+    code span,
+    .code-container pre span {
+      display: inline !important;
+    }
+
+    /* Code Syntax Coloring */
+    .json-key { color: #f43f5e; }
+    .json-string { color: #34d399; }
+    .json-number { color: #60a5fa; }
+    .json-boolean { color: #fbbf24; }
+    .code-keyword { color: #f43f5e; font-weight: 500; }
+    .code-comment { color: #64748b; font-style: italic; }
+    .code-string { color: #34d399; }
+    .code-func { color: #3b82f6; }
+
+    /* Custom HTTP Badges */
+    .http-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Fira Code', monospace;
+    }
+    .http-badge.get { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .http-badge.post { background: rgba(59, 130, 246, 0.15); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .http-badge.put { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .http-badge.patch { background: rgba(139, 92, 246, 0.15); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .http-badge.delete { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* Custom Status Badges */
+    .status-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+    }
+    .status-badge.s2xx { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+    .status-badge.s3xx { background: rgba(100, 116, 139, 0.15); color: #94A3B8; }
+    .status-badge.s4xx { background: rgba(245, 158, 11, 0.15); color: #F59E0B; }
+    .status-badge.s5xx { background: rgba(239, 68, 68, 0.15); color: #EF4444; }
+
+    /* Scroll To Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--accent-green);
+      color: var(--smoky-black);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-3);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-1);
+      z-index: 4;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .scroll-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 15px var(--accent-green);
+    }
+
+    /* Checklist Design */
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .checklist-item {
+      background: var(--eerie-black-1);
+      border: 1px solid var(--jet);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: transform var(--transition-1);
+    }
+
+    .checklist-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .checklist-item ion-icon {
+      font-size: 18px;
+      color: var(--accent-green);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checklist-item h5 {
+      color: var(--white-1);
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .checklist-item p {
+      font-size: 12px !important;
+      color: var(--light-gray) !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+    }
+
+    @media (max-width: 768px) {
+      .toc-sidebar { display: none; }
+      .code-container pre { font-size: 12.5px; }
+      .back-to-blog { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- #MAIN -->
+  <main>
+
+    <!-- #SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Shivansh Kumar">Shivansh Kumar</h1>
+          <p class="title">Software Engineer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="javascript:void(0)" class="contact-link" id="email-copy-link"
+                data-copy-email="kumarshivansh1013@gmail.com"
+                title="Click or hover to copy">kumarshivansh1013@gmail.com</a>
+            </div>
+          </li>
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Noida, India</address>
+            </div>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/shivansh-kumar-492b3021b/" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://github.com/ShivanshKumar4265" class="social-link" target="_blank"
+              rel="noopener noreferrer">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://x.com/codeXstalker" class="social-link" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <!-- #main-content -->
+    <div class="main-content">
+
+      <!-- BLOG DETAIL CONTAINER -->
+      <article class="active api-guide-container">
+
+        <header class="blog-header">
+          <div class="blog-meta-wrapper">
+            <span class="category">System Design</span>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <time datetime="2026-05-25">May 25, 2026</time>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span>25 min read</span>
+          </div>
+
+          <h1 class="blog-title">API Design: Basic to Advanced — SDE Interview Guide</h1>
+          <p class="blog-subtitle">
+            A comprehensive, rigorous blueprint covering HTTP protocols, security standards, caching matrices, idempotency, microservices scaling, and OWASP safety patterns.
+          </p>
+
+          <a href="./index.html#blog" class="back-to-blog">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Portfolio</span>
+          </a>
+        </header>
+
+        <!-- Blog post banner -->
+        <figure class="blog-banner-img">
+          <img src="./assets/images/blog-api-design-banner.png" alt="API Design Basic to Advanced Interview Guide Banner">
+        </figure>
+
+        <!-- Dynamic Layout Grid with Sticky TOC on desktop -->
+        <div class="layout-wrapper">
+
+          <!-- Sticky Table of Contents Sidebar -->
+          <div class="toc-sidebar">
+            <div class="toc-card">
+              <div class="toc-title">
+                <ion-icon name="list-outline"></ion-icon>
+                <span>Guide Chapters</span>
+              </div>
+              <ul class="toc-list" id="tocList">
+                <li class="toc-item active"><a href="#section1">1. What is an API?</a></li>
+                <li class="toc-item"><a href="#section2">2. REST Fundamentals</a></li>
+                <li class="toc-item"><a href="#section3">3. Endpoint Design</a></li>
+                <li class="toc-item"><a href="#section4">4. Payload Design</a></li>
+                <li class="toc-item"><a href="#section5">5. Auth &amp; Tokens</a></li>
+                <li class="toc-item"><a href="#section6">6. Versioning Systems</a></li>
+                <li class="toc-item"><a href="#section7">7. Paginate &amp; Query</a></li>
+                <li class="toc-item"><a href="#section8">8. Throttling &amp; Limits</a></li>
+                <li class="toc-item"><a href="#section9">9. Caching Headers</a></li>
+                <li class="toc-item"><a href="#section10">10. Idempotency Key</a></li>
+                <li class="toc-item"><a href="#section11">11. Security &amp; OWASP</a></li>
+                <li class="toc-item"><a href="#section12">12. Advanced Patterns</a></li>
+                <li class="toc-item"><a href="#section13">13. Protocol Matrix</a></li>
+                <li class="toc-item"><a href="#section14">14. API Documentation</a></li>
+                <li class="toc-item"><a href="#section15">15. Gateway &amp; Scale</a></li>
+                <li class="toc-item"><a href="#section16">16. Interview Cheat Sheet</a></li>
+                <li class="toc-item"><a href="#section17">17. Golden Rules Summary</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Main Article Content Body -->
+          <div class="main-article-content">
+
+            <!-- SECTION 1 -->
+            <section id="section1" class="content-section">
+              <div class="section-header">
+                <span class="section-num">01</span>
+                <h2>What is an API?</h2>
+              </div>
+              <p>
+                An <strong>API (Application Programming Interface)</strong> acts as a formalized, structured contract between two software boundaries. It establishes exactly <em>what</em> resources and endpoints are exposed, <em>what</em> arguments or payloads must be supplied, and <em>what</em> payload structure is guaranteed to return. The consuming boundary interacts purely through this contract, completely isolated from internal database configurations, state storage mechanics, or implementation language specifications.
+              </p>
+              <p>
+                In modern systems architecture, selecting the appropriate API paradigm is a critical architectural decision based on data shape, bandwidth requirements, and streaming characteristics:
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>API Type</th>
+                      <th>Core Protocol</th>
+                      <th>Data Model &amp; Mechanics</th>
+                      <th>Primary Use Case</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>REST</strong></td>
+                      <td>HTTP/1.1 or HTTP/2</td>
+                      <td>Resource-centric representation, structured JSON/XML payloads, standard CRUD commands mapped to HTTP methods.</td>
+                      <td>Public web APIs, enterprise platform integrations, standard CRUD client-server products.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>GraphQL</strong></td>
+                      <td>HTTP/1.1 or HTTP/2</td>
+                      <td>Graph model queries. Single POST gateway endpoint where clients submit specific schema selections.</td>
+                      <td>Single Page Applications (SPAs), mobile clients where network bandwidth and round-trip times are premium.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>gRPC</strong></td>
+                      <td>HTTP/2 only</td>
+                      <td>High-performance RPC using binary Protocol Buffers (Protobuf). Strongly typed schemas compiled into client/server stubs.</td>
+                      <td>High-speed microservices inter-communication, low-overhead cloud integrations.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>SOAP</strong></td>
+                      <td>HTTP, SMTP, TCP</td>
+                      <td>XML-wrapped message exchanges requiring WSDL definitions. Rigid, legacy enterprise standard.</td>
+                      <td>Legacy banking platforms, highly audited transactional legacy services.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>WebSocket</strong></td>
+                      <td>TCP / WS Upgrade</td>
+                      <td>Persistent, full-duplex TCP channels allowing bi-directional message frames without polling overhead.</td>
+                      <td>Real-time chat platforms, collaborative document editing, live gaming feeds.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="cog-outline"></ion-icon> Architectural Context</h4>
+                <p>
+                  While <strong>REST</strong> remains the default choice for external public integrations due to its high cacheability and simple tooling, <strong>gRPC</strong> has largely taken over internal service-to-service communication paths in modern microservice architectures because it dramatically reduces JSON encoding/decoding overhead and enforces strict compile-time interface schemas.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section id="section2" class="content-section">
+              <div class="section-header">
+                <span class="section-num">02</span>
+                <h2>REST API Fundamentals</h2>
+              </div>
+              <p>
+                <strong>REST (Representational State Transfer)</strong> is an architectural style designed around <em>Resources</em> rather than operations. A resource is an entity identified by a uniform URI (e.g. `/users/42`) and manipulated using standard HTTP verbs.
+              </p>
+
+              <h3>HTTP Methods (CRUD Mapping)</h3>
+              <p>
+                To build high-fidelity REST APIs, HTTP methods must map correctly to CRUD database logic, adhering strictly to the specifications of <strong>safety</strong> (not modifying state) and <strong>idempotency</strong> (repeated executions returning identical side effects):
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>HTTP Method</th>
+                      <th>CRUD Action</th>
+                      <th>Idempotent?</th>
+                      <th>Safe?</th>
+                      <th>Example Target</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="http-badge get">GET</span></td>
+                      <td>Read (Fetch resource)</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td>`GET /users/42` — Fetches profile of User 42.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge post">POST</span></td>
+                      <td>Create (Instantiate resource)</td>
+                      <td>No</td>
+                      <td>No</td>
+                      <td>`POST /users` — Registers a new user. Generates new ID.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge put">PUT</span></td>
+                      <td>Full Update (Replace target)</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td>`PUT /users/42` — Completely replaces User 42 schema.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge patch">PATCH</span></td>
+                      <td>Partial Update (Modify subset)</td>
+                      <td>No (Usually)</td>
+                      <td>No</td>
+                      <td>`PATCH /users/42` — Modifies specific fields of User 42 profile.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge delete">DELETE</span></td>
+                      <td>Delete (Remove resource)</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td>`DELETE /users/42` — Removes User 42 permanently.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>HTTP Status Codes</h3>
+              <p>
+                Status codes inform consuming clients of the exact outcome of their request. Standardizing on expressive status codes prevents developers from nesting custom error formats inside generic `200 OK` envelopes:
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Range</th>
+                      <th>Category</th>
+                      <th>Critical Codes &amp; Usage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="status-badge s2xx">2xx</span></td>
+                      <td>Success</td>
+                      <td>
+                        <strong>200 OK</strong>: Request succeeded.<br>
+                        <strong>201 Created</strong>: POST successfully created a resource.<br>
+                        <strong>204 No Content</strong>: DELETE/PUT succeeded; no payload body returned.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="status-badge s3xx">3xx</span></td>
+                      <td>Redirection</td>
+                      <td>
+                        <strong>301 Moved Permanently</strong>: URI updated.<br>
+                        <strong>304 Not Modified</strong>: Resource cached; content matches local validation.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="status-badge s4xx">4xx</span></td>
+                      <td>Client Error</td>
+                      <td>
+                        <strong>400 Bad Request</strong>: Input validation failed.<br>
+                        <strong>401 Unauthorized</strong>: Authentication credentials missing or bad.<br>
+                        <strong>403 Forbidden</strong>: Authenticated, but lacks required permissions (RBAC).<br>
+                        <strong>404 Not Found</strong>: URI does not map to a resource.<br>
+                        <strong>409 Conflict</strong>: Resource state conflict (e.g., email already registered).<br>
+                        <strong>429 Too Many Requests</strong>: Rate limit threshold breached.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="status-badge s5xx">5xx</span></td>
+                      <td>Server Error</td>
+                      <td>
+                        <strong>500 Internal Error</strong>: Uncaught exception or database crash.<br>
+                        <strong>503 Service Unavailable</strong>: Node overload, maintenance window.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>The 6 REST Architectural Constraints</h3>
+              <ol style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li><strong>Client-Server Separation:</strong> Decouples structural presentation boundaries from core persistent engine boundaries, permitting independent horizontal scale.</li>
+                <li><strong>Statelessness:</strong> Every incoming request must package complete operational context, metadata, and security tokens. The server holds zero session states within memory blocks.</li>
+                <li><strong>Cacheability:</strong> Downstream layers (CDN, Proxy, Browser) must receive clear caching metadata (e.g. `Cache-Control` header) defining payload expirations.</li>
+                <li><strong>Uniform Interface:</strong> Uniform URIs, standard HTTP action methods, self-describing resource structures, and hypermedia controls (HATEOAS).</li>
+                <li><strong>Layered System:</strong> The consumer must have zero visibility of system routing paths, unable to determine if it speaks to the source microservice, a load balancer, or an edge CDN proxy.</li>
+                <li><strong>Code on Demand (Optional):</strong> Servers can transmit executable scripts or applets (e.g., client-side JS) to dynamic client boundaries.</li>
+              </ol>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="section3" class="content-section">
+              <div class="section-header">
+                <span class="section-num">03</span>
+                <h2>URL / Endpoint Design</h2>
+              </div>
+              <p>
+                A high-fidelity API must treat URLs as clean, expressive addresses mapping directly to hierarchical resource relationships. Poor URI schemas that treat paths as RPC calls degrade scalability and readability.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">HTTP API Schema Guidelines</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># Rule 1: Always utilize plural nouns representing collections. Avoid verbs.</span>
+<span class="code-comment"># GOOD: Matches REST standards</span>
+GET /orders
+GET /orders/123
+
+<span class="code-comment"># BAD: Mixing verbs or RPC style</span>
+GET /getOrders
+GET /get-order?id=123
+
+<span class="code-comment"># Rule 2: Model hierarchical nested dependencies cleanly. Limit nesting to 2 levels.</span>
+<span class="code-comment"># GOOD: Clear resource association</span>
+GET /users/42/orders          <span class="code-comment"># Fetch orders belonging to User 42</span>
+GET /users/42/orders/789      <span class="code-comment"># Fetch specific order 789 belonging to User 42</span>
+
+<span class="code-comment"># BAD: Too deep, hard to maintain</span>
+GET /departments/finance/teams/backend/users/42/projects/12
+
+<span class="code-comment"># Rule 3: Utilize kebab-case rather than camelCase for multi-word collections</span>
+<span class="code-comment"># GOOD: Search-engine friendly & easy to read</span>
+GET /order-items/55
+
+<span class="code-comment"># BAD: Mix of casing styles</span>
+GET /orderItems/55
+GET /order_items/55
+
+<span class="code-comment"># Rule 4: Handle actions that don't map to standard CRUD using explicit sub-resources or verbs</span>
+POST /payments/123/refund     <span class="code-comment"># Represents a transaction operation</span>
+POST /users/42/deactivate     <span class="code-comment"># Changes status via specific workflow</span></code></pre>
+              </div>
+
+              <h3>Query Parameters vs Path Parameters</h3>
+              <p>
+                Selecting between query and path parameters is dictated by the conceptual intent of the client's request:
+              </p>
+              
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter Type</th>
+                      <th>Primary Intent</th>
+                      <th>Example Configuration</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Path Parameter</strong></td>
+                      <td>Locating and identifying a <em>specific</em> resource node within a collection. Necessary for locating single entities.</td>
+                      <td>`/products/prod-8871`</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Query Parameter</strong></td>
+                      <td>Applying modifiers to a collection, such as filtering, sorting, pagination, or optional child inclusion metadata.</td>
+                      <td>`/products?category=electronics&amp;sort=price:desc&amp;page=2`</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout performance">
+                <h4><ion-icon name="warning-outline"></ion-icon> REST API Anti-Pattern</h4>
+                <p>
+                  Avoid passing unique resource identifiers within query strings (e.g. `/get-user?userId=42`). This breaks HTTP caching strategies. Proxies and edge CDNs treat unique path nodes differently than query strings, which often get bypassed for static edge caching.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="section4" class="content-section">
+              <div class="section-header">
+                <span class="section-num">04</span>
+                <h2>Request &amp; Response Design</h2>
+              </div>
+              <p>
+                API payloads must adhere to consistent schemas, shielding clients from variable output structures and providing descriptive request tracking details.
+              </p>
+
+              <h3>1. Structured Request Payload</h3>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">POST /orders</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"userId"</span>: <span class="json-string">"u-123"</span>,
+  <span class="json-key">"items"</span>: [
+    { <span class="json-key">"productId"</span>: <span class="json-string">"p-456"</span>, <span class="json-key">"quantity"</span>: <span class="json-number">2</span> }
+  ],
+  <span class="json-key">"shippingAddress"</span>: {
+    <span class="json-key">"street"</span>: <span class="json-string">"123 Main St"</span>,
+    <span class="json-key">"city"</span>: <span class="json-string">"Bangalore"</span>,
+    <span class="json-key">"pincode"</span>: <span class="json-string">"560001"</span>
+  }
+}</code></pre>
+              </div>
+
+              <h3>2. Consistent Response Structure</h3>
+              <p>
+                Never return raw data arrays at the root level of a JSON payload. Always wrap payloads in a root object containing metadata, facilitating forward-compatible structural upgrades without breaking arrays.
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">JSON Response Standard</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"orderId"</span>: <span class="json-string">"o-789"</span>,
+    <span class="json-key">"status"</span>: <span class="json-string">"confirmed"</span>,
+    <span class="json-key">"total"</span>: <span class="json-number">1500.00</span>
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"requestId"</span>: <span class="json-string">"req-abc-123"</span>,
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2026-05-25T10:30:00Z"</span>
+  }
+}</code></pre>
+              </div>
+
+              <h3>3. Standardized Error Response</h3>
+              <p>
+                When errors occur, return a highly descriptive payload highlighting validation problems, while sanitizing stack traces to protect system internals.
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">JSON Error Standard</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"VALIDATION_ERROR"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Invalid input data"</span>,
+    <span class="json-key">"details"</span>: [
+      { <span class="json-key">"field"</span>: <span class="json-string">"email"</span>, <span class="json-key">"issue"</span>: <span class="json-string">"Must be a valid email address"</span> },
+      { <span class="json-key">"field"</span>: <span class="json-string">"age"</span>, <span class="json-key">"issue"</span>: <span class="json-string">"Must be at least 18"</span> }
+    ]
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"requestId"</span>: <span class="json-string">"req-abc-123"</span>
+  }
+}</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section id="section5" class="content-section">
+              <div class="section-header">
+                <span class="section-num">05</span>
+                <h2>Authentication &amp; Authorization</h2>
+              </div>
+              <p>
+                Securing transactional boundaries requires establishing clear authentication protocols (identifying who the caller is) and authorization policies (governing what operations they are allowed to perform).
+              </p>
+
+              <h3>Authentication Protocols</h3>
+              <ol style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li>
+                  <strong>API Key:</strong> Passed via header e.g., `X-API-Key: secret-key-here`. Primarily optimized for server-to-server microservices. Simple, but lacks expiration.
+                </li>
+                <li>
+                  <strong>Basic Auth:</strong> Passed via `Authorization: Basic base64(username:password)`. High overhead risk, highly vulnerable to decoding. Avoid in production.
+                </li>
+                <li>
+                  <strong>Bearer Token (JWT):</strong> Passed via `Authorization: Bearer eyJ...`. Self-contained, cryptographically signed, stateless token.
+                </li>
+              </ol>
+
+              <h3>OAuth 2.0 Authorization Flows</h3>
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>OAuth Flow</th>
+                      <th>Primary Target / Client Type</th>
+                      <th>Operational Mechanics</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Authorization Code with PKCE</strong></td>
+                      <td>SPAs, Mobile Apps, Native Platforms</td>
+                      <td>Uses code challenge verifiers to exchange authorizations without exposing secret keys in browsers.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Client Credentials</strong></td>
+                      <td>Server-to-Server / Background Daemons</td>
+                      <td>Machines directly request tokens using their private client IDs and secret key sets. No user context involved.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Authorization Code</strong></td>
+                      <td>Traditional server-side web applications</td>
+                      <td>Redirects users to auth servers, returns authorization code, backend swaps code for access token.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Implicit Flow</strong></td>
+                      <td>Deprecated (Insecure)</td>
+                      <td>Tokens returned directly in browser redirect fragment. Highly vulnerable to access-token theft. Avoid.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>JWT Structure</h3>
+              <p>
+                A <strong>JSON Web Token</strong> consists of three distinct parts concatenated by dots: `Header.Payload.Signature`
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">JWT Format Representation</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># 1. Header: Defines cryptographic signing algorithm</span>
+{
+  <span class="json-key">"alg"</span>: <span class="json-string">"HS256"</span>,
+  <span class="json-key">"typ"</span>: <span class="json-string">"JWT"</span>
+}
+
+<span class="code-comment"># 2. Payload: Packages claims (subject, role, expiration epoch timestamp)</span>
+{
+  <span class="json-key">"sub"</span>: <span class="json-string">"user-123"</span>,
+  <span class="json-key">"role"</span>: <span class="json-string">"admin"</span>,
+  <span class="json-key">"exp"</span>: <span class="json-number">1748000000</span>
+}
+
+<span class="code-comment"># 3. Signature: Created by concatenating Base64 Encoded Header and Payload, then signing with a private server secret key</span>
+HMACSHA256(
+  base64UrlEncode(header) + "." + base64UrlEncode(payload),
+  private_secret_key
+)</code></pre>
+              </div>
+
+              <h3>Authorization Strategies</h3>
+              <ul style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li><strong>RBAC (Role-Based Access Control):</strong> Permissions tied to static user roles (e.g. user, manager, admin).</li>
+                <li><strong>ABAC (Attribute-Based Access Control):</strong> Dynamic policies evaluating attributes (e.g., location, time window, resource owner).</li>
+                <li><strong>OAuth Scopes:</strong> Fine-grained capability access lists (e.g. `read:profile`, `write:billing`) delegating system actions to third-party integrations.</li>
+              </ul>
+            </section>
+
+            <!-- SECTION 6 -->
+            <section id="section6" class="content-section">
+              <div class="section-header">
+                <span class="section-num">06</span>
+                <h2>Versioning</h2>
+              </div>
+              <p>
+                API Versioning is mandatory to introduce breaking changes (removing fields, re-typing formats, renaming keys) without disrupting existing clients in production.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Versioning Methods</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># 1. URI Versioning (Highly recommended, easily cached by proxies)</span>
+GET /v1/users
+GET /v2/users
+
+<span class="code-comment"># 2. Header Versioning (Pristine, but complex to query and test manually)</span>
+GET /users
+Accept: application/vnd.myapi.v2+json
+
+<span class="code-comment"># 3. Query Parameter Versioning</span>
+GET /users?version=2
+
+<span class="code-comment"># 4. Subdomain Versioning</span>
+GET https://v2.api.example.com/users</code></pre>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="bookmark-outline"></ion-icon> Interview Tip</h4>
+                <p>
+                  Interviewers favor <strong>URI Versioning</strong> because it offers maximum clarity, simplifies debugging, and works flawlessly with standard CDN configurations out-of-the-box. When versioning, ensure you deprecate old structures gracefully by passing deprecation timelines using standard HTTP headers (e.g. `Sunset` and `Deprecation`).
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 7 -->
+            <section id="section7" class="content-section">
+              <div class="section-header">
+                <span class="section-num">07</span>
+                <h2>Pagination, Filtering &amp; Sorting</h2>
+              </div>
+              <p>
+                Large database tables must never be dumped directly onto network channels. Implementing efficient filtering, sorting, and pagination constraints is essential for performance and reliability.
+              </p>
+
+              <h3>Pagination Strategies</h3>
+              
+              <h4>1. Offset Pagination</h4>
+              <p>Uses simple SQL `LIMIT` and `OFFSET` clauses. Good for small collections, but scales terribly as the database must scan all preceding rows.</p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">GET /products?page=3&amp;limit=20</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"data"</span>: [...],
+  <span class="json-key">"pagination"</span>: {
+    <span class="json-key">"total"</span>: <span class="json-number">500</span>,
+    <span class="json-key">"page"</span>: <span class="json-number">3</span>,
+    <span class="json-key">"limit"</span>: <span class="json-number">20</span>,
+    <span class="json-key">"totalPages"</span>: <span class="json-number">25</span>
+  }
+}</code></pre>
+              </div>
+
+              <h4>2. Keyset Pagination (Seek Method)</h4>
+              <p>Filters rows using comparative parameters based on high-performance indexed database keys (e.g., `WHERE id > 500 LIMIT 20`). More performant than offsets but harder to implement for complex sort paths.</p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">GET /orders?after_id=500&amp;limit=20</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"data"</span>: [...],
+  <span class="json-key">"pagination"</span>: {
+    <span class="json-key">"limit"</span>: <span class="json-number">20</span>,
+    <span class="json-key">"afterId"</span>: <span class="json-number">500</span>
+  }
+}</code></pre>
+              </div>
+
+              <h4>3. Cursor-Based Pagination</h4>
+              <p>Highly optimized, state-isolated technique. The client receives an opaque base64-encoded cursor containing structural metadata. Perfect for highly dynamic or infinite scroll feeds.</p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">GET /feed?cursor=eyJpZCI6MTAwfQ==&amp;limit=20</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"data"</span>: [...],
+  <span class="json-key">"pagination"</span>: {
+    <span class="json-key">"nextCursor"</span>: <span class="json-string">"eyJpZCI6MTIwfQ=="</span>,
+    <span class="json-key">"hasMore"</span>: <span class="json-boolean">true</span>
+  }
+}</code></pre>
+              </div>
+
+              <h3>Filtering &amp; Sorting Specification</h3>
+              <p>
+                Standardize sorting and filtering formats to minimize custom logic in endpoints:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Query Filter Formats</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># Filtering specific fields</span>
+GET /products?category=electronics&amp;minPrice=500&amp;maxPrice=5000
+
+<span class="code-comment"># Sorting: Use comma-separated fields with a clear ascending/descending modifier</span>
+GET /users?sort=createdAt:desc,name:asc
+
+<span class="code-comment"># Time-series filters</span>
+GET /orders?status=pending&amp;createdAfter=2026-01-01</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 8 -->
+            <section id="section8" class="content-section">
+              <div class="section-header">
+                <span class="section-num">08</span>
+                <h2>Rate Limiting</h2>
+              </div>
+              <p>
+                Rate limiting protects infrastructure from malicious Denial of Service (DoS) attacks, brute-force requests, and resource depletion.
+              </p>
+
+              <h3>Rate Limiting Algorithms</h3>
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Algorithm</th>
+                      <th>Operational Mechanics</th>
+                      <th>Pros / Cons</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Fixed Window</strong></td>
+                      <td>Limits requests within static time boundaries (e.g., max 100 requests per 1-minute window).</td>
+                      <td>Simple to implement. Vulnerable to traffic spikes at window transitions.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Sliding Window</strong></td>
+                      <td>Maintains a sorted set of request timestamps to evaluate requests over a rolling window.</td>
+                      <td>Very accurate, smooth. Memory intensive due to large set logs.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Token Bucket</strong></td>
+                      <td>Tokens added to a bucket at a fixed fill rate. Incoming requests consume a token. Allows bursts when full.</td>
+                      <td>Highly flexible. Supports bursts while maintaining long-term rate constraints.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Leaky Bucket</strong></td>
+                      <td>Requests flow into a queue and are processed at a steady, fixed rate. Excessive requests overflow and fail.</td>
+                      <td>Perfect for smoothing traffic spikes. Adds latency to requests.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Standard Rate Limit Headers</h3>
+              <p>
+                Inform downstream clients of their throttling limits with standard HTTP headers:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">HTTP/1.1 429 Too Many Requests</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>X-RateLimit-Limit: 1000        <span class="code-comment"># Max allowable allocations within current window</span>
+X-RateLimit-Remaining: 0       <span class="code-comment"># Remaining requests available</span>
+X-RateLimit-Reset: 1748001600  <span class="code-comment"># Epoch timestamp when the rate limit window resets</span>
+Retry-After: 60                <span class="code-comment"># Seconds to wait before retrying</span></code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 9 -->
+            <section id="section9" class="content-section">
+              <div class="section-header">
+                <span class="section-num">09</span>
+                <h2>Caching</h2>
+              </div>
+              <p>
+                Caching dramatically improves performance and reduces server load. By configuring caching parameters correctly, we prevent servers from repeatedly generating identical static outputs.
+              </p>
+
+              <h3>Cache-Control Header Matrix</h3>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Cache-Control Directives</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># Cached by proxies, gateways, and clients for 1 hour</span>
+Cache-Control: public, max-age=3600
+
+<span class="code-comment"># Strictly cached only by the end-user browser (sensitive data)</span>
+Cache-Control: private, max-age=300
+
+<span class="code-comment"># Force clients to validate with origin server before using cached copies</span>
+Cache-Control: no-cache
+
+<span class="code-comment"># Strictly ban caching entirely (sensitive financial data)</span>
+Cache-Control: no-store
+
+<span class="code-comment"># Strong validation token representing resource fingerprint</span>
+ETag: "abc123"
+
+<span class="code-comment"># Weak validation token representing resource modification date</span>
+Last-Modified: Mon, 25 May 2026 10:00:00 GMT</code></pre>
+              </div>
+
+              <h3>Multi-Tier Caching Architecture</h3>
+              <p style="text-align: center; font-family: 'Fira Code', monospace; color: var(--accent-green); background: rgba(16, 185, 129, 0.03); border: 1px dashed var(--border-accent); padding: 15px; border-radius: 8px;">
+                Client &rarr; Edge CDN &rarr; API Gateway Proxy &rarr; Redis Cache &rarr; Database
+              </p>
+
+              <h3>HTTP Conditional Requests</h3>
+              <p>
+                Avoid sending full payloads when resources haven't changed. Clients can pass resource tags back to the server in validation requests:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Validation Handshake</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># 1. Client conditional request</span>
+GET /products/42
+If-None-Match: "abc123"
+
+<span class="code-comment"># 2. Server response (If resource matches the client tag, skip body serialization)</span>
+HTTP/1.1 304 Not Modified
+Cache-Control: public, max-age=3600
+ETag: "abc123"</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 10 -->
+            <section id="section10" class="content-section">
+              <div class="section-header">
+                <span class="section-num">10</span>
+                <h2>Idempotency</h2>
+              </div>
+              <p>
+                An operation is <strong>idempotent</strong> if executing it multiple times produces the exact same resource state as executing it a single time. Idempotency is crucial for handling network retries safely, preventing duplicate transactions (like double-billing a user).
+              </p>
+
+              <h3>HTTP Method Idempotency Matrix</h3>
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>HTTP Method</th>
+                      <th>Safe?</th>
+                      <th>Idempotent?</th>
+                      <th>Operational Side Effect Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="http-badge get">GET</span></td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td>Pure reading operations. Never modifies state.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge put">PUT</span></td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td>Repeated PUT operations replace the target with identical data, resulting in the same final state.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge delete">DELETE</span></td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td>The first execution deletes the resource. Subsequent executions return `404 Not Found`, but state change is identical.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge post">POST</span></td>
+                      <td>No</td>
+                      <td>No</td>
+                      <td>Submitting multiple POST requests will create multiple distinct records, leading to duplicates.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="http-badge patch">PATCH</span></td>
+                      <td>No</td>
+                      <td>No (Usually)</td>
+                      <td>Can be non-idempotent depending on operation (e.g., appending values or incrementing a field like `{ "price": "$price + 10" }`).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Implementing Idempotent POST Operations</h3>
+              <p>
+                To make non-idempotent endpoints (like payment creation) safe for retries, require clients to pass a unique <strong>Idempotency-Key</strong> in the header:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">POST /payments</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># Request Header</span>
+POST /payments
+Idempotency-Key: a8098c1a-f86e-11da-bd1a-00112444be1e
+
+{
+  <span class="json-key">"amount"</span>: <span class="json-number">5000</span>,
+  <span class="json-key">"currency"</span>: <span class="json-string">"INR"</span>
+}</code></pre>
+              </div>
+
+              <div class="callout internals">
+                <h4><ion-icon name="cog-outline"></ion-icon> Idempotency Execution Flow</h4>
+                <ol style="margin-left: 15px; font-size: 13.5px; line-height: 1.6; color: var(--light-gray);">
+                  <li>The server intercepts the request and checks for an existing `Idempotency-Key` in cache (e.g., Redis).</li>
+                  <li>If the key exists, the server skips execution and returns the cached response immediately.</li>
+                  <li>If the key is new, the server locks the key, processes the request, and caches the final response with a defined TTL.</li>
+                </ol>
+              </div>
+            </section>
+
+            <!-- SECTION 11 -->
+            <section id="section11" class="content-section">
+              <div class="section-header">
+                <span class="section-num">11</span>
+                <h2>API Security (OWASP Top 10)</h2>
+              </div>
+              <p>
+                Securing API gateways requires deep familiarity with the <strong>OWASP API Security Top 10</strong> vulnerabilities, which target API endpoints specifically.
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>OWASP Vulnerability</th>
+                      <th>Underlying Risk</th>
+                      <th>Mitigation Strategy</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>1. BOLA (Broken Object Level Authorization)</strong></td>
+                      <td>Clients access resources simply by modifying IDs in query paths (e.g., accessing `/users/43` from `/users/42`).</td>
+                      <td>Enforce strict owner authorization policies on every request. Never rely on unauthenticated path IDs.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>2. Broken Authentication</strong></td>
+                      <td>Weak token signatures, lack of expiration dates, or predictable API keys.</td>
+                      <td>Implement standardized JWT structures with robust cryptographics and strict expirations.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>3. Broken Object Property Level Authorization</strong></td>
+                      <td>Endpoints expose sensitive internal fields that standard users shouldn't see (e.g., exposing `isAdmin` parameters).</td>
+                      <td>Sanitize outgoing payloads. Enforce strict DTO data-mapping contracts.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>4. Unrestricted Resource Consumption</strong></td>
+                      <td>No rate limiting, letting clients execute massive operations that exhaust server memory, CPU, or bandwidth.</td>
+                      <td>Enforce rate limits, pagination maximums, and payload size restrictions.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>5. Broken Function Level Authorization</strong></td>
+                      <td>Standard users access administrative functions simply by hitting admin routes (e.g. `POST /admin/delete-user`).</td>
+                      <td>Implement centralized RBAC filters checking role permissions on every protected path.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>6. Unrestricted Access to Sensitive Business Flows</strong></td>
+                      <td>Bots exploiting standard workflows (e.g. bulk ticketing or inventory hoarding).</td>
+                      <td>Add anomaly detection, client fingerprinting, and device verification constraints to sensitive routes.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>7. SSRF (Server-Side Request Forgery)</strong></td>
+                      <td>API takes user-supplied URLs and queries them directly, exposing internal network nodes.</td>
+                      <td>Sanitize and validate URL inputs. Sandbox external requests using strict DNS/IP blocklists.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>8. Security Misconfiguration</strong></td>
+                      <td>Exposing verbose debug stack traces in production error outputs.</td>
+                      <td>Disable detailed error messages externally. Implement a global exception handler to return clean JSON envelopes.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>9. Improper Inventory Management</strong></td>
+                      <td>Exposing deprecated or unversioned routes (like `/v1/beta/users`) that bypass security filters.</td>
+                      <td>Maintain centralized API schemas. Audit and deprecate old endpoints aggressively.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>10. Unsafe Consumption of APIs</strong></td>
+                      <td>Blindly trusting payloads returned from third-party APIs without validation.</td>
+                      <td>Validate and sanitize all data received from external integrations before processing.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Security Checklist</h3>
+              <div class="checklist-grid">
+                <div class="checklist-item">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                  <div>
+                    <h5>HTTPS Always</h5>
+                    <p>Enforce TLS 1.2+ globally. Reject plain HTTP requests at the gateway.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="funnel-outline"></ion-icon>
+                  <div>
+                    <h5>Input Validation</h5>
+                    <p>Validate all incoming query parameters and JSON payloads against a strict schema.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="git-network-outline"></ion-icon>
+                  <div>
+                    <h5>Centralized CORS</h5>
+                    <p>Restrict browser access to trusted domains using explicit CORS header configurations.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="key-outline"></ion-icon>
+                  <div>
+                    <h5>Token Rotation</h5>
+                    <p>Implement short-lived access tokens paired with secure refresh token rotation.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION 12 -->
+            <section id="section12" class="content-section">
+              <div class="section-header">
+                <span class="section-num">12</span>
+                <h2>Advanced API Design Patterns</h2>
+              </div>
+              <p>
+                Advanced architectural patterns are key to designing highly scalable, discoverable, and robust systems.
+              </p>
+
+              <h3>1. HATEOAS (Hypermedia as the Engine of Application State)</h3>
+              <p>
+                Makes APIs self-discoverable by returning related actions and links along with the resource representation:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">HATEOAS JSON Response</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"orderId"</span>: <span class="json-string">"o-789"</span>,
+  <span class="json-key">"status"</span>: <span class="json-string">"pending"</span>,
+  <span class="json-key">"_links"</span>: {
+    <span class="json-key">"self"</span>: { <span class="json-key">"href"</span>: <span class="json-string">"/orders/789"</span> },
+    <span class="json-key">"cancel"</span>: { <span class="json-key">"href"</span>: <span class="json-string">"/orders/789/cancel"</span>, <span class="json-key">"method"</span>: <span class="json-string">"POST"</span> },
+    <span class="json-key">"pay"</span>: { <span class="json-key">"href"</span>: <span class="json-string">"/orders/789/pay"</span>, <span class="json-key">"method"</span>: <span class="json-string">"POST"</span> }
+  }
+}</code></pre>
+              </div>
+
+              <h3>2. Partial Responses (Field Filtering)</h3>
+              <p>
+                Reduce network payload overhead by letting clients select exactly which JSON fields they want returned:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">GET /users/42?fields=id,name,email</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>{
+  <span class="json-key">"id"</span>: <span class="json-number">42</span>,
+  <span class="json-key">"name"</span>: <span class="json-string">"Alex Johnson"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"alex@api.dev"</span>
+}</code></pre>
+              </div>
+
+              <h3>3. Bulk Operations</h3>
+              <p>
+                Avoid network round-trip overhead by grouping multiple updates or creations into a single array payload:
+              </p>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">PATCH /products</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code>[
+  { <span class="json-key">"id"</span>: <span class="json-string">"p-1"</span>, <span class="json-key">"price"</span>: <span class="json-number">999</span> },
+  { <span class="json-key">"id"</span>: <span class="json-string">"p-2"</span>, <span class="json-key">"price"</span>: <span class="json-number">1499</span> }
+]</code></pre>
+              </div>
+
+              <h3>4. Long-Running Operations (Async API Flow)</h3>
+              <p>
+                Never block synchronous client connections on heavy backend operations (like video encoding or report generation). Instead, implement a non-blocking asynchronous polling pattern:
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">Asynchronous Job Pattern</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-comment"># Step 1: Client submits job. Server responds immediately with 202 Accepted.</span>
+POST /reports/generate
+&rarr; HTTP/1.1 202 Accepted
+{ 
+  <span class="json-key">"jobId"</span>: <span class="json-string">"job-123"</span>, 
+  <span class="json-key">"statusUrl"</span>: <span class="json-string">"/jobs/job-123"</span> 
+}
+
+<span class="code-comment"># Step 2: Client polls statusUrl</span>
+GET /jobs/job-123
+&rarr; HTTP/1.1 200 OK
+{ 
+  <span class="json-key">"status"</span>: <span class="json-string">"processing"</span>, 
+  <span class="json-key">"progress"</span>: <span class="json-number">60</span> 
+}
+
+<span class="code-comment"># Step 3: Job completes. Server returns final result pointer.</span>
+GET /jobs/job-123
+&rarr; HTTP/1.1 200 OK
+{ 
+  <span class="json-key">"status"</span>: <span class="json-string">"completed"</span>, 
+  <span class="json-key">"resultUrl"</span>: <span class="json-string">"/reports/r-456"</span> 
+}</code></pre>
+              </div>
+            </section>
+
+            <!-- SECTION 13 -->
+            <section id="section13" class="content-section">
+              <div class="section-header">
+                <span class="section-num">13</span>
+                <h2>Protocol Matrix</h2>
+              </div>
+              <p>
+                An architecture comparison of the dominant API protocol paradigms:
+              </p>
+
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Feature</th>
+                      <th>REST</th>
+                      <th>GraphQL</th>
+                      <th>gRPC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Data Fetching</strong></td>
+                      <td>Fixed resource endpoints.</td>
+                      <td>Client queries specific fields.</td>
+                      <td>Strict RPC method invocations.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Over/Under-fetching</strong></td>
+                      <td>Common issue.</td>
+                      <td>Completely eliminated.</td>
+                      <td>N/A (Schema defined).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Transport Protocol</strong></td>
+                      <td>HTTP/1.1 or HTTP/2</td>
+                      <td>HTTP/1.1 or HTTP/2</td>
+                      <td>HTTP/2 only</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Payload Format</strong></td>
+                      <td>JSON, XML</td>
+                      <td>JSON</td>
+                      <td>Protobuf (Binary)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Schema Definition</strong></td>
+                      <td>OpenAPI / Swagger</td>
+                      <td>SDL (Schema Definition Language)</td>
+                      <td>`.proto` files</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Real-time</strong></td>
+                      <td>Via WebSockets or SSE.</td>
+                      <td>Subscriptions.</td>
+                      <td>Bidirectional streaming natively.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Ideal Use Case</strong></td>
+                      <td>Public facing integration portals.</td>
+                      <td>Complex, highly-relational data graphs.</td>
+                      <td>Internal microservices communications.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- SECTION 14 -->
+            <section id="section14" class="content-section">
+              <div class="section-header">
+                <span class="section-num">14</span>
+                <h2>API Documentation</h2>
+              </div>
+              <p>
+                An undocumented API is a broken API. Modern teams standardize on the <strong>OpenAPI Specification (OAS)</strong> to generate interactive documentation portals (like Swagger UI) automatically.
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="lang-badge">OpenAPI 3.0 (YAML Spec)</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span class="code-keyword">openapi</span>: 3.0.0
+<span class="code-keyword">info</span>:
+  <span class="code-keyword">title</span>: Orders API Portal
+  <span class="code-keyword">version</span>: 1.0.0
+<span class="code-keyword">paths</span>:
+  <span class="code-keyword">/orders</span>:
+    <span class="code-keyword">get</span>:
+      <span class="code-keyword">summary</span>: Retrieve lists of orders
+      <span class="code-keyword">parameters</span>:
+        - <span class="code-keyword">name</span>: status
+          <span class="code-keyword">in</span>: query
+          <span class="code-keyword">schema</span>:
+            <span class="code-keyword">type</span>: string
+            <span class="code-keyword">enum</span>: [pending, confirmed, delivered]
+      <span class="code-keyword">responses</span>:
+        <span class="code-keyword">'200'</span>:
+          <span class="code-keyword">description</span>: Array of orders returned
+          <span class="code-keyword">content</span>:
+            <span class="code-keyword">application/json</span>:
+              <span class="code-keyword">schema</span>:
+                <span class="code-keyword">type</span>: array
+                <span class="code-keyword">items</span>:
+                  <span class="code-keyword">$ref</span>: <span class="code-string">'#/components/schemas/Order'</span></code></pre>
+              </div>
+
+              <h3>What Good Docs Must Include</h3>
+              <ul style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li><strong>Clear Auth Guide:</strong> Step-by-step instructions on acquiring and passing tokens.</li>
+                <li><strong>Environments Map:</strong> Explicit URLs for development, sandbox, staging, and production environments.</li>
+                <li><strong>Expressive Mock Payloads:</strong> Working request and response examples for every supported schema.</li>
+                <li><strong>SDK Code Snippets:</strong> Multi-language integrations (e.g., cURL, Node.js, Python, Go) showing actual request implementations.</li>
+              </ul>
+            </section>
+
+            <!-- SECTION 15 -->
+            <section id="section15" class="content-section">
+              <div class="section-header">
+                <span class="section-num">15</span>
+                <h2>Advanced Topics: Gateway &amp; Scale</h2>
+              </div>
+              <p>
+                Scaling APIs to handle millions of requests requires decoupling infrastructure concerns from core backend services.
+              </p>
+
+              <h3>1. Centralized API Gateway</h3>
+              <p>
+                An API Gateway acts as a reverse proxy, shielding internal microservices by consolidating infrastructure tasks in a single layer:
+              </p>
+              <ul style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li><strong>Routing:</strong> Dynamically maps public request paths to internal services.</li>
+                <li><strong>Authentication:</strong> Offloads authorization checks from downstream microservices.</li>
+                <li><strong>SSL Termination:</strong> Handles public HTTPS handshakes at the edge, communicating with internal nodes via fast, unencrypted paths.</li>
+                <li><strong>Centralized Logging:</strong> Aggregates telemetry data for deep system observability.</li>
+              </ul>
+
+              <h3>2. WebSockets vs Server-Sent Events (SSE)</h3>
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Feature</th>
+                      <th>WebSocket</th>
+                      <th>SSE (Server-Sent Events)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Direction</strong></td>
+                      <td>Bi-directional (Full duplex). Both sides send data.</td>
+                      <td>Uni-directional (Server &rarr; Client only).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Underlying Protocol</strong></td>
+                      <td>TCP / Custom WS Protocol.</td>
+                      <td>Standard HTTP.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Re-connection</strong></td>
+                      <td>Must be implemented manually in javascript.</td>
+                      <td>Handled automatically by the browser.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Best For</strong></td>
+                      <td>Real-time chat, multiplayer gaming, collaborative tools.</td>
+                      <td>Live stock tickers, notifications, logging streams.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>3. Backward Compatibility Rules</h3>
+              <p>
+                To avoid breaking existing client integrations in production, follow these structural rules:
+              </p>
+              <ul style="margin-left: 20px; color: var(--light-gray); font-size: 14.5px; line-height: 1.8;">
+                <li><strong style="color: #F87171;">DO NOT</strong> remove or rename existing JSON fields in response payloads.</li>
+                <li><strong style="color: #F87171;">DO NOT</strong> change the data type of existing fields (e.g., changing string IDs to integers).</li>
+                <li><strong style="color: var(--accent-green);">DO</strong> add new optional fields or parameters safely.</li>
+                <li><strong style="color: #F87171;">AVOID</strong> introducing new mandatory query parameters, as they instantly break older clients.</li>
+              </ul>
+            </section>
+
+            <!-- SECTION 16 -->
+            <section id="section16" class="content-section">
+              <div class="section-header">
+                <span class="section-num">16</span>
+                <h2>Interview Cheat Sheet</h2>
+              </div>
+              <p>
+                Key talking points and system design structures to reference during SDE interviews:
+              </p>
+
+              <div class="callout internals">
+                <h4><ion-icon name="help-circle-outline"></ion-icon> "How do you design a highly scalable E-commerce API?"</h4>
+                <p>
+                  "I'd establish clean resource hierarchies: `/products`, `/users`, `/orders`. I'd isolate transaction boundaries using token auth, enforce cursor pagination for product feeds to handle scale, implement centralized rate limiting at the API Gateway, and safeguard payments with Idempotency keys."
+                </p>
+              </div>
+
+              <div class="callout performance">
+                <h4><ion-icon name="key-outline"></ion-icon> "How do you prevent double-charging on payment failures?"</h4>
+                <p>
+                  "I'd enforce an `Idempotency-Key` header for transactional operations. The server validates this key against Redis before execution. If the key exists, it skips execution and returns the cached result, safely preventing double charges."
+                </p>
+              </div>
+
+              <div class="callout trap">
+                <h4><ion-icon name="close-circle-outline"></ion-icon> "When do you select GraphQL over REST?"</h4>
+                <p>
+                  "GraphQL shines when clients need highly variable nested structures, as it eliminates over-fetching and under-fetching. However, REST is superior when high edge cacheability, standardized CDN performance, or simple public integrations are primary requirements."
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 17 -->
+            <section id="section17" class="content-section">
+              <div class="section-header">
+                <span class="section-num">17</span>
+                <h2>Golden Rules Summary</h2>
+              </div>
+              <p>
+                Incorporate these ten principles into your engineering practices to build world-class APIs:
+              </p>
+
+              <div class="checklist-grid">
+                <div class="checklist-item">
+                  <ion-icon name="people-outline"></ion-icon>
+                  <div>
+                    <h5>1. Design for the Consumer</h5>
+                    <p>Treat your API as a product. Prioritize developer ergonomics and predictability.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="git-merge-outline"></ion-icon>
+                  <div>
+                    <h5>2. Maintain Strict Consistency</h5>
+                    <p>Standardize field naming, casing, pagination parameters, and error formats globally.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="eye-outline"></ion-icon>
+                  <div>
+                    <h5>3. Be Highly Explicit</h5>
+                    <p>Use clear field names and descriptive error messages. Avoid cryptic codes.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  <div>
+                    <h5>4. Fail Gracefully</h5>
+                    <p>Return precise status codes paired with validation details to accelerate debugging.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="infinite-outline"></ion-icon>
+                  <div>
+                    <h5>5. Think Idempotency First</h5>
+                    <p>Design transactional operations to handle network retries safely from day one.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                  <div>
+                    <h5>6. Document Everything</h5>
+                    <p>An undocumented API is broken. Leverage automated specs to keep docs in sync.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <div>
+                    <h5>7. Version Early</h5>
+                    <p>Establish a versioning plan before launching to production, anticipating inevitable future changes.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="lock-closed-outline"></ion-icon>
+                  <div>
+                    <h5>8. Secure by Default</h5>
+                    <p>Enforce HTTPS, validation schemas, token authentication, and rate limiting from day one.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="speedometer-outline"></ion-icon>
+                  <div>
+                    <h5>9. Keep It Simple</h5>
+                    <p>Don't over-engineer. Rely on standard REST practices before adopting more complex protocols.</p>
+                  </div>
+                </div>
+                <div class="checklist-item">
+                  <ion-icon name="trending-up-outline"></ion-icon>
+                  <div>
+                    <h5>10. Evolve Without Breaking</h5>
+                    <p>Adhere to strict backward-compatibility rules. Only make additive changes.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- #NAVBAR -->
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item">
+          <a href="./index.html#about" class="navbar-link">About</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#portfolio" class="navbar-link">Projects</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#skills" class="navbar-link">Skills</a>
+        </li>
+        <li class="navbar-item">
+          <a href="./index.html#blog" class="navbar-link active">Blog</a>
+        </li>
+        <li class="navbar-item">
+          <a href="https://docs.google.com/document/d/1X_Q1Q70l5MmsqXUyUXVWrknjRLyyV7moK29830jSLek/edit?usp=sharing"
+            class="navbar-link" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+        </li>
+      </ul>
+    </nav>
+
+  </main>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </button>
+
+  <div id="avatarLightbox" class="avatar-lightbox">
+    <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar">
+  </div>
+
+  <!-- custom js link -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- ionicon link -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Copy Code Block function
+    function copyCode(button) {
+      const container = button.closest('.code-container');
+      const pre = container.querySelector('pre');
+      const code = pre.textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        button.classList.add('copied');
+        button.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon> <span>Copied!</span>';
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = '<ion-icon name="copy-outline"></ion-icon> <span>Copy</span>';
+        }, 2000);
+      });
+    }
+
+    // Scroll to Top logic
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.onscroll = function() {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Toc active state on scroll tracking
+    const sections = document.querySelectorAll('.content-section');
+    const tocItems = document.querySelectorAll('#tocList .toc-item');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= (sectionTop - 120)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocItems.forEach(item => {
+        item.classList.remove('active');
+        const link = item.querySelector('a');
+        if (link.getAttribute('href').slice(1) === current) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
