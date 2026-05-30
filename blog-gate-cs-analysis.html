@@ -640,6 +640,103 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  /* ── STRATEGY SECTION ── */
+  .strategy-selector {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .strategy-tab {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
+    justify-content: center;
+  }
+  .strategy-tab:hover {
+    border-color: rgba(0,212,255,0.3);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .strategy-tab.active {
+    background: rgba(0,212,255,0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--glow);
+  }
+  .profile-content {
+    display: none;
+    animation: fadeUp 0.4s ease both;
+  }
+  .profile-content.active {
+    display: block;
+  }
+
+  /* Timeline Styles for Profile 3 */
+  .timeline-vertical {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline-vertical::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-step {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-step:last-child {
+    margin-bottom: 0;
+  }
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: -26px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 10px var(--accent);
+    z-index: 1;
+  }
+  .timeline-badge {
+    display: inline-block;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .timeline-content {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
 </style>
 </head>
 <body>
@@ -676,6 +773,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#strategy" class="nav-link">Prep Strategy</a>
     <a href="#weightage" class="nav-link">Weightage</a>
     <a href="#trends" class="nav-link">Trends</a>
     <a href="#table" class="nav-link">Subject Table</a>
@@ -730,6 +828,740 @@
         <div class="kpi-value" style="color:#fb923c">7.9</div>
         <div class="kpi-label">Avg Marks — COA</div>
         <div class="kpi-trend trend-up">▲ 2026 surge</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREPARATION STRATEGY SECTION -->
+  <section id="strategy" class="reveal">
+    <div class="section-label">
+      <span class="section-title">2026–2027 Preparation Strategy</span>
+      <span class="section-desc">To ensure that absolutely nothing is omitted, this master plan maps out every single topic from the official GATE Computer Science syllabus across the precise timeline from June 2026 to January 2027.</span>
+    </div>
+
+    <!-- MASTER SYLLABUS REFERENCE CHECKLIST -->
+    <div class="card" style="margin-bottom:36px; padding:28px;">
+      <div class="chart-title" style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;color:var(--text);">The Master Syllabus Reference Checklist</div>
+      <div class="chart-sub" style="margin-bottom:24px;color:var(--text3);">Anchor your preparation around this absolute list of modules. Check off these exact sub-topics using GO Classes for concepts and GATE Overflow for PYQs.</div>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px;">
+        <!-- Card 1 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='var(--accent)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">📐 Discrete Mathematics</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:var(--accent); padding:2px 6px; border-radius:4px;">Math Core</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Propositional & First-Order Logic; Sets, Relations, Functions; Partial Orders & Lattices; Monoids & Groups; Combinatorics (Counting, Recurrence Relations, Generating Functions); Graph Theory (Connectivity, Matching, Coloring).</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent2); border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='var(--accent2)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">📊 Engineering Mathematics</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.2); color:var(--accent2); padding:2px 6px; border-radius:4px;">Systems Math</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Linear Algebra (Matrices, Determinants, Systems of Equations, Eigenvalues/vectors, LU Decomposition); Calculus (Limits, Continuity, Differentiability, Maxima/minima, Mean Value Theorem, Integration); Probability & Statistics (Random Variables; Uniform, Normal, Exponential, Poisson, and Binomial Distributions; Mean, Median, Mode, Standard Deviation; Conditional Probability, Bayes' Theorem).</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent3); border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='var(--accent3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">⚡ Digital Logic</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); color:var(--accent3); padding:2px 6px; border-radius:4px;">Hardware</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Boolean Algebra; Minimization; Combinational Circuits (Mux, Demux, Decoders); Sequential Circuits (Latches, Flip-Flops, Registers, Counters); Number Representations & Computer Arithmetic (Fixed & Floating-point).</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent4); border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='var(--accent4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">💻 Programming & DS</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(10,185,129,0.08); border:1px solid rgba(10,185,129,0.2); color:var(--accent4); padding:2px 6px; border-radius:4px;">Software</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">C Programming (Pointers, Scope, Parameter passing); Recursion; Linear Data Structures (Arrays, Stacks, Queues, Linked Lists); Non-Linear Data Structures (Trees, BSTs, AVL Trees, Binary Heaps); Graphs.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent5); border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='var(--accent5)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">⚙️ Algorithms</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:var(--accent5); padding:2px 6px; border-radius:4px;">Core Logic</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Asymptotic Worst-Case Time & Space Complexity; Searching, Sorting, Hashing; Greedy Techniques; Dynamic Programming; Divide-and-Conquer; Graph Traversals (BFS, DFS), Minimum Spanning Trees (Prims, Kruskals), Shortest Paths (Dijkstra, Bellman-Ford, Floyd-Warshall).</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #fb923c; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#fb923c'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">🔮 Theory of Computation</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(251,146,60,0.08); border:1px solid rgba(251,146,60,0.2); color:#fb923c; padding:2px 6px; border-radius:4px;">Automata</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Regular Expressions & Finite Automata (DFA, NFA, Regular Grammar); Context-Free Grammars & Pushdown Automata (PDA); Regular & Context-Free Languages (Pumping Lemma); Turing Machines & Undecidability.</p>
+        </div>
+
+        <!-- Card 7 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #a78bfa; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#a78bfa'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">🛠️ Compiler Design</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.2); color:#a78bfa; padding:2px 6px; border-radius:4px;">Translation</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Lexical Analysis; Parsing (LL(1), LR(0), SLR(1), LALR(1), CLR(1)); Syntax-Directed Translation (SDT); Runtime Environments; Intermediate Code Generation; Local Optimization; Data Flow Analysis (Constant Propagation, Liveness Analysis, Common Subexpression Elimination).</p>
+        </div>
+
+        <!-- Card 8 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #60a5fa; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#60a5fa'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">🖥️ Operating Systems</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.2); color:#60a5fa; padding:2px 6px; border-radius:4px;">Systems</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">System Calls, Processes, Threads, IPC; Concurrency & Synchronization (Semaphores, Mutex, Classical Problems); Deadlocks (Prevention, Avoidance, Detection); CPU Scheduling; Memory Management & Virtual Memory (Paging, Segmentation, Page Replacement); File Systems & Disk Scheduling.</p>
+        </div>
+
+        <!-- Card 9 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #f472b6; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#f472b6'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">🗄️ Databases (DBMS)</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(244,114,182,0.08); border:1px solid rgba(244,114,182,0.2); color:#f472b6; padding:2px 6px; border-radius:4px;">Storage</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">ER-Model; Relational Model (Relational Algebra, Tuple Calculus); SQL Queries; Integrity Constraints & Normal Forms (1NF, 2NF, 3NF, BCNF, 4NF); File Organization & Indexing (B and B+ trees); Transactions & Concurrency Control (Serializability, Locking Protocols).</p>
+        </div>
+
+        <!-- Card 10 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #34d399; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#34d399'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">🌐 Computer Networks</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); color:#34d399; padding:2px 6px; border-radius:4px;">Networks</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Layering Concept (OSI & TCP/IP); Packet, Circuit, & Virtual Circuit Switching; Data Link Layer (Framing, Error Detection/Correction, MAC, Sliding Window, Ethernet Bridging); Routing Protocols (Distance Vector, Link State); Fragmentation & IP addressing (IPv4, IPv6, CIDR); Support Protocols (ARP, DHCP, ICMP); NAT; Transport Layer (Flow & Congestion Control, UDP, TCP, Sockets); Application Layer Protocols (DNS, SMTP, HTTP, FTP, Email).</p>
+        </div>
+
+        <!-- Card 11 -->
+        <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid #facc15; border-radius:12px; padding:18px 20px; transition:transform 0.25s ease, border-color 0.25s ease;" onmouseover="this.style.borderColor='#facc15'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='none';">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text)">💡 General Aptitude</div>
+            <span style="font-family:'DM Mono',monospace; font-size:10px; background:rgba(250,204,21,0.08); border:1px solid rgba(250,204,21,0.2); color:#facc15; padding:2px 6px; border-radius:4px;">Aptitude</span>
+          </div>
+          <p style="font-size:13px; line-height:1.55; color:var(--text2); margin:0;">Quantitative (Ratios, Percentages, Logarithms, Permutations & Combinations, Series, Mensuration, Geometry); Verbal (Grammar, Vocabulary, Comprehension); Analytical (Deduction, Induction, Syllogisms); Spatial Aptitude (Transformations, Rotation, Scaling, Paper folding/patterns).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWITCHER TABS -->
+    <div style="text-align:center; margin-bottom:20px; font-family:'Syne',sans-serif; font-weight:600; font-size:14px; color:var(--text3);">SELECT YOUR PREPARATION PROFILE</div>
+    <div class="strategy-selector">
+      <button class="strategy-tab active" onclick="switchProfile('professional')">
+        <span>💼</span> Working Professional
+      </button>
+      <button class="strategy-tab" onclick="switchProfile('student')">
+        <span>🎓</span> College Student
+      </button>
+      <button class="strategy-tab" onclick="switchProfile('aspirant')">
+        <span>🏆</span> Full-Time Aspirant
+      </button>
+    </div>
+
+    <!-- PROFILE 1: WORKING PROFESSIONAL -->
+    <div id="prof-professional" class="profile-content active">
+      <!-- Baseline Configurations KPI -->
+      <div class="allocation-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:28px;">
+        <div class="kpi-card" style="border-left:3px solid var(--accent)">
+          <div class="kpi-icon" style="background:rgba(0,212,255,0.1)">📅</div>
+          <div class="kpi-value" style="color:var(--accent)">3.5h <span style="font-size:16px;font-weight:400;color:var(--text3)">/ day</span></div>
+          <div class="kpi-label">Weekday Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// 2h morning + 1.5h night</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent2)">
+          <div class="kpi-icon" style="background:rgba(124,58,237,0.1)">⚡</div>
+          <div class="kpi-value" style="color:var(--accent2)">9h <span style="font-size:16px;font-weight:400;color:var(--text3)">/ day</span></div>
+          <div class="kpi-label">Weekend Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// 3 blocks of 3 hours each</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent3)">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.1)">🏆</div>
+          <div class="kpi-value" style="color:var(--accent3)">~35.5h</div>
+          <div class="kpi-label">Weekly Baseline Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Dedicated professional schedule</p>
+        </div>
+      </div>
+
+      <!-- Month-by-month timeline -->
+      <div class="card" style="margin-bottom:28px; padding:32px 28px;">
+        <div class="chart-title">Month-by-Month Granular Preparation Blueprint</div>
+        <div class="chart-sub" style="margin-bottom:30px;">June 2026 – December 2026 subject mappings & execution blocks</div>
+
+        <div class="timeline-vertical">
+          <!-- Month 1 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">June 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent)">Logic & Mathematical Foundations</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Discrete Mathematics + Digital Logic + Verbal/Quantitative Aptitude basics</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Watch GO Classes videos on Propositional and First-Order Logic, Set Theory and Relations.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Work through Digital Logic (Boolean algebra & Minimization techniques). Solve 1990-2026 logic PYQs on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 2 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">July 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent2)">Code Architecture & Linear Spaces</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Programming & Data Structures + Linear Algebra + Calculus</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete C Programming (Pointers, Recursion, Parameter Passing) and Linear Data Structures (Arrays, Stacks, Queues).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Linear Algebra (Matrices, Systems of Equations, Determinants) from GO Classes. Practice matrix manipulation queries on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 3 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">August 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent4)">Algorithmic Efficiency & Probability</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Algorithms + Probability & Statistics + Discrete Math (Combinatorics & Graphs)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Learn Asymptotic Analysis, Searching/Sorting algorithms, and Hashing.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Probability basics (Bayes' Theorem, Conditional Probability) and Combinatorics (Counting, Recurrences). Solve related GATE Overflow topics.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 4 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">September 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#fb923c">Computation, Automata & Structured Data</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Theory of Computation (TOC) + Database Management Systems (DBMS)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Regular Expressions, DFA, NFA, and Context-Free Grammars from GO Classes.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #f472b6">
+                  <strong style="color:#f472b6;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Cover the ER Model, Relational Algebra, and SQL Queries in DBMS. Run database PYQs on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 5 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">October 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#60a5fa">Systems Engineering & Language Translation</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Operating Systems (OS) + Compiler Design + Analytical Aptitude</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #60a5fa">
+                  <strong style="color:#60a5fa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Processes, Threads, CPU Scheduling, and Compiler Lexical Analysis.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #a78bfa">
+                  <strong style="color:#a78bfa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Deep dive into OS Semaphores/Synchronization and Compiler Parsing (LL, LR tables). Work through GATE Overflow query threads.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 6 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">November 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#34d399">Hardware Architecture & Deep Networking</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Computer Organization & Architecture (COA) + Computer Networks (CN)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Machine Instructions, Addressing Modes, Data Path, Control Units, and CN Layering models.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #34d399">
+                  <strong style="color:#34d399;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Work through Pipelining Hazards, Cache Memory mapping, and IP Addressing/Subnetting (CIDR). Solve numerical-heavy PYQs on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 7 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">December 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--text)">Consolidation & Spatial Logic</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Full Syllabus Revision + Spatial Aptitude + Topic/Subject Online Tests</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (3.5 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Review your short notes for 2 subjects per week. Take short topic tests on weak areas.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (9 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Take 2 Full Subject Tests every weekend. Deep dive into errors by reading verified explanations on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revision Protocol Card -->
+      <div class="insight-card" style="border-left:3px solid var(--accent5);background:rgba(239,68,68,0.02)">
+        <div class="insight-header">
+          <div class="insight-icon" style="background:rgba(239,68,68,0.1)">🏆</div>
+          <div class="insight-title" style="color:var(--accent5)">January 2027: The Grand Revision & Daily Mock Test Protocol</div>
+        </div>
+        <div style="font-size:14px; line-height:1.6; color:var(--text2);">
+          <p style="margin: 0 0 12px 0;">January is identical across all profiles in terms of intent, but optimized specifically for professionals:</p>
+          <ul class="insight-list" style="margin-left: 18px;">
+            <li style="margin-bottom:8px;"><strong>Monday – Friday:</strong> Do not attempt full-length mocks on workdays; forcing a 3-hour test after a long shift can lead to burnout. Instead, spend your 3.5 daily hours running through targeted subject revisions and re-solving specific tough questions on <strong>GATE Overflow</strong>.</li>
+            <li><strong>Saturday & Sunday:</strong> Wake up early and execute the complete <strong>09:30 AM Mock Test Simulation</strong> (sit down in isolated room, lock phone away, use official virtual calculator, write full-length 65-question mock). Spend your afternoon and evening running diagnostic post-mortems and reviewing formulas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE 2: COLLEGE STUDENT -->
+    <div id="prof-student" class="profile-content">
+      <!-- Baseline Configurations KPI -->
+      <div class="allocation-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:28px;">
+        <div class="kpi-card" style="border-left:3px solid var(--accent)">
+          <div class="kpi-icon" style="background:rgba(0,212,255,0.1)">📅</div>
+          <div class="kpi-value" style="color:var(--accent)">4h <span style="font-size:16px;font-weight:400;color:var(--text3)">/ day</span></div>
+          <div class="kpi-label">Weekday Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Utilize lecture slots + library hours</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent2)">
+          <div class="kpi-icon" style="background:rgba(124,58,237,0.1)">⚡</div>
+          <div class="kpi-value" style="color:var(--accent2)">7h <span style="font-size:16px;font-weight:400;color:var(--text3)">/ day</span></div>
+          <div class="kpi-label">Weekend Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Maintain personal/college project balance</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent3)">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.1)">🏆</div>
+          <div class="kpi-value" style="color:var(--accent3)">~34h</div>
+          <div class="kpi-label">Weekly Baseline Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Includes Nov/Dec 2-week semester exam buffer</p>
+        </div>
+      </div>
+
+      <!-- Month-by-month timeline -->
+      <div class="card" style="margin-bottom:28px; padding:32px 28px;">
+        <div class="chart-title">Month-by-Month Granular Preparation Blueprint</div>
+        <div class="chart-sub" style="margin-bottom:30px;">June 2026 – December 2026 subject mappings & execution blocks</div>
+
+        <div class="timeline-vertical">
+          <!-- Month 1 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">June 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent)">Logic & Mathematical Foundations</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Discrete Mathematics + Digital Logic + Verbal/Quantitative Aptitude basics</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Logic, Sets, Relations, and Functions. Solve Quantitative Aptitude worksheets (Ratios, Percentages) for 45 minutes daily.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Cover Digital Logic Combinational Circuits (Mux, Decoders). Solve corresponding GATE Overflow questions.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 2 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">July 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent2)">Code Architecture & Linear Spaces</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Programming & Data Structures + Linear Algebra + Calculus</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Master C programming and Linked Lists. Balance this with college programming labs. Spend 30 minutes on Calculus limits and continuity.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Trees, BSTs, and Linear Algebra Eigenvalues/vectors. Solve matching PYQs.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 3 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">August 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent4)">Algorithmic Efficiency & Probability</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Algorithms + Probability & Statistics + Discrete Math (Combinatorics & Graphs)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Cover Divide-and-Conquer and Greedy algorithms. Study Combinatorics counting methods.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Master Probability Distributions (Binomial, Poisson, Exponential). Practice on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 4 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">September 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#fb923c">Computation, Automata & Structured Data</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Theory of Computation (TOC) + Database Management Systems (DBMS)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Finite Automata and Regular Languages. Study Relational Algebra and basic SQL schema structures.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #f472b6">
+                  <strong style="color:#f472b6;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Pushdown Automata (PDA) and DBMS Normalization up to BCNF/4NF.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 5 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">October 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#60a5fa">Systems Engineering & Language Translation</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Operating Systems (OS) + Compiler Design + Analytical Aptitude</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #60a5fa">
+                  <strong style="color:#60a5fa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Processes, Memory Management, Paging, and Compiler Parsing types.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #a78bfa">
+                  <strong style="color:#a78bfa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Deadlocks, File Systems, and Compiler Syntax Directed Translation (SDT). Practice on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 6 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">November 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#34d399">Hardware Architecture & Deep Networking</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Computer Organization & Architecture (COA) + Computer Networks (CN)</p>
+              
+              <div style="background:rgba(239,68,68,0.03); border:1px dashed var(--border); padding:10px 14px; border-radius:8px; margin-bottom:12px;">
+                <strong style="color:var(--accent5); font-size:11px; display:block; text-transform:uppercase; margin-bottom:3px;">🚨 Semester Exams Accounted Buffer</strong>
+                <span style="font-size:12.5px; color:var(--text2);">Reduce daily hours to <strong>1.5 hrs during final university exams</strong>, focusing exclusively on the intersection of COA/CN with university modules.</span>
+              </div>
+
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Normal Weekdays (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Machine Instructions, Pipelining, Data Link Layer protocols (Sliding Window), and Routing.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #34d399">
+                  <strong style="color:#34d399;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Normal Weekends (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Solve basic networking and hardware pipeline architecture questions on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 7 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">December 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--text)">Consolidation & Spatial Logic</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Full Syllabus Revision + Spatial Aptitude + Topic/Subject Online Tests</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekday Focus (4 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Revisit core subjects (Math, Data Structures, Algorithms, OS). Take topic-specific quizzes.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Weekend Focus (7 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Dedicate time to full subject tests and practice Spatial Aptitude topics (shape rotations, paper folding).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revision Protocol Card -->
+      <div class="insight-card" style="border-left:3px solid var(--accent5);background:rgba(239,68,68,0.02)">
+        <div class="insight-header">
+          <div class="insight-icon" style="background:rgba(239,68,68,0.1)">🏆</div>
+          <div class="insight-title" style="color:var(--accent5)">January 2027: The Grand Revision & Daily Mock Test Protocol</div>
+        </div>
+        <div style="font-size:14px; line-height:1.6; color:var(--text2);">
+          <p style="margin: 0 0 12px 0;">January is identical in intent across all profiles, demanding strict diagnostic execution daily:</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">1. MOCK SIMULATION (9:30 AM - 12:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Sit down in an isolated room. Lock phone away. Use official virtual calculator on screen. Solve full-length 65-question mock tests to build mental endurance.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent2); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">2. DIAGNOSTIC POST-MORTEM (2:00 - 4:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Analyze every single mistake. Search question IDs on GATE Overflow to identify traps, alternative methods, and conceptual fallacies.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent3); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">3. CONCEPTUAL REPAIR (5:30 - 8:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Open short notes for sub-topics missed (e.g. eigenvalue laws, parsing conflicts). Fix gaps and solve 10 targeted practice problems.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent4); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">4. FORMULA LOG CHECK (8:45 - 9:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Review your custom Math properties and closure property sheets. Consistent daily review prevents unexpected mental blocks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE 3: FULL-TIME ASPIRANT -->
+    <div id="prof-aspirant" class="profile-content">
+      <!-- Baseline Configurations KPI -->
+      <div class="allocation-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:28px;">
+        <div class="kpi-card" style="border-left:3px solid var(--accent)">
+          <div class="kpi-icon" style="background:rgba(0,212,255,0.1)">⏰</div>
+          <div class="kpi-value" style="color:var(--accent)">9h <span style="font-size:16px;font-weight:400;color:var(--text3)">/ day</span></div>
+          <div class="kpi-label">Daily Cadence</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// 7 days a week, split in 3 blocks</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent2)">
+          <div class="kpi-icon" style="background:rgba(124,58,237,0.1)">📊</div>
+          <div class="kpi-value" style="color:var(--accent2)">3 Blocks</div>
+          <div class="kpi-label">Block Structure</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Concepts (3h) + PYQs (3h) + Revision (3h)</p>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid var(--accent3)">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.1)">🏆</div>
+          <div class="kpi-value" style="color:var(--accent3)">~63h</div>
+          <div class="kpi-label">Weekly Baseline Target</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace;">// Maximum depth, maximum velocity</p>
+        </div>
+      </div>
+
+      <!-- Month-by-month timeline -->
+      <div class="card" style="margin-bottom:28px; padding:32px 28px;">
+        <div class="chart-title">Month-by-Month Granular Preparation Blueprint</div>
+        <div class="chart-sub" style="margin-bottom:30px;">June 2026 – December 2026 subject mappings & execution blocks</div>
+
+        <div class="timeline-vertical">
+          <!-- Month 1 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">June 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent)">Logic & Mathematical Foundations</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Discrete Mathematics + Digital Logic + Verbal/Quantitative Aptitude basics</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Go through entire Discrete Math modules (Logic, Sets, Relations, Functions, Lattice Theory, Groups, Monoids).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Digital Logic completely (Combinational + Sequential Circuits like Flip-Flops and Counters).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete 100% of PYQs on GATE Overflow for these modules. Practice 5 Verbal Aptitude questions.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 2 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">July 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent2)">Code Architecture & Linear Spaces</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Programming & Data Structures + Linear Algebra + Calculus</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Non-Linear Data Structures (Trees, AVL trees, Binary Heaps, Graphs) via GO Classes.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Linear Algebra (including LU Decomposition) and Calculus (Limits, Continuity, Differentiability, Maxima/Minima, Mean Value Theorem).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Trace complex C programming code pointers and solve structural math problems on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 3 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">August 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--accent4)">Algorithmic Efficiency & Probability</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Algorithms + Probability & Statistics + Discrete Math (Combinatorics & Graphs)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent4)">
+                  <strong style="color:var(--accent4);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Advanced Algorithms (Dynamic Programming, Graph traversals, MST, Shortest Paths).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Discrete Math Graph Theory (Connectivity, Matching, Coloring) and Probability Distributions (Normal, Uniform).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent5)">
+                  <strong style="color:var(--accent5);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Tackle difficult algorithm design problems and distribution-based MSQs on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 4 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">September 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#fb923c">Computation, Automata & Structured Data</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Theory of Computation (TOC) + Database Management Systems (DBMS)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete entire TOC track (Regular/CFL Pumping Lemmas, Turing Machines, Decidability/Undecidability properties).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #f472b6">
+                  <strong style="color:#f472b6;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete entire DBMS track (Normalization, B+ Trees, Transactions, Concurrency Control, Serializability, Locking).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Solve closure property tables and complex nested SQL/Tuple Calculus problems on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 5 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">October 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#60a5fa">Systems Engineering & Language Translation</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Operating Systems (OS) + Compiler Design + Analytical Aptitude</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #60a5fa">
+                  <strong style="color:#60a5fa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Operating Systems (Virtual Memory, Paging, Disk Scheduling, File System structures).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #a78bfa">
+                  <strong style="color:#a78bfa;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Complete Compiler Design (Intermediate Code Generation, Runtime Environments, Data Flow Analysis, Liveness Analysis).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent3)">
+                  <strong style="color:var(--accent3);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Solve multi-process semaphore problems and compiler optimization proofs on GATE Overflow. Spend 30 minutes on Analytical Syllogisms.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 6 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">November 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:#34d399">Hardware Architecture & Deep Networking</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Computer Organization & Architecture (COA) + Computer Networks (CN)</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #fb923c">
+                  <strong style="color:#fb923c;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Concepts (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study COA thoroughly (Pipelining, Cache Hierarchy, Secondary Storage, I/O Interface, Interrupts, DMA mode).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid #34d399">
+                  <strong style="color:#34d399;font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Systems (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Study Computer Networks (Data Link, Routing protocols, TCP/UDP Flow & Congestion Control, Sockets, Application layer DNS/HTTP).</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent5)">
+                  <strong style="color:var(--accent5);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: PYQ Practice (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Solve complex cache missing patterns and TCP window size calculation scripts on GATE Overflow.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Month 7 -->
+          <div class="timeline-step">
+            <div class="timeline-badge">December 2026</div>
+            <div class="timeline-content">
+              <h4 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--text)">Consolidation & Spatial Logic</h4>
+              <p style="color:var(--text3);font-size:12px;margin:4px 0 10px 0;font-family:'DM Mono',monospace;">// Subjects: Full Syllabus Revision + Spatial Aptitude + Topic/Subject Online Tests</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:10px;">
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent)">
+                  <strong style="color:var(--accent);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 1: Review (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Run through your short notes, formulas, and property summaries for 1 entire core subject every 2 days.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent2)">
+                  <strong style="color:var(--accent2);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 2: Testing (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Take 3 multi-subject tests or full-subject tests daily.</span>
+                </div>
+                <div style="background:var(--surface3);padding:12px 14px;border-radius:8px;border-left:2.5px solid var(--accent5)">
+                  <strong style="color:var(--accent5);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;">Block 3: Refinement (3 hrs)</strong>
+                  <span style="font-size:13px;color:var(--text2);">Re-solve the trickiest 5% of questions from the 2025 and 2026 GATE papers to fine-tune your problem-solving approaches.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revision Protocol Card -->
+      <div class="insight-card" style="border-left:3px solid var(--accent5);background:rgba(239,68,68,0.02)">
+        <div class="insight-header">
+          <div class="insight-icon" style="background:rgba(239,68,68,0.1)">🏆</div>
+          <div class="insight-title" style="color:var(--accent5)">January 2027: The Grand Revision & Daily Mock Test Protocol</div>
+        </div>
+        <div style="font-size:14px; line-height:1.6; color:var(--text2);">
+          <p style="margin: 0 0 12px 0;">January is identical in intent across all profiles, demanding strict diagnostic execution daily:</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">1. MOCK SIMULATION (9:30 AM - 12:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Sit down in an isolated room. Lock phone away. Use official virtual calculator on screen. Solve full-length 65-question mock tests to build mental endurance.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent2); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">2. DIAGNOSTIC POST-MORTEM (2:00 - 4:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Analyze every single mistake. Search question IDs on GATE Overflow to identify traps, alternative methods, and conceptual fallacies.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent3); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">3. CONCEPTUAL REPAIR (5:30 - 8:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Open short notes for sub-topics missed (e.g. eigenvalue laws, parsing conflicts). Fix gaps and solve 10 targeted practice problems.</p>
+            </div>
+            <div style="background:var(--surface3); padding:10px 12px; border-radius:6px;">
+              <span style="color:var(--accent4); font-family:'DM Mono',monospace; font-weight:500; font-size:12px; display:block;">4. FORMULA LOG CHECK (8:45 - 9:30 PM)</span>
+              <p style="font-size:12px; margin:4px 0 0 0;">Review your custom Math properties and closure property sheets. Consistent daily review prevents unexpected mental blocks.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1327,6 +2159,25 @@ function makeSubjDiffChart() {
       }
     }
   });
+}
+
+function switchProfile(profileId) {
+  document.querySelectorAll('.profile-content').forEach(content => {
+    content.classList.remove('active');
+  });
+  document.querySelectorAll('.strategy-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  const selectedContent = document.getElementById('prof-' + profileId);
+  if (selectedContent) {
+    selectedContent.classList.add('active');
+  }
+  const activeTab = Array.from(document.querySelectorAll('.strategy-tab')).find(tab => 
+    tab.getAttribute('onclick').includes(profileId)
+  );
+  if (activeTab) {
+    activeTab.classList.add('active');
+  }
 }
 
 // ── SCROLL REVEAL ─────────────────────────────────────
