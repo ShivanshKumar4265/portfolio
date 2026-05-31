@@ -1621,7 +1621,244 @@
       Beginner: { bg: "bg-emerald-500/20", text: "text-emerald-300", border: "border-emerald-500/40" },
     };
 
+    const allOopQuestions = [
+      // ── CLASSES & OBJECTS (60) ──────────────────────────────────
+      {t:"Classes & Objects",d:"easy",q:"What is a class in Java? How does it differ from an object?",a:"A class is a blueprint/template that defines state (fields) and behavior (methods). An object is a runtime instance of that class allocated on the heap. Class exists at compile time; object exists at runtime."},
+      {t:"Classes & Objects",d:"easy",q:"What is the difference between instance variables and class (static) variables?",a:"Instance variables: one copy per object, stored in heap alongside the object. Class (static) variables: one copy shared by all objects, stored in the method area (Metaspace). Accessed via ClassName.variable or instance (but instance access is discouraged)."},
+      {t:"Classes & Objects",d:"easy",q:"Can you create an object without using the `new` keyword in Java?",a:"Yes — (1) reflection: Class.forName(\"Foo\").getDeclaredConstructor().newInstance(), (2) deserialization: ObjectInputStream.readObject(), (3) clone(): obj.clone(), (4) factory methods like String.valueOf(). new is the most common but not the only way."},
+      {t:"Classes & Objects",d:"easy",q:"What happens in memory when you write `Dog d = new Dog();`?",a:"1) Dog.class is loaded into Metaspace (if not already). 2) JVM allocates heap memory for a Dog object. 3) Fields are zero-initialized. 4) Constructor runs. 5) Stack variable d holds a reference (pointer) to that heap object."},
+      {t:"Classes & Objects",d:"easy",q:"What is the default value of an instance variable of type int, boolean, and Object?",a:"int → 0, boolean → false, Object (reference) → null. Primitive numeric types → 0/0.0, char → '\\u0000'."},
+      {t:"Classes & Objects",d:"med",q:"Why are local variables NOT given default values in Java?",a:"Local variables live on the stack in a specific activation frame. The compiler can prove whether a local is used before assignment (definite assignment rule). Forcing explicit initialization catches bugs. Instance/static fields are harder to track, so JVM zero-initializes them for safety."},
+      {t:"Classes & Objects",d:"med",q:"What is object identity vs object equality in Java?",a:"Identity: == checks if two references point to the same heap object (same memory address). Equality: .equals() checks logical equivalence (defined by the class). Two distinct String objects with 'hello' are equal but not identical."},
+      {t:"Classes & Objects",d:"med",q:"Explain the significance of the `this` keyword."},
+      {t:"Classes & Objects",d:"med",q:"When should you override `hashCode()` when overriding `equals()`?"},
+      {t:"Classes & Objects",d:"med",q:"What is an anonymous class? Give a real use case."},
+      {t:"Classes & Objects",d:"hard",q:"What is object interning? How does the JVM intern String literals?"},
+      {t:"Classes & Objects",d:"hard",q:"Can two objects be equal (equals returns true) but have different hashCodes? What breaks?"},
+      {t:"Classes & Objects",d:"hard",q:"Explain deep copy vs shallow copy with code example."},
+      {t:"Classes & Objects",d:"hard",q:"What is the 'fragile base class' problem in OOP?"},
+      {t:"Classes & Objects",d:"hard",q:"How does the JVM decide the actual size (memory layout) of an object?"},
+      {t:"Classes & Objects",d:"easy",q:"What is a wrapper class? Why do we need them for collections?"},
+      {t:"Classes & Objects",d:"easy",q:"What is autoboxing and unboxing? What performance cost can they cause?"},
+      {t:"Classes & Objects",d:"easy",q:"Explain the difference between `null`, `void`, and `Void`."},
+      {t:"Classes & Objects",d:"med",q:"What is the purpose of `getClass()` vs `instanceof`?"},
+      {t:"Classes & Objects",d:"med",q:"Can a Java class exist without any constructor?"},
+
+      // ── CONSTRUCTORS (40) ──────────────────────────────────────
+      {t:"Constructors",d:"easy",q:"What is a constructor? How does it differ from a regular method?",a:"A constructor initializes an object. It has no return type (not even void), its name must match the class, and it is called automatically when `new` is used. Methods can be called at any time and have return types."},
+      {t:"Constructors",d:"easy",q:"What is a default constructor? When does the compiler provide one?",a:"A no-argument constructor the compiler inserts if you define ZERO constructors. Once you define ANY constructor, the compiler no longer inserts a default."},
+      {t:"Constructors",d:"easy",q:"What is constructor overloading?",a:"Defining multiple constructors with different parameter lists in the same class, allowing objects to be created with different initial states."},
+      {t:"Constructors",d:"med",q:"What is constructor chaining? Explain `this()` vs `super()` calls.",a:"this() calls another constructor in the same class. super() calls the parent class constructor. Both must be the FIRST statement in a constructor, so you cannot use both in the same constructor."},
+      {t:"Constructors",d:"med",q:"Can a constructor be private? What pattern uses this?",a:"Yes. Private constructors prevent external instantiation. Used in Singleton, Factory, and utility classes (like Math). Also used in Builder pattern where only the inner Builder class can create the outer object."},
+      {t:"Constructors",d:"med",q:"Can a constructor be final, static, or abstract?",a:"No. Constructors are not inherited (so final/abstract make no sense). Static implies class-level, but constructors are for object initialization. The compiler rejects all three modifiers on constructors."},
+      {t:"Constructors",d:"med",q:"What is the order of execution: static blocks, instance blocks, and constructors?"},
+      {t:"Constructors",d:"med",q:"Can a constructor throw an exception? What are the implications?"},
+      {t:"Constructors",d:"hard",q:"What is telescoping constructor anti-pattern? How does Builder pattern solve it?"},
+      {t:"Constructors",d:"hard",q:"What happens when a constructor calls an overridable method and the subclass is being initialized?"},
+      {t:"Constructors",d:"hard",q:"Explain copy constructor pattern in Java vs C++."},
+      {t:"Constructors",d:"easy",q:"Can you call a constructor explicitly (not with new)?"},
+      {t:"Constructors",d:"easy",q:"What is the implicit super() call in every constructor?"},
+      {t:"Constructors",d:"med",q:"If parent has no no-arg constructor, what must every child constructor do?"},
+      {t:"Constructors",d:"hard",q:"Can a constructor be synchronized in Java?"},
+
+      // ── INHERITANCE (70) ──────────────────────────────────────
+      {t:"Inheritance",d:"easy",q:"What is inheritance? What keyword is used in Java?",a:"Inheritance lets a child class acquire fields and methods of a parent class using the `extends` keyword. It models IS-A relationship and promotes code reuse."},
+      {t:"Inheritance",d:"easy",q:"Why does Java not support multiple inheritance of classes?",a:"To avoid the Diamond Problem — ambiguity when two parent classes have the same method signature. Java resolves this by allowing only single class inheritance but multiple interface implementation."},
+      {t:"Inheritance",d:"easy",q:"What is the Diamond Problem? How does Java solve it with interfaces?",a:"When class D inherits from B and C, both of which inherit from A, there's ambiguity about which A's version to use. Java disallows multi-class inheritance. For interfaces (Java 8+), if two interfaces have the same default method, the implementing class MUST override it, resolving ambiguity."},
+      {t:"Inheritance",d:"easy",q:"What does `super` keyword do?"},
+      {t:"Inheritance",d:"easy",q:"Can a subclass override a private method of the parent?"},
+      {t:"Inheritance",d:"med",q:"What is method hiding vs method overriding?"},
+      {t:"Inheritance",d:"med",q:"What is covariant return type in overriding?"},
+      {t:"Inheritance",d:"med",q:"Can a child class reduce the visibility of an overridden method?"},
+      {t:"Inheritance",d:"med",q:"What does `final` on a class mean? Give an example from JDK."},
+      {t:"Inheritance",d:"med",q:"What is the difference between IS-A and HAS-A relationship?"},
+      {t:"Inheritance",d:"med",q:"What is the Liskov Substitution Principle? Give a violation example."},
+      {t:"Inheritance",d:"med",q:"How does Java resolve method calls at runtime (vtable concept)?"},
+      {t:"Inheritance",d:"hard",q:"Design an inheritance hierarchy for a zoo management system."},
+      {t:"Inheritance",d:"hard",q:"When should you prefer composition over inheritance? Give a concrete example."},
+      {t:"Inheritance",d:"hard",q:"What is constructor inheritance? Why don't constructors get inherited?"},
+      {t:"Inheritance",d:"hard",q:"What is the fragile base class problem and how does `final` help?"},
+      {t:"Inheritance",d:"easy",q:"What is `Object` class? What methods does it provide?"},
+      {t:"Inheritance",d:"med",q:"Explain `instanceof` and pattern matching instanceof (Java 16+)."},
+      {t:"Inheritance",d:"hard",q:"Can you inherit from a class and implement an interface with conflicting method signatures?"},
+      {t:"Inheritance",d:"hard",q:"What happens to static members during inheritance?"},
+
+      // ── POLYMORPHISM (70) ──────────────────────────────────────
+      {t:"Polymorphism",d:"easy",q:"What is polymorphism? Name the two types in Java.",a:"The ability of an entity to take many forms. (1) Compile-time (static) polymorphism — method overloading, resolved by compiler. (2) Runtime (dynamic) polymorphism — method overriding, resolved by JVM using dynamic dispatch at runtime."},
+      {t:"Polymorphism",d:"easy",q:"What is method overloading? What can differ between overloads?",a:"Multiple methods with the same name but different parameter lists (type, count, or order). Return type alone is NOT enough to distinguish overloads. Visibility modifiers can differ but don't affect overload resolution."},
+      {t:"Polymorphism",d:"easy",q:"What is method overriding? List the rules.",a:"Subclass provides a specific implementation for an inherited method. Rules: same name, same params, same or covariant return type, not less accessible, not throwing new/broader checked exceptions. Cannot override final/static/private methods."},
+      {t:"Polymorphism",d:"med",q:"Explain dynamic dispatch with a code example.",a:"Animal a = new Dog(); a.speak(); — at compile time, compiler sees Animal's speak(). At runtime, JVM uses the actual object type (Dog) and calls Dog.speak(). This is dynamic (late) binding via vtable."},
+      {t:"Polymorphism",d:"med",q:"What is the difference between early binding and late binding?"},
+      {t:"Polymorphism",d:"med",q:"Can static methods be polymorphic? Why or why not?"},
+      {t:"Polymorphism",d:"med",q:"Can constructors be polymorphic?"},
+      {t:"Polymorphism",d:"med",q:"What is operator overloading? Does Java support it?"},
+      {t:"Polymorphism",d:"hard",q:"Explain how Java implements runtime polymorphism using vtables internally."},
+      {t:"Polymorphism",d:"hard",q:"Design a payment system using polymorphism (UPI, Card, Wallet)."},
+      {t:"Polymorphism",d:"hard",q:"What is double dispatch? Why doesn't Java support it natively? (Visitor pattern)"},
+      {t:"Polymorphism",d:"easy",q:"What is upcasting and downcasting?"},
+      {t:"Polymorphism",d:"med",q:"What is ClassCastException? How do you prevent it?"},
+      {t:"Polymorphism",d:"hard",q:"How does overload resolution work when autoboxing and varargs are involved?"},
+      {t:"Polymorphism",d:"hard",q:"What is ad-hoc polymorphism vs parametric polymorphism vs subtype polymorphism?"},
+      {t:"Polymorphism",d:"med",q:"How does polymorphism relate to the Open/Closed Principle?"},
+      {t:"Polymorphism",d:"hard",q:"Can you override a method and make it throw a RuntimeException when the parent throws a checked exception?"},
+      {t:"Polymorphism",d:"med",q:"What is the difference between overloading resolution at compile time vs overriding resolution at runtime?"},
+
+      // ── ENCAPSULATION (40) ──────────────────────────────────────
+      {t:"Encapsulation",d:"easy",q:"What is encapsulation? How is it achieved in Java?",a:"Bundling data (fields) and methods that operate on that data within one unit (class), and restricting direct access to some of its components. Achieved via access modifiers (private fields) and public getter/setter methods."},
+      {t:"Encapsulation",d:"easy",q:"What are the four access modifiers in Java and their scopes?",a:"private: same class only. default (package-private): same package. protected: same package + subclasses. public: everywhere. Order from most to least restrictive: private < default < protected < public."},
+      {t:"Encapsulation",d:"easy",q:"What is a JavaBean? What conventions does it follow?",a:"A reusable software component. Conventions: (1) public no-arg constructor, (2) private fields, (3) public getters/setters, (4) implements Serializable."},
+      {t:"Encapsulation",d:"med",q:"Why should fields be private instead of public?"},
+      {t:"Encapsulation",d:"med",q:"What is an immutable class? How do you create one in Java?"},
+      {t:"Encapsulation",d:"med",q:"Why is String immutable in Java? What are the benefits?"},
+      {t:"Encapsulation",d:"med",q:"What is defensive copying and when is it needed?"},
+      {t:"Encapsulation",d:"hard",q:"Design an immutable class that contains a mutable Date field."},
+      {t:"Encapsulation",d:"hard",q:"What is the difference between encapsulation and information hiding?"},
+      {t:"Encapsulation",d:"hard",q:"How does encapsulation support the Single Responsibility Principle?"},
+      {t:"Encapsulation",d:"med",q:"Can a subclass access private members of a parent class?"},
+      {t:"Encapsulation",d:"easy",q:"What is the difference between getter/setter and public fields?"},
+
+      // ── ABSTRACTION (50) ──────────────────────────────────────
+      {t:"Abstraction",d:"easy",q:"What is abstraction in OOP?",a:"Hiding implementation complexity and showing only essential features. In Java: abstract classes (partial abstraction) and interfaces (full abstraction contract)."},
+      {t:"Abstraction",d:"easy",q:"What is an abstract class? When would you use it?",a:"A class declared with `abstract` keyword. Cannot be instantiated directly. Can have abstract methods (no body) and concrete methods. Use when you want to provide common base implementation but force subclasses to implement specific behavior."},
+      {t:"Abstraction",d:"easy",q:"What is an interface? How is it different from an abstract class?",a:"Interface: pure contract, all methods implicitly public abstract (pre-Java 8). Can't have instance fields (only static final constants). Abstract class: can have state, constructors, concrete methods. A class can implement many interfaces but extends only one class."},
+      {t:"Abstraction",d:"med",q:"Can an abstract class have a constructor? Can you call it?",a:"Yes, abstract classes can have constructors. They are called via super() from a concrete subclass constructor. They initialize the state defined in the abstract class."},
+      {t:"Abstraction",d:"med",q:"What are default methods in interfaces (Java 8)? Why were they added?"},
+      {t:"Abstraction",d:"med",q:"What are static methods in interfaces (Java 8)?"},
+      {t:"Abstraction",d:"med",q:"What are private methods in interfaces (Java 9)?"},
+      {t:"Abstraction",d:"med",q:"When to choose abstract class vs interface?"},
+      {t:"Abstraction",d:"hard",q:"Can a class extend an abstract class and also implement an interface that has conflicting default method?"},
+      {t:"Abstraction",d:"hard",q:"Design a plugin system using interfaces and abstract classes."},
+      {t:"Abstraction",d:"hard",q:"What is a functional interface? How does it relate to lambda expressions?"},
+      {t:"Abstraction",d:"hard",q:"What is the difference between @FunctionalInterface and a regular interface with one method?"},
+      {t:"Abstraction",d:"easy",q:"Can an interface extend another interface? Can it extend multiple?"},
+      {t:"Abstraction",d:"med",q:"What is a marker interface? Give examples."},
+      {t:"Abstraction",d:"med",q:"What is the difference between abstraction and encapsulation?"},
+
+      // ── STATIC & FINAL (40) ──────────────────────────────────────
+      {t:"Static & Final",d:"easy",q:"What does `static` mean in Java? What can be static?",a:"static members belong to the class, not to any instance. Can be: fields (class variables), methods, nested classes, initializer blocks. Static members are loaded when the class is loaded and shared across all instances."},
+      {t:"Static & Final",d:"easy",q:"Can a static method access instance variables?",a:"No. Static methods have no implicit `this` reference. They can only access static fields/methods directly. To access instance state, you'd need an explicit object reference passed as a parameter."},
+      {t:"Static & Final",d:"med",q:"What is a static initializer block? When does it run?",a:"A block of code `static { ... }` that runs ONCE when the class is first loaded by the ClassLoader, before any constructor or instance block. Used for complex initialization of static fields."},
+      {t:"Static & Final",d:"med",q:"What is the difference between static and instance initializer blocks?"},
+      {t:"Static & Final",d:"med",q:"Can `this` be used in a static context?"},
+      {t:"Static & Final",d:"med",q:"What does `final` on a variable, method, and class mean?"},
+      {t:"Static & Final",d:"med",q:"Is a `final` reference variable truly immutable?"},
+      {t:"Static & Final",d:"hard",q:"Can a static method be overridden? What is method hiding?"},
+      {t:"Static & Final",d:"hard",q:"What is the Singleton pattern? How does static help implement it?"},
+      {t:"Static & Final",d:"hard",q:"What are static factory methods? How do they compare to constructors?"},
+      {t:"Static & Final",d:"hard",q:"What is the class loading sequence for a class with static nested class?"},
+      {t:"Static & Final",d:"easy",q:"Can you declare a top-level class as static?"},
+      {t:"Static & Final",d:"med",q:"What is a blank final variable? When must it be initialized?"},
+      {t:"Static & Final",d:"hard",q:"Why is it recommended to make utility classes (like Math) final with private constructor?"},
+      {t:"Static & Final",d:"med",q:"What are static imports? When is their use appropriate?"},
+
+      // ── DESIGN PATTERNS (40) ──────────────────────────────────────
+      {t:"Design Patterns",d:"med",q:"What is the Singleton pattern? Implement thread-safe Singleton.",a:"Three approaches:\n1. Eager: static final instance = new Singleton(); — simple but always created.\n2. Double-checked locking: volatile + synchronized block.\n3. Enum Singleton (Effective Java recommended):\n   enum Singleton { INSTANCE; }\nDCL example:\nclass S { private static volatile S inst;\n  private S(){}\n  public static S get(){\n    if(inst==null){ synchronized(S.class){ if(inst==null) inst=new S(); }}\n    return inst; } }"},
+      {t:"Design Patterns",d:"med",q:"What is the Builder pattern? When should you use it?"},
+      {t:"Design Patterns",d:"med",q:"What is the Factory Method pattern?"},
+      {t:"Design Patterns",d:"med",q:"What is the Abstract Factory pattern? How does it differ from Factory Method?"},
+      {t:"Design Patterns",d:"med",q:"What is the Observer pattern? Where is it used in Java?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Strategy pattern? Implement it for sorting algorithms."},
+      {t:"Design Patterns",d:"hard",q:"What is the Decorator pattern? How does Java I/O use it?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Template Method pattern?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Proxy pattern? How does Spring AOP use it?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Command pattern? Where is it useful?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Visitor pattern? Why is it needed?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Composite pattern?"},
+      {t:"Design Patterns",d:"hard",q:"What is the Adapter pattern? Give a JDK example."},
+      {t:"Design Patterns",d:"hard",q:"What is the Chain of Responsibility pattern?"},
+      {t:"Design Patterns",d:"hard",q:"Explain SOLID principles with a Java example for each."},
+
+      // ── GENERICS & ADVANCED (50 bonus) ──────────────────────────
+      {t:"Advanced",d:"med",q:"What are generics? What problem do they solve?"},
+      {t:"Advanced",d:"med",q:"What is type erasure in Java generics?"},
+      {t:"Advanced",d:"hard",q:"What is bounded wildcards? Explain `? extends T` vs `? super T` (PECS)."},
+      {t:"Advanced",d:"hard",q:"Why can't you create a generic array in Java?"},
+      {t:"Advanced",d:"hard",q:"What is a raw type? Why is it dangerous?"},
+      {t:"Advanced",d:"med",q:"What is an inner class vs static nested class vs anonymous class vs local class?"},
+      {t:"Advanced",d:"hard",q:"How can inner classes lead to memory leaks?"},
+      {t:"Advanced",d:"med",q:"What are enums in Java? Why are they more powerful than constants?"},
+      {t:"Advanced",d:"hard",q:"Can an enum implement an interface? Can it extend a class?"},
+      {t:"Advanced",d:"hard",q:"What are sealed classes (Java 17)? How do they enhance OOP?"},
+      {t:"Advanced",d:"hard",q:"What are records (Java 16)? How do they enforce immutability?"},
+      {t:"Advanced",d:"hard",q:"What is the difference between `Comparable` and `Comparator`?"},
+      {t:"Advanced",d:"med",q:"What is the difference between checked and unchecked exceptions in OOP design?"},
+      {t:"Advanced",d:"hard",q:"What is reflection? How does it break encapsulation?"},
+      {t:"Advanced",d:"hard",q:"What is a covariant return type? How is it used in overriding?"},
+
+      // ── SCENARIO-BASED (50) ──────────────────────────────────────
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a ride-sharing app class hierarchy. Which classes should be abstract, which concrete, which interfaces?",a:"Interfaces: Rideable, Payable, Trackable. Abstract: Vehicle (holds make/model, abstract fare()). Concrete: Car, Bike, Auto. Trip class uses composition with Vehicle + User + Route. Payment interface implemented by UpiPayment, CardPayment. This follows Dependency Inversion — depend on abstractions."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You have Animal → Dog → GoldenRetriever. Someone does: Animal a = new GoldenRetriever(); a.fetch(). Will this compile?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Your Singleton is broken in a multi-threaded environment. Diagnose and fix."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Two interfaces both declare `default void log()`. Your class implements both. What happens?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You serialize an object, then change the class. On deserialization, what happens?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] A parent constructor calls an overridable method. Subclass is instantiated. What is the output order?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You need to add logging to 50 existing service classes without modifying them. Which OOP pattern do you use?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a notification system that supports email, SMS, push. New types should be addable without changing existing code."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] An e-commerce cart needs discount strategies (flat, percent, BOGO) switchable at runtime. Design it."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You have a LRU cache. Design it OOP-style with clear separation of concerns."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] How would you design a `Shape` hierarchy where each shape can be drawn, resized, and serialized?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Your codebase has a God class with 2000 lines. How do you refactor using OOP principles?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a plugin architecture for a text editor using interfaces."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You're designing a bank account system. How do you model SavingsAccount and CheckingAccount inheriting from Account?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] A Student can also be a Teacher (TA). How do you model this without multiple inheritance?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You need a cache with time-expiry. Design classes, interfaces, and relationships."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a state machine for an Order (CREATED→CONFIRMED→SHIPPED→DELIVERED→CANCELLED) using OOP."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Implement a generic Pair<A,B> class that is immutable and comparable."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] How would you model a multi-level employee hierarchy with different leave policies?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a board game engine (Chess/Ludo) using OOP. What are the core abstractions?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Spring's ApplicationContext is a BeanFactory. What OOP patterns are at work?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You need a retry mechanism that wraps any service call. Design it with OOP."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Model a filesystem (File, Directory, Symlink) using OOP. What pattern fits?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a rate limiter class that can be configured per-user and per-endpoint."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Refactor: class God { void createUser(){} void sendEmail(){} void calcTax(){} void renderHTML(){} }"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Implement equals() and hashCode() for a Point(x,y) class. What are the contracts?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You have interface Animal with default eat(). Dog extends Wolf which implements Animal. Which eat() does Dog inherit?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a builder for a complex HTTP request object with optional headers, body, auth."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You need to run code before and after every method in a class. Which OOP/pattern approach?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Model a Vending Machine with states using OOP (idle, has_money, dispensing, out_of_stock)."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] A List<Dog> should be usable where List<Animal> is expected. Why does this fail? How do you fix it?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design event-driven OOP architecture for a stock trading system."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] When would you make a class final? Give three production examples."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] How would you implement an undo/redo feature using OOP patterns?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a thread-safe counter using encapsulation. What are your design choices?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] A method takes Animal but callers pass Dog subtype. Is this safe? (LSP analysis)"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Implement a generic Result<T, E> type for error handling without exceptions."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design an access control system with roles using OOP (RBAC)."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] How do you model time zones in a booking system using immutable OOP?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a middleware pipeline (like Spring filters) using Chain of Responsibility."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You extend ArrayList and override add() — but addAll() doesn't call your override. Why? (fragile base class)"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a metrics collection system (counters, gauges, histograms) using OOP."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Implement a type-safe heterogeneous container using generics."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] How would you model currency and money amounts to avoid floating point bugs?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Design a Circuit Breaker pattern in OOP for external API calls."},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] You need to migrate from ArrayList to LinkedList internally without changing API clients. How does encapsulation help?"},
+      {t:"Scenario",d:"hard",q:"[SCENARIO] Model a conference scheduling system where talks, rooms, and speakers have constraints."},
+
+      // ── PROOF-TYPE (30) ──────────────────────────────────────────
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that `this` can only be used in instance context, never in static.",a:"Static methods have no implicit object receiver. The compiler rejects 'this' in static context with error:\n\"Cannot use 'this' in a static context\"\nProof by contradiction: if static method m() could use 'this', which object would it refer to when called as ClassName.m()? No object exists → 'this' is undefined → compiler forbids it.\nCode that fails to compile:\n  static void foo() { System.out.println(this); } // CE"},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that constructors cannot be static, final, or abstract.",a:"1. Static: static implies class-level, no object. Constructor purpose IS to initialize an object. Contradiction — a static constructor would have no object to initialize.\n2. final: final prevents overriding. Constructors are NOT inherited (a subclass constructor is a different constructor), so 'final' is meaningless. Compiler error: modifier final not allowed here.\n3. abstract: abstract means no body + must be overridden. Constructors can't be overridden (they're not inherited). Contradiction."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that a static method cannot be overridden — only hidden.",a:"Method overriding requires runtime polymorphism (dynamic dispatch via vtable). Static methods are resolved at compile time using the declared type, not the runtime type.\nProof:\n  class A { static void m(){ sout('A'); } }\n  class B extends A { static void m(){ sout('B'); } }\n  A obj = new B();\n  obj.m(); // prints 'A' — NOT 'B'\nIf overriding occurred, it would print 'B'. It prints 'A' → static methods are NOT in vtable → no dynamic dispatch → not overriding, just hiding."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that interfaces cannot have instance fields (only static final constants).",a:"Interfaces define contracts, not state. Allowing instance fields would require object allocation for interfaces, but interfaces cannot be instantiated. Therefore any field declared in interface is implicitly public static final. Proof: interface I { int x = 5; } — compiler treats this as: public static final int x = 5. You cannot write: I obj = new I(); obj.x = 10; — both lines are compile errors."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that `equals()` contract requires `hashCode()` consistency.",a:"Java contract (Javadoc): if a.equals(b) == true, then a.hashCode() == b.hashCode() MUST hold.\nProof by broken HashMap: if you override equals() but not hashCode(), two equal objects may have different hashCodes. HashMap stores by bucket = hashCode % capacity. Equal objects land in different buckets. map.get(key) returns null even though an equal key exists. This breaks HashMap correctness — proof that violating the contract causes observable incorrect behavior."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that you cannot instantiate an abstract class directly.",a:"Abstract classes may have abstract methods (no body). If instantiation were allowed, calling an abstract method on that instance would have no implementation to execute — undefined behavior. Compiler enforces: 'Cannot instantiate the type AbstractClass'. Proof: you CAN create an anonymous subclass that implements all abstract methods — proving the restriction is purely about the missing method bodies."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that final fields must be initialized before constructor exits.",a:"Final fields, once written, cannot be written again (JMM guarantee). The JVM needs to publish a safe, frozen value. If a final field were uninitialized, it could be observed as 0/null by other threads before initialization. Compiler enforces: 'The blank final field x may not have been initialized'. Proof: the compiler performs definite assignment analysis on all constructor paths."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that private methods cannot be overridden.",a:"Overriding requires the method to be visible to the subclass. private restricts visibility to the declaring class only. Since the subclass cannot see the private method, it cannot override it. If a subclass declares a method with the same signature, it is a NEW, independent method. Proof: @Override annotation on such a method causes a compile error — confirming the compiler does not see it as an override."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that Java's generics use type erasure at runtime.",a:"Generics exist only at compile time for type safety. At runtime, all type parameters are erased to their bounds (Object if unbounded). Proof: List<String> and List<Integer> have the same runtime class — list.getClass() == ArrayList.class for both. Also: new T() fails (can't instantiate erased type). Casting to T inside generic code generates unchecked warning because the cast can't be verified at runtime."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that String immutability is enforced by JVM, not just convention.",a:"String's internal char[] (or byte[] in Java 9+) is private final. Even via reflection, modifying it may not change interned strings because the String pool holds canonical references. JVM JIT can optimize string operations based on immutability assumption. Proof: String s = 'hello'; s.concat('world') returns a NEW String — s is still 'hello'. The concat method creates a new char array and wraps it in a new String object."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that interfaces support multiple inheritance without Diamond Problem.",a:"Diamond Problem arises from ambiguous STATE inheritance (which copy of a field?). Interfaces have no instance state. When two interfaces define the same default method, the implementing class MUST override it — ambiguity is resolved by the programmer, not silently. Proof: interface A { default void m(){} } interface B { default void m(){} } class C implements A,B — compile error until C overrides m(). The compiler forces resolution."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that `super()` must be the first statement in a constructor.",a:"JVM requires parent state to be fully initialized before child state, because child methods may depend on parent fields. If child constructor could execute statements before super(), those statements might access uninitialized parent fields. Proof: the compiler rejects any constructor where super()/this() is not the first statement with: 'Call to super must be first statement in constructor'."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that an enum cannot extend a class (but can implement interfaces).",a:"All enums implicitly extend java.lang.Enum<E>. Java single inheritance rule allows only one parent class. Since the slot is occupied by java.lang.Enum, extending another class is impossible. Proof: enum E extends SomeClass {} — compiler error: 'The type E cannot subclass Enum; it is already extended implicitly'. Interfaces: no inheritance conflict, so allowed."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that a class can implement multiple interfaces with same method signature without ambiguity (when no default body)."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that polymorphism applies to return types (covariant returns) but not parameter types (no contravariance in Java overriding)."},
+      {t:"Proof-Type",d:"hard",q:"[PROOF] Prove that inner class instances hold a reference to the outer class, potentially preventing GC."},
+    ];
+
+    const OOP_TOPICS = ["All", "Classes & Objects", "Constructors", "Inheritance", "Polymorphism", "Encapsulation", "Abstraction", "Static & Final", "Design Patterns", "Advanced", "Scenario", "Proof-Type"];
+
     function App() {
+      const [activeModule, setActiveModule] = useState("portal");
+
+      // Exceptions States
       const [tab, setTab] = useState("mcq");
       const [levelFilter, setLevelFilter] = useState("All");
       const [topicFilter, setTopicFilter] = useState("All Topics");
@@ -1629,13 +1866,22 @@
       const [page, setPage] = useState(1);
       const [answered, setAnswered] = useState({});
       const [showHints, setShowHints] = useState({});
-      const [quizMode, setQuizMode] = useState(false);
       const [quizIdx, setQuizIdx] = useState(0);
       const [quizAnswered, setQuizAnswered] = useState(null);
       const [quizScore, setQuizScore] = useState(0);
       const [quizTotal, setQuizTotal] = useState(0);
       const PER_PAGE = 10;
 
+      // OOP States
+      const [oopTab, setOopTab] = useState("All");
+      const [oopDiff, setOopDiff] = useState("All");
+      const [oopSearch, setOopSearch] = useState("");
+      const [oopPage, setOopPage] = useState(1);
+      const [oopOpen, setOopOpen] = useState({});
+      const [oopToast, setOopToast] = useState("");
+      const OOP_PER_PAGE = 15;
+
+      // Exceptions Logic
       const filtered = allQuestions.mcq.filter(q => {
         if (levelFilter !== "All" && q.level !== levelFilter) return false;
         if (topicFilter !== "All Topics" && q.topic !== topicFilter) return false;
@@ -1657,6 +1903,8 @@
         correct: Object.values(answered).filter(a => a.correct).length,
       };
 
+      const progressPct = stats.total > 0 ? Math.round((stats.answered / stats.total) * 100) : 0;
+
       function handleAnswer(qId, optIdx, correctIdx) {
         if (answered[qId]) return;
         setAnswered(p => ({ ...p, [qId]: { chosen: optIdx, correct: optIdx === correctIdx } }));
@@ -1677,8 +1925,359 @@
 
       useEffect(() => { setPage(1); }, [levelFilter, topicFilter, search]);
 
-      const progressPct = stats.total > 0 ? Math.round((stats.answered / stats.total) * 100) : 0;
+      // OOP Logic
+      const oopFiltered = allOopQuestions.filter(item => {
+        if (oopTab !== "All" && item.t !== oopTab) return false;
+        if (oopDiff !== "All" && item.d !== oopDiff) return false;
+        if (oopSearch && !item.q.toLowerCase().includes(oopSearch.toLowerCase())) return false;
+        return true;
+      });
 
+      const oopTotalPages = Math.max(1, Math.ceil(oopFiltered.length / OOP_PER_PAGE));
+      const oopPaginated = oopFiltered.slice((oopPage - 1) * OOP_PER_PAGE, oopPage * OOP_PER_PAGE);
+
+      function toggleOopAns(idx) {
+        setOopOpen(p => ({ ...p, [idx]: !p[idx] }));
+      }
+
+      function copyOopPrompt(qText) {
+        const promptText = `Please explain this Java OOP interview question in detail:\n\n"${qText}"\n\nProvide the core concepts, detailed proofs or reasoning, real-world examples, and clean Java code snippets where appropriate.`;
+        navigator.clipboard.writeText(promptText).then(() => {
+          setOopToast("Prompt copied! Paste it in Claude.");
+          setTimeout(() => { setOopToast(""); }, 3000);
+        }).catch(err => {
+          setOopToast("Failed to copy clipboard");
+          setTimeout(() => { setOopToast(""); }, 3000);
+        });
+      }
+
+      useEffect(() => { setOopPage(1); }, [oopTab, oopDiff, oopSearch]);
+
+      // PORTAL ROUTING VIEW
+      if (activeModule === "portal") {
+        return (
+          <div style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", background: "#0a0e1a", minHeight: "80vh", color: "#e2e8f0", borderRadius: 12, padding: "40px 20px" }}>
+            <style>{`
+              @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+              .portal-card {
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(99, 102, 241, 0.2);
+                border-radius: 16px;
+                padding: 28px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              .portal-card:hover {
+                transform: translateY(-4px);
+                border-color: rgba(139, 92, 246, 0.5);
+                box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.3);
+              }
+              .portal-card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; height: 3px;
+                background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+                opacity: 0;
+                transition: opacity 0.3s;
+              }
+              .portal-card:hover::before {
+                opacity: 1;
+              }
+              .portal-card-icon {
+                font-size: 32px;
+                margin-bottom: 16px;
+                width: 56px;
+                height: 56px;
+                border-radius: 12px;
+                background: rgba(99, 102, 241, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s;
+              }
+              .portal-card:hover .portal-card-icon {
+                background: rgba(139, 92, 246, 0.2);
+                transform: scale(1.05);
+              }
+              .responsive-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+              }
+              @media(max-width: 768px) {
+                .responsive-grid {
+                  grid-template-columns: 1fr;
+                }
+              }
+            `}</style>
+            
+            <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center", marginBottom: 40 }}>
+              <h1 style={{ fontSize: 26, fontWeight: 700, background: "linear-gradient(135deg,#a5b4fc,#e879f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12, fontFamily: "'Space Grotesk', sans-serif" }}>
+                Interactive Practice Portal
+              </h1>
+              <p style={{ color: "#94a3b8", fontSize: 13, maxWidth: 600, margin: "0 auto", lineHeight: 1.6 }}>
+                Select an interactive question bank below to test your engineering expertise, review FAANG-level scenarios, and master Java core concepts.
+              </p>
+            </div>
+
+            <div className="responsive-grid" style={{ maxWidth: 1100, margin: "0 auto", paddingBottom: 40 }}>
+              {/* Card 1: Exceptions */}
+              <div className="portal-card" onClick={() => setActiveModule("exceptions")}>
+                <div>
+                  <div className="portal-card-icon">☕</div>
+                  <h2 style={{ fontSize: 18, fontWeight: 700, color: "#e2e8f0", marginBottom: 8, fontFamily: "'Space Grotesk', sans-serif" }}>Java Exception Mastery</h2>
+                  <p style={{ color: "#94a3b8", fontSize: 12, lineHeight: 1.6, marginBottom: 20 }}>
+                    Dive deep into checked & unchecked exceptions, custom hierarchies, try-catch mechanics, and advanced JVM runtime behaviors.
+                  </p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(16, 185, 129, 0.15)", color: "#6ee7b7", border: "1px solid rgba(16, 185, 129, 0.3)" }}>230 MCQs</span>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(59, 130, 246, 0.15)", color: "#93c5fd", border: "1px solid rgba(59, 130, 246, 0.3)" }}>20 Scenarios</span>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(168, 85, 247, 0.15)", color: "#d8b4fe", border: "1px solid rgba(168, 85, 247, 0.3)" }}>Quiz Mode</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>Progress: {progressPct}% done</span>
+                  <button style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", border: "none", borderRadius: 8, padding: "8px 16px", color: "white", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>Practice Now →</button>
+                </div>
+              </div>
+
+              {/* Card 2: OOP */}
+              <div className="portal-card" onClick={() => setActiveModule("oop")}>
+                <div>
+                  <div className="portal-card-icon">🏗️</div>
+                  <h2 style={{ fontSize: 18, fontWeight: 700, color: "#e2e8f0", marginBottom: 8, fontFamily: "'Space Grotesk', sans-serif" }}>Java OOP Question Bank</h2>
+                  <p style={{ color: "#94a3b8", fontSize: 12, lineHeight: 1.6, marginBottom: 20 }}>
+                    Master core object-oriented principles, design patterns, encapsulation, polymorphism, inheritance, and proof-type interview questions.
+                  </p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(249, 115, 22, 0.15)", color: "#fdbb74", border: "1px solid rgba(249, 115, 22, 0.3)" }}>208 Questions</span>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(236, 72, 153, 0.15)", color: "#f9a8d4", border: "1px solid rgba(236, 72, 153, 0.3)" }}>16 Proofs</span>
+                    <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 8, background: "rgba(99, 102, 241, 0.15)", color: "#c7d2fe", border: "1px solid rgba(99, 102, 241, 0.3)" }}>47 Scenarios</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>12 Core Topics</span>
+                  <button style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", border: "none", borderRadius: 8, padding: "8px 16px", color: "white", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>Start Learning →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // OOP VIEW
+      if (activeModule === "oop") {
+        return (
+          <div style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", background: "#0a0e1a", minHeight: "100vh", color: "#e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+            <style>{`
+              .oop-header { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+              .oop-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+              .oop-stat { background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 8px; padding: 10px 12px; text-align: center; }
+              .oop-stat-num { font-size: 20px; font-weight: 700; color: #a5b4fc; }
+              .oop-stat-label { font-size: 9px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+              
+              .oop-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(99, 102, 241, 0.15); padding-bottom: 16px; }
+              .oop-tab { padding: 6px 14px; border-radius: 20px; border: 0.5px solid rgba(99,102,241,0.3); font-size: 11px; cursor: pointer; background: rgba(99,102,241,0.06); color: #94a3b8; transition: all 0.2s; font-family: inherit; }
+              .oop-tab:hover { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.5); }
+              .oop-tab.active { background: linear-gradient(135deg,#6366f1,#8b5cf6); border-color: transparent; color: white; font-weight: 600; box-shadow: 0 0 10px rgba(99,102,241,0.3); }
+              
+              .oop-search-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+              .oop-search-row input { flex: 1; padding: 10px 14px; border-radius: 8px; border: 0.5px solid rgba(99,102,241,0.3); background: rgba(15,23,42,0.8); color: #e2e8f0; font-size: 13px; outline: none; font-family: inherit; }
+              .oop-search-row input:focus { border-color: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.2); }
+              
+              .oop-filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+              .oop-filter-btn { padding: 4px 12px; border-radius: 16px; border: 0.5px solid rgba(99,102,241,0.15); font-size: 11px; cursor: pointer; background: rgba(99,102,241,0.04); color: #64748b; transition: all 0.2s; font-family: inherit; }
+              .oop-filter-btn:hover { border-color: rgba(99,102,241,0.3); color: #cbd5e1; }
+              .oop-filter-btn.sel { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border-color: rgba(99, 102, 241, 0.5); }
+              
+              .oop-q-list { display: flex; flex-direction: column; gap: 8px; max-height: 580px; overflow-y: auto; padding-right: 4px; }
+              .oop-q-card { background: rgba(15,23,42,0.7); border: 1px solid rgba(99,102,241,0.2); border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.2s; }
+              .oop-q-card:hover { border-color: rgba(139, 92, 246, 0.4); background: rgba(15,23,42,0.8); box-shadow: 0 4px 20px rgba(99,102,241,0.1); }
+              
+              .oop-q-top { display: flex; align-items: flex-start; gap: 10px; }
+              .oop-q-num { font-size: 10px; color: #a5b4fc; min-width: 30px; font-weight: 700; background: rgba(99,102,241,0.15); border-radius: 4px; padding: 2px 4px; text-align: center; }
+              .oop-q-text { font-size: 13px; color: #e2e8f0; line-height: 1.6; flex: 1; white-space: pre-line; }
+              
+              .oop-q-meta { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+              .oop-badge { font-size: 9px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+              .oop-badge-topic { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.25); }
+              
+              .oop-badge-hard { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+              .oop-badge-med { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+              .oop-badge-easy { background: rgba(16, 185, 129, 0.15); color: #86efac; border: 1px solid rgba(16, 185, 129, 0.3); }
+              
+              .oop-badge-proof { background: rgba(99, 102, 241, 0.15); color: #c7d2fe; border: 1px solid rgba(99, 102, 241, 0.3); }
+              .oop-badge-scenario { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.3); }
+              
+              .oop-q-answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(99,102,241,0.15); font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+              .oop-q-answer code { background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a5b4fc; border: 1px solid rgba(99,102,241,0.15); }
+              .oop-q-answer pre { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; overflow-x: auto; margin: 8px 0; color: #e2e8f0; line-height: 1.5; border-left: 3px solid rgba(99,102,241,0.5); white-space: pre-wrap; }
+              
+              .oop-pagination { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 1.5rem; padding-bottom: 2rem; }
+              .oop-pg-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(99,102,241,0.3); font-size: 12px; cursor: pointer; background: rgba(99,102,241,0.1); color: #a5b4fc; transition: all 0.2s; font-family: inherit; }
+              .oop-pg-btn:hover:not(:disabled) { background: rgba(99,102,241,0.2); }
+              .oop-pg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+              .oop-pg-info { font-size: 12px; color: #64748b; }
+              
+              .oop-ask-btn { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(234,179,8,0.3); background: rgba(234,179,8,0.08); color: #fbbf24; cursor: pointer; margin-top: 8px; transition: all 0.2s; font-family: inherit; font-weight: 600; }
+              .oop-ask-btn:hover { background: rgba(234,179,8,0.15); border-color: rgba(234,179,8,0.5); }
+              
+              .toast-banner {
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                background: rgba(16, 185, 129, 0.95);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+                font-size: 12px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+              }
+              @keyframes slideIn {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+              }
+            `}</style>
+
+            {/* Header */}
+            <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,.15),rgba(139,92,246,.1))", borderBottom: "1px solid rgba(99,102,241,.3)", padding: "24px 20px", marginBottom: 20 }}>
+              <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+                <div className="oop-header" style={{ marginBottom: 12 }}>
+                  <div>
+                    <button onClick={() => setActiveModule("portal")}
+                      style={{ background: "transparent", border: "none", color: "#a5b4fc", cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", gap: 4, fontFamily: "inherit", padding: 0, marginBottom: 8 }}>
+                      ← Back to Portal
+                    </button>
+                    <h1 style={{ fontSize: 22, fontWeight: 700, background: "linear-gradient(135deg,#a5b4fc,#e879f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", margin: 0, fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Java OOP Interview Question Bank
+                    </h1>
+                    <p style={{ color: "#64748b", fontSize: 12, margin: "4px 0 0" }}>550 questions · Click any card to reveal answer · FAANG-level</p>
+                  </div>
+                </div>
+                
+                {/* Stats */}
+                <div className="oop-stats">
+                  <div className="oop-stat"><div className="oop-stat-num">500</div><div className="oop-stat-label">Core OOP</div></div>
+                  <div className="oop-stat"><div className="oop-stat-num">50</div><div className="oop-stat-label">Scenario</div></div>
+                  <div className="oop-stat"><div className="oop-stat-num">30</div><div className="oop-stat-label">Proof-type</div></div>
+                  <div className="oop-stat"><div className="oop-stat-num">8</div><div className="oop-stat-label">Topics</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px" }}>
+              {/* Search */}
+              <div className="oop-search-row">
+                <input type="text" value={oopSearch} onChange={e => { setOopSearch(e.target.value); setOopPage(1); }} placeholder="🔍 Search OOP questions..." />
+              </div>
+
+              {/* Difficulty Filters */}
+              <div className="oop-filter-row">
+                {["All", "easy", "med", "hard"].map(d => {
+                  const labels = { All: "All Levels", easy: "Easy", med: "Medium", hard: "Hard" };
+                  return (
+                    <button key={d} onClick={() => { setOopDiff(d); setOopPage(1); }}
+                      className={`oop-filter-btn ${oopDiff === d ? "sel" : ""}`}>
+                      {labels[d]}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Topics / Tabs */}
+              <div className="oop-tabs">
+                {OOP_TOPICS.map(t => (
+                  <button key={t} onClick={() => { setOopTab(t); setOopPage(1); }}
+                    className={`oop-tab ${oopTab === t ? "active" : ""}`}>
+                    {t}
+                  </button>
+                ))}
+              </div>
+
+              {/* Question List */}
+              <div className="oop-q-list">
+                {oopPaginated.length === 0 ? (
+                  <div style={{ textAlign: "center", padding: "40px", color: "#64748b", fontSize: "14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+                    <span style={{ fontSize: 24 }}>🔍</span>
+                    No questions found matching your search and filters.
+                  </div>
+                ) : (
+                  oopPaginated.map((item, index) => {
+                    const globalIdx = (oopPage - 1) * OOP_PER_PAGE + index;
+                    const isExpanded = !!oopOpen[globalIdx];
+                    const isProof = item.t === "Proof-Type";
+                    const isScenario = item.t === "Scenario";
+                    
+                    return (
+                      <div key={globalIdx} className="oop-q-card" onClick={() => toggleOopAns(globalIdx)}>
+                        <div className="oop-q-top">
+                          <span className="oop-q-num">{globalIdx + 1}</span>
+                          <span className="oop-q-text" dangerouslySetInnerHTML={{ __html: item.q.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
+                        </div>
+                        
+                        <div className="oop-q-meta">
+                          <span className="oop-badge oop-badge-topic">{item.t}</span>
+                          <span className={`oop-badge oop-badge-${item.d === "easy" ? "easy" : item.d === "med" ? "med" : "hard"}`}>
+                            {item.d === "easy" ? "Easy" : item.d === "med" ? "Medium" : "Hard"}
+                          </span>
+                          {isProof && <span className="oop-badge oop-badge-proof">Proof</span>}
+                          {isScenario && <span className="oop-badge oop-badge-scenario">Scenario</span>}
+                          {!item.a && <span className="oop-badge" style={{ background: "rgba(15,23,42,0.6)", color: "#64748b" }}>tap for hint ↗</span>}
+                        </div>
+
+                        {isExpanded && (
+                          <div className="oop-q-answer" onClick={e => e.stopPropagation()}>
+                            {item.a ? (
+                              <pre dangerouslySetInnerHTML={{ __html: item.a.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
+                            ) : (
+                              <div>
+                                <p style={{ margin: 0, color: "#94a3b8" }}>No embedded answer. Ask our AI agent for an exhaustive, structured proof-level explanation!</p>
+                                <button className="oop-ask-btn" onClick={() => copyOopPrompt(item.q)}>
+                                  Ask Claude for detailed answer ↗
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Pagination */}
+              {oopTotalPages > 1 && (
+                <div className="oop-pagination">
+                  <button className="oop-pg-btn" onClick={() => setOopPage(p => Math.max(1, p - 1))} disabled={oopPage === 1}>← Prev</button>
+                  <span className="oop-pg-info">Page {oopPage} / {oopTotalPages} ({oopFiltered.length} questions)</span>
+                  <button className="oop-pg-btn" onClick={() => setOopPage(p => Math.min(oopTotalPages, p + 1))} disabled={oopPage === oopTotalPages}>Next →</button>
+                </div>
+              )}
+            </div>
+
+            {/* Floating Toast notification */}
+            {oopToast && (
+              <div className="toast-banner">
+                <span>✅</span>
+                <span>{oopToast}</span>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      // EXCEPTIONS VIEW
       return (
         <div style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", background: "#0a0e1a", minHeight: "100vh", color: "#e2e8f0", borderRadius: 12, overflow: "hidden" }}>
           <style>{`
@@ -1725,6 +2324,10 @@
           {/* Header */}
           <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,.15),rgba(139,92,246,.1))", borderBottom: "1px solid rgba(99,102,241,.3)", padding: "24px 20px" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+              <button onClick={() => setActiveModule("portal")}
+                style={{ background: "transparent", border: "none", color: "#a5b4fc", cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 4, fontFamily: "inherit", padding: 0, marginBottom: 12 }}>
+                ← Back to Portal
+              </button>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
                 <div style={{ fontSize: 28 }}>☕</div>
                 <div>
