@@ -1228,15 +1228,15 @@
   <!--
     - React, ReactDOM & Babel CDN
   -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin defer></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin defer></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" defer></script>
 
   <!--
     - Interactive Java Exception Mastery Component
   -->
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+  <script>
+
 
     const allQuestions = {
       mcq: [
@@ -1854,6 +1854,10 @@
     ];
 
     const OOP_TOPICS = ["All", "Classes & Objects", "Constructors", "Inheritance", "Polymorphism", "Encapsulation", "Abstraction", "Static & Final", "Design Patterns", "Advanced", "Scenario", "Proof-Type"];
+  </script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
     function App() {
       const [activeModule, setActiveModule] = useState("portal");
