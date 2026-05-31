@@ -1116,6 +1116,19 @@
 
       </article>
 
+      <!--
+        - #PRACTICE ("praction")
+      -->
+      <article class="praction" data-page="praction" id="praction">
+        <header>
+          <h2 class="h2 article-title">Practice</h2>
+        </header>
+
+        <section class="practice-content">
+          <div id="praction-root"></div>
+        </section>
+      </article>
+
 
 
 
@@ -1190,6 +1203,10 @@
         </li>
 
         <li class="navbar-item">
+          <a href="#praction" class="navbar-link" data-nav-link>Practice</a>
+        </li>
+
+        <li class="navbar-item">
           <a href="https://docs.google.com/document/d/1X_Q1Q70l5MmsqXUyUXVWrknjRLyyV7moK29830jSLek/edit?usp=sharing"
             class="navbar-link" target="_blank" rel="noopener noreferrer">Resume &#x2197;</a>
         </li>
@@ -1204,6 +1221,763 @@
 
 
 
+
+
+
+
+  <!--
+    - React, ReactDOM & Babel CDN
+  -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!--
+    - Interactive Java Exception Mastery Component
+  -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const allQuestions = {
+      mcq: [
+        // ─── BASICS (1–30) ───────────────────────────────────────────
+        { id: 1, level: "Basics", topic: "Definition", q: "What is an exception in Java?", options: ["A compile-time error", "An event that disrupts normal program flow at runtime", "A syntax mistake", "A warning message"], ans: 1 },
+        { id: 2, level: "Basics", topic: "Hierarchy", q: "Which class is the root of Java's exception hierarchy?", options: ["Exception", "Error", "Throwable", "RuntimeException"], ans: 2 },
+        { id: 3, level: "Basics", topic: "Hierarchy", q: "Which of the following is NOT a direct subclass of Throwable?", options: ["Error", "Exception", "RuntimeException", "Both A and B are direct subclasses"], ans: 2 },
+        { id: 4, level: "Basics", topic: "Types", q: "Which type of exception must be declared or handled?", options: ["Unchecked", "Error", "Checked", "Runtime"], ans: 2 },
+        { id: 5, level: "Basics", topic: "Keywords", q: "Which keyword is used to manually throw an exception?", options: ["throws", "throw", "catch", "finally"], ans: 1 },
+        { id: 6, level: "Basics", topic: "Keywords", q: "Which keyword declares that a method may throw an exception?", options: ["throw", "throws", "try", "catch"], ans: 1 },
+        { id: 7, level: "Basics", topic: "Try-Catch", q: "What happens if no exception is thrown in a try block?", options: ["catch block executes", "finally block is skipped", "catch block is skipped, finally runs", "Program terminates"], ans: 2 },
+        { id: 8, level: "Basics", topic: "Finally", q: "When does the finally block NOT execute?", options: ["When an exception is thrown", "When System.exit() is called", "When catch block runs", "When return is in try block"], ans: 1 },
+        { id: 9, level: "Basics", topic: "Types", q: "NullPointerException is a:", options: ["Checked exception", "Error", "Unchecked exception", "Compile-time exception"], ans: 2 },
+        { id: 10, level: "Basics", topic: "Types", q: "IOException is a:", options: ["Unchecked exception", "Checked exception", "Error", "RuntimeException"], ans: 1 },
+        { id: 11, level: "Basics", topic: "Hierarchy", q: "Which exception is thrown when you divide an integer by zero?", options: ["NullPointerException", "IllegalArgumentException", "ArithmeticException", "NumberFormatException"], ans: 2 },
+        { id: 12, level: "Basics", topic: "Hierarchy", q: "What exception is thrown for invalid array index access?", options: ["ArrayException", "IndexOutOfBoundsException", "ArrayIndexOutOfBoundsException", "Both B and C"], ans: 3 },
+        { id: 13, level: "Basics", topic: "Try-Catch", q: "Can a try block exist without a catch block?", options: ["No, always need catch", "Yes, if there is a finally block", "Yes, always", "No, never"], ans: 1 },
+        { id: 14, level: "Basics", topic: "Multi-catch", q: "How many catch blocks can follow a single try block?", options: ["Only one", "Maximum two", "Unlimited", "Maximum five"], ans: 2 },
+        { id: 15, level: "Basics", topic: "Hierarchy", q: "StackOverflowError is a subclass of:", options: ["Exception", "RuntimeException", "Error", "Throwable directly"], ans: 2 },
+        { id: 16, level: "Basics", topic: "Keywords", q: "What does e.getMessage() return?", options: ["Stack trace", "Exception class name", "Detail message of the exception", "Cause of exception"], ans: 2 },
+        { id: 17, level: "Basics", topic: "Keywords", q: "Which method prints the full stack trace to standard error?", options: ["e.getMessage()", "e.getCause()", "e.printStackTrace()", "e.toString()"], ans: 2 },
+        { id: 18, level: "Basics", topic: "Types", q: "OutOfMemoryError is an example of:", options: ["Checked exception", "Unchecked exception", "Error", "RuntimeException"], ans: 2 },
+        { id: 19, level: "Basics", topic: "Hierarchy", q: "ClassCastException belongs to which category?", options: ["Checked exception", "Error", "Unchecked (RuntimeException)", "IOException"], ans: 2 },
+        { id: 20, level: "Basics", topic: "Keywords", q: "Can we catch an Error in Java?", options: ["No, it's impossible", "Yes, but it's generally not recommended", "Only in finally block", "Only using throws keyword"], ans: 1 },
+        { id: 21, level: "Basics", topic: "Try-Catch", q: "What is the output if exception is caught: try{int x=1/0;}catch(ArithmeticException e){System.out.println(\"caught\");}?", options: ["Runtime error", "caught", "Compilation error", "Nothing"], ans: 1 },
+        { id: 22, level: "Basics", topic: "Hierarchy", q: "NumberFormatException is a subclass of:", options: ["IOException", "ArithmeticException", "IllegalArgumentException", "RuntimeException directly"], ans: 2 },
+        { id: 23, level: "Basics", topic: "Definition", q: "Which of the following is a checked exception?", options: ["NullPointerException", "FileNotFoundException", "ArrayIndexOutOfBoundsException", "ClassCastException"], ans: 1 },
+        { id: 24, level: "Basics", topic: "Finally", q: "What is the primary purpose of the finally block?", options: ["To handle exceptions", "To execute cleanup code always", "To re-throw exceptions", "To skip exceptions"], ans: 1 },
+        { id: 25, level: "Basics", topic: "Hierarchy", q: "StringIndexOutOfBoundsException is a subclass of:", options: ["ArrayIndexOutOfBoundsException", "IndexOutOfBoundsException", "IllegalArgumentException", "RuntimeException directly"], ans: 1 },
+        { id: 26, level: "Basics", topic: "Try-Catch", q: "What happens when an exception is not caught?", options: ["Program continues normally", "JVM terminates the program after printing stack trace", "finally block is skipped", "Program pauses"], ans: 1 },
+        { id: 27, level: "Basics", topic: "Hierarchy", q: "Which is NOT a subclass of RuntimeException?", options: ["NullPointerException", "IOException", "ArithmeticException", "ClassCastException"], ans: 1 },
+        { id: 28, level: "Basics", topic: "Definition", q: "Checked exceptions are checked at:", options: ["Runtime", "Compile time", "Link time", "Load time"], ans: 1 },
+        { id: 29, level: "Basics", topic: "Try-Catch", q: "Can we have a try block inside a catch block?", options: ["No", "Yes (nested try-catch)", "Only in Java 8+", "Only with finally"], ans: 1 },
+        { id: 30, level: "Basics", topic: "Hierarchy", q: "IllegalStateException is a subclass of:", options: ["IllegalArgumentException", "RuntimeException", "IOException", "Error"], ans: 1 },
+
+        // ─── INTERMEDIATE (31–80) ─────────────────────────────────────
+        { id: 31, level: "Intermediate", topic: "Custom Exceptions", q: "To create a checked custom exception, extend:", options: ["RuntimeException", "Error", "Exception", "Throwable"], ans: 2 },
+        { id: 32, level: "Intermediate", topic: "Custom Exceptions", q: "To create an unchecked custom exception, extend:", options: ["Exception", "RuntimeException", "Error", "Throwable"], ans: 1 },
+        { id: 33, level: "Intermediate", topic: "Multi-catch", q: "What is the multi-catch syntax introduced in Java 7?", options: ["catch(Ex1 | Ex2 e)", "catch(Ex1, Ex2 e)", "catch(Ex1 + Ex2 e)", "catch(Ex1 & Ex2 e)"], ans: 0 },
+        { id: 34, level: "Intermediate", topic: "Multi-catch", q: "In a multi-catch block, the variable 'e' is effectively:", options: ["mutable", "final", "static", "volatile"], ans: 1 },
+        { id: 35, level: "Intermediate", topic: "Try-with-resources", q: "What interface must a resource implement to be used in try-with-resources?", options: ["Closeable", "AutoCloseable", "Serializable", "AutoCloseable or Closeable"], ans: 3 },
+        { id: 36, level: "Intermediate", topic: "Try-with-resources", q: "In try-with-resources, when is the resource closed?", options: ["Only when exception occurs", "Only in finally block", "Automatically at end of try block", "Only when close() is called manually"], ans: 2 },
+        { id: 37, level: "Intermediate", topic: "Exception Propagation", q: "If a checked exception is not caught, what must the method do?", options: ["Ignore it", "Declare it using throws", "Convert to RuntimeException", "Wrap it in Error"], ans: 1 },
+        { id: 38, level: "Intermediate", topic: "Exception Chaining", q: "Which constructor supports exception chaining?", options: ["Exception(String msg)", "Exception(Throwable cause)", "Exception(String msg, Throwable cause)", "Both B and C"], ans: 3 },
+        { id: 39, level: "Intermediate", topic: "Exception Chaining", q: "Which method retrieves the chained cause of an exception?", options: ["getMessage()", "getStackTrace()", "getCause()", "getSuppressed()"], ans: 2 },
+        { id: 40, level: "Intermediate", topic: "Re-throwing", q: "What is re-throwing an exception?", options: ["Catching and ignoring", "Catching and throwing the same/different exception", "Using throws on method", "Wrapping in finally"], ans: 1 },
+        { id: 41, level: "Intermediate", topic: "Overriding", q: "An overriding method can throw:", options: ["Any new checked exception", "Broader checked exceptions only", "Same or narrower checked exceptions, or none", "Any exception"], ans: 2 },
+        { id: 42, level: "Intermediate", topic: "Overriding", q: "An overriding method can throw unchecked exceptions:", options: ["No restrictions", "Only the same ones", "Cannot throw any", "Fewer than parent"], ans: 0 },
+        { id: 43, level: "Intermediate", topic: "Multi-catch", q: "In multi-catch, can you catch a superclass and subclass together?", options: ["Yes always", "No, it causes compile error", "Only in Java 9+", "Only with | operator"], ans: 1 },
+        { id: 44, level: "Intermediate", topic: "Try-with-resources", q: "Suppressed exceptions in try-with-resources can be retrieved using:", options: ["getCause()", "getMessage()", "getSuppressed()", "getStackTrace()"], ans: 2 },
+        { id: 45, level: "Intermediate", topic: "Nested Try", q: "In nested try-catch, if inner catch doesn't handle it, the exception:", options: ["Is ignored", "Is passed to outer catch", "Crashes JVM", "Goes to finally only"], ans: 1 },
+        { id: 46, level: "Intermediate", topic: "Custom Exceptions", q: "What is a best practice when defining custom exception constructors?", options: ["Define only no-arg constructor", "Provide constructors matching parent Exception constructors", "Only String message constructor", "Static factory only"], ans: 1 },
+        { id: 47, level: "Intermediate", topic: "Exception Propagation", q: "Exception propagation in Java goes:", options: ["Bottom up the call stack", "Top down the call stack", "Sideways across threads", "Randomly"], ans: 0 },
+        { id: 48, level: "Intermediate", topic: "Finally", q: "If both try and finally throw exceptions, which propagates?", options: ["try's exception", "finally's exception", "Both propagate", "Neither"], ans: 1 },
+        { id: 49, level: "Intermediate", topic: "Try-with-resources", q: "Try-with-resources was introduced in Java:", options: ["5", "6", "7", "8"], ans: 2 },
+        { id: 50, level: "Intermediate", topic: "Overriding", q: "If parent method declares 'throws IOException', child can declare:", options: ["throws Exception (broader)", "throws FileNotFoundException (narrower) ✓", "throws SQLException (unrelated checked)", "All of the above"], ans: 1 },
+        { id: 51, level: "Intermediate", topic: "Custom Exceptions", q: "Why should custom exceptions be serializable?", options: ["Better performance", "Can be thrown across network/RMI", "JVM requirement", "Required by compiler"], ans: 1 },
+        { id: 52, level: "Intermediate", topic: "Exception Chaining", q: "initCause() method is used to:", options: ["Initialize a new exception", "Set the cause after construction", "Clear exception cause", "Suppress exceptions"], ans: 1 },
+        { id: 53, level: "Intermediate", topic: "Multi-catch", q: "Which bytecode instruction handles exceptions?", options: ["INVOKE", "ATHROW", "ALOAD", "IRETURN"], ans: 1 },
+        { id: 54, level: "Intermediate", topic: "Try-with-resources", q: "Multiple resources in try-with-resources are closed in:", options: ["Declaration order", "Reverse declaration order", "Alphabetical order", "Random order"], ans: 1 },
+        { id: 55, level: "Intermediate", topic: "Custom Exceptions", q: "What is the serialVersionUID in exception classes used for?", options: ["Performance optimization", "Serialization version control", "Thread safety", "Garbage collection"], ans: 1 },
+        { id: 56, level: "Intermediate", topic: "Re-throwing", q: "In Java 7+, re-throwing a caught exception in a method declared with specific exceptions:", options: ["Requires declaring Throwable", "Allows precise rethrow - only declared exceptions", "Not allowed", "Requires finally block"], ans: 1 },
+        { id: 57, level: "Intermediate", topic: "Exception Propagation", q: "RuntimeExceptions don't need to be:", options: ["Caught or declared in throws", "Handled in finally", "Thrown with throw keyword", "Part of exception hierarchy"], ans: 0 },
+        { id: 58, level: "Intermediate", topic: "Overriding", q: "An interface method throws IOException. Implementing class method can:", options: ["Throw broader exceptions", "Not throw any checked exception or throw narrower", "Must throw IOException exactly", "Throw any checked exception"], ans: 1 },
+        { id: 59, level: "Intermediate", topic: "Custom Exceptions", q: "Best practice: business logic exceptions should be:", options: ["Always checked", "Always unchecked", "Depends on whether caller can recover", "Always extend Error"], ans: 2 },
+        { id: 60, level: "Intermediate", topic: "Multi-catch", q: "Which Java feature allows catching multiple exceptions since Java 7?", options: ["Enhanced for loop", "Multi-catch (catch with |)", "Try-with-resources", "Diamond operator"], ans: 1 },
+        { id: 61, level: "Intermediate", topic: "Finally", q: "Return statement in finally block:", options: ["Is ignored", "Overrides return in try/catch", "Causes compile error", "Only works with void methods"], ans: 1 },
+        { id: 62, level: "Intermediate", topic: "Try-with-resources", q: "Can try-with-resources have a catch block?", options: ["No", "Yes", "Only in Java 9+", "Only for RuntimeExceptions"], ans: 1 },
+        { id: 63, level: "Intermediate", topic: "Exception Chaining", q: "Wrapping a low-level exception into a higher-level one is called:", options: ["Re-throwing", "Exception translation/chaining", "Suppression", "Propagation"], ans: 1 },
+        { id: 64, level: "Intermediate", topic: "Overriding", q: "Constructor of subclass exception should call:", options: ["super() with no args only", "super(message) or super(message, cause) etc.", "this() only", "Nothing special needed"], ans: 1 },
+        { id: 65, level: "Intermediate", topic: "Custom Exceptions", q: "What is the advantage of checked exceptions?", options: ["Faster performance", "Forces API users to handle potential failures", "No advantage over unchecked", "Better memory usage"], ans: 1 },
+        { id: 66, level: "Intermediate", topic: "Exception Propagation", q: "If main() doesn't catch an exception, it's handled by:", options: ["JVM default exception handler (prints stack trace)", "OS", "Compiler", "Another thread"], ans: 0 },
+        { id: 67, level: "Intermediate", topic: "Try-with-resources", q: "Before Java 7, resources were typically cleaned up in:", options: ["catch block", "try block only", "finally block", "Constructor"], ans: 2 },
+        { id: 68, level: "Intermediate", topic: "Re-throwing", q: "What keyword is used to re-throw the same exception object?", options: ["rethrow e", "throw e", "throws e", "re e"], ans: 1 },
+        { id: 69, level: "Intermediate", topic: "Custom Exceptions", q: "A custom exception class should be:", options: ["abstract always", "final always", "Concrete and instantiable", "Inner class always"], ans: 2 },
+        { id: 70, level: "Intermediate", topic: "Nested Try", q: "Nested try-catch is useful for:", options: ["Only performance", "Handling different exceptions at different levels", "Reducing code size", "Avoiding finally"], ans: 1 },
+        { id: 71, level: "Intermediate", topic: "Exception Propagation", q: "Which of the following stops exception propagation?", options: ["throws declaration", "Catching it in a catch block", "finally block", "Re-throwing it"], ans: 1 },
+        { id: 72, level: "Intermediate", topic: "Custom Exceptions", q: "ApplicationException (Spring) is an example of:", options: ["JDK built-in exception", "Custom framework exception hierarchy", "Error subclass", "Multi-catch syntax"], ans: 1 },
+        { id: 73, level: "Intermediate", topic: "Finally", q: "Can finally block modify the return value from try block?", options: ["No", "Yes, by returning a different value", "Only primitives", "Only objects"], ans: 1 },
+        { id: 74, level: "Intermediate", topic: "Try-with-resources", q: "In Java 9, effectively-final variables can be used in try-with-resources:", options: ["False", "True", "Only local variables", "Only static variables"], ans: 1 },
+        { id: 75, level: "Intermediate", topic: "Overriding", q: "Interface default methods and exception handling: default method can throw:", options: ["Only unchecked exceptions", "Any exception", "Only declared checked exceptions", "Nothing"], ans: 2 },
+        { id: 76, level: "Intermediate", topic: "Exception Chaining", q: "Suppressed exceptions are added using:", options: ["getCause()", "addSuppressed(Throwable)", "setSuppressed()", "suppressException()"], ans: 1 },
+        { id: 77, level: "Intermediate", topic: "Custom Exceptions", q: "Exception classes without any additional fields are sometimes called:", options: ["Marker exceptions", "Empty exceptions", "Signal exceptions", "Flag exceptions"], ans: 0 },
+        { id: 78, level: "Intermediate", topic: "Multi-catch", q: "Multi-catch reduces:", options: ["Performance", "Code duplication in catch blocks", "Exception types", "Stack depth"], ans: 1 },
+        { id: 79, level: "Intermediate", topic: "Re-throwing", q: "Wrapping in RuntimeException and re-throwing is called:", options: ["Exception suppression", "Exception translation to unchecked", "Exception chaining", "Exception propagation"], ans: 1 },
+        { id: 80, level: "Intermediate", topic: "Exception Propagation", q: "Thread.UncaughtExceptionHandler is used to:", options: ["Prevent exceptions", "Handle uncaught exceptions in threads", "Create custom exceptions", "Chain exceptions"], ans: 1 },
+
+        // ─── ADVANCED (81–150) ────────────────────────────────────────
+        { id: 81, level: "Advanced", topic: "Concurrency", q: "Which exception is thrown when a thread is interrupted while waiting?", options: ["ThreadException", "InterruptedException", "ConcurrencyException", "WaitException"], ans: 1 },
+        { id: 82, level: "Advanced", topic: "Concurrency", q: "Future.get() wraps exceptions in:", options: ["RuntimeException", "ExecutionException", "ThreadException", "ConcurrentException"], ans: 1 },
+        { id: 83, level: "Advanced", topic: "Concurrency", q: "CompletableFuture exceptions are handled using:", options: ["try-catch only", "exceptionally() or handle()", "Thread.UncaughtExceptionHandler", "finally block"], ans: 1 },
+        { id: 84, level: "Advanced", topic: "JVM Internals", q: "Exception table in bytecode stores:", options: ["Method signatures", "Try-catch ranges and handler PCs", "Local variable info", "Constant pool refs"], ans: 1 },
+        { id: 85, level: "Advanced", topic: "Performance", q: "Why are exceptions expensive in Java?", options: ["They use more memory", "Stack trace capture at creation time", "JVM recompiles code", "They trigger GC always"], ans: 1 },
+        { id: 86, level: "Advanced", topic: "Performance", q: "To avoid stack trace overhead, you can:", options: ["Override fillInStackTrace() to return this", "Use Error instead", "Use multi-catch", "Use finally"], ans: 0 },
+        { id: 87, level: "Advanced", topic: "Streams & Lambdas", q: "Why can't lambda expressions directly throw checked exceptions?", options: ["JVM limitation", "Functional interfaces don't declare checked exceptions", "Lambda scope issue", "Java 8 bug"], ans: 1 },
+        { id: 88, level: "Advanced", topic: "Streams & Lambdas", q: "To handle checked exceptions in streams, common pattern is:", options: ["Wrap in unchecked or use sneaky throws", "Use parallel streams", "Use Optional", "Use CompletableFuture"], ans: 0 },
+        { id: 89, level: "Advanced", topic: "Concurrency", q: "Which class provides a way to set a default uncaught exception handler for all threads?", options: ["Thread.setExceptionHandler()", "ThreadGroup.setUncaughtExceptionHandler()", "Thread.setDefaultUncaughtExceptionHandler()", "ExecutorService.setHandler()"], ans: 2 },
+        { id: 90, level: "Advanced", topic: "JVM Internals", q: "JIT compiler can optimize away exception creation when:", options: ["Exception is always thrown", "Never", "Exception path is rarely taken (uncommon path optimization)", "When using multi-catch"], ans: 2 },
+        { id: 91, level: "Advanced", topic: "Streams & Lambdas", q: "Optional.orElseThrow() is used to:", options: ["Suppress exceptions", "Throw exception if value absent", "Catch exceptions in stream", "Wrap checked exceptions"], ans: 1 },
+        { id: 92, level: "Advanced", topic: "Design Patterns", q: "Which pattern uses exceptions for flow control (anti-pattern)?", options: ["Observer", "Using exceptions as goto statements", "Factory", "Strategy"], ans: 1 },
+        { id: 93, level: "Advanced", topic: "Design Patterns", q: "Result/Either type is an alternative to exceptions for:", options: ["Checked exceptions elimination", "Error handling without exception overhead", "Stack traces", "Multi-threading"], ans: 1 },
+        { id: 94, level: "Advanced", topic: "Concurrency", q: "RejectedExecutionException is thrown when:", options: ["Thread sleeps too long", "Task can't be accepted by executor", "Lock is unavailable", "Thread is interrupted"], ans: 1 },
+        { id: 95, level: "Advanced", topic: "Performance", q: "Pre-allocating exception objects as static fields:", options: ["Improves correctness", "Loses accurate stack trace but may improve performance", "Is best practice always", "Is JVM requirement"], ans: 1 },
+        { id: 96, level: "Advanced", topic: "JVM Internals", q: "athrow bytecode instruction:", options: ["Allocates exception", "Checks exception type", "Throws the exception reference on operand stack", "Clears exception table"], ans: 2 },
+        { id: 97, level: "Advanced", topic: "Streams & Lambdas", q: "Sneaky throws technique uses generics to:", options: ["Avoid exception altogether", "Trick compiler into not requiring checked exception declaration", "Speed up exception handling", "Create custom exceptions"], ans: 1 },
+        { id: 98, level: "Advanced", topic: "Design Patterns", q: "Command pattern with exceptions should:", options: ["Swallow all exceptions", "Propagate or store exception for later inspection", "Use only RuntimeException", "Use Error"], ans: 1 },
+        { id: 99, level: "Advanced", topic: "Concurrency", q: "When using ForkJoinPool, exceptions propagate via:", options: ["Direct throw", "ForkJoinTask.getException()", "Thread.join()", "Future.cancel()"], ans: 1 },
+        { id: 100, level: "Advanced", topic: "Performance", q: "Exception creation vs exception throwing: which is more expensive?", options: ["Throwing", "Creation (stack trace capture)", "Both equally", "Neither"], ans: 1 },
+        { id: 101, level: "Advanced", topic: "JVM Internals", q: "HotSpot JVM can 'de-optimize' methods when exceptions are thrown frequently because:", options: ["Exceptions are always de-optimized", "JIT assumes happy path; exceptions break inlining assumptions", "Stack frames are larger", "GC pauses increase"], ans: 1 },
+        { id: 102, level: "Advanced", topic: "Streams & Lambdas", q: "In reactive programming (RxJava/Project Reactor), errors are:", options: ["Ignored", "Terminal events on the stream", "Converted to null", "Always retried"], ans: 1 },
+        { id: 103, level: "Advanced", topic: "Design Patterns", q: "Exception shielding means:", options: ["Catching all exceptions and ignoring", "Catching implementation exceptions and throwing abstraction-level exceptions", "Using static exception objects", "Using multi-catch only"], ans: 1 },
+        { id: 104, level: "Advanced", topic: "Concurrency", q: "TimeoutException in java.util.concurrent is:", options: ["Unchecked", "Checked", "An Error", "A Warning"], ans: 1 },
+        { id: 105, level: "Advanced", topic: "JVM Internals", q: "Which JVM flag can help analyze exception-related overhead?", options: ["-XX:+PrintExceptions", "-XX:+TraceExceptions", "-XX:+PrintCompilation", "-verbose:exception"], ans: 1 },
+
+        // ─── FAANG LEVEL (106–150) ────────────────────────────────────
+        { id: 106, level: "FAANG", topic: "System Design", q: "In microservices, how should you handle exceptions crossing service boundaries?", options: ["Propagate Java exceptions directly", "Map to HTTP error codes and error DTOs", "Use shared exception classes", "Ignore them"], ans: 1 },
+        { id: 107, level: "FAANG", topic: "System Design", q: "Circuit breaker pattern prevents:", options: ["Exception creation", "Cascading failures by stopping calls to failing service", "Thread deadlocks", "Memory leaks"], ans: 1 },
+        { id: 108, level: "FAANG", topic: "Best Practices", q: "What does 'exception-driven development' anti-pattern mean?", options: ["Testing with exceptions", "Using exceptions for normal control flow", "Developing exception hierarchies first", "Over-catching exceptions"], ans: 1 },
+        { id: 109, level: "FAANG", topic: "Best Practices", q: "Empty catch blocks are problematic because:", options: ["They cause compile errors", "Exceptions are silently swallowed hiding bugs", "They slow down the JVM", "They prevent GC"], ans: 1 },
+        { id: 110, level: "FAANG", topic: "Logging", q: "When logging exceptions, what should always be included?", options: ["Only exception class name", "Full stack trace and context (user ID, request ID, etc.)", "Just the message", "Thread name only"], ans: 1 },
+        { id: 111, level: "FAANG", topic: "System Design", q: "Idempotency in retry logic with exceptions means:", options: ["Retrying infinitely", "Same operation produces same result even if repeated", "Catching all exceptions", "Using circuit breakers only"], ans: 1 },
+        { id: 112, level: "FAANG", topic: "Best Practices", q: "Catch-all (catch Exception e) at application boundary is acceptable for:", options: ["Never", "Logging and returning generic error response", "Swallowing exceptions", "Performance"], ans: 1 },
+        { id: 113, level: "FAANG", topic: "System Design", q: "Structured error responses in REST APIs typically include:", options: ["Java stack trace", "Error code, message, timestamp, traceId", "Exception class name", "HTTP status only"], ans: 1 },
+        { id: 114, level: "FAANG", topic: "Best Practices", q: "Which is the better approach: catch specific or catch general exceptions?", options: ["Always general for safety", "Specific exceptions, narrowest applicable type", "Depends on mood", "Always catch Throwable"], ans: 1 },
+        { id: 115, level: "FAANG", topic: "Logging", q: "MDC (Mapped Diagnostic Context) in logging helps with exceptions by:", options: ["Preventing exceptions", "Correlating logs across a request with context data", "Faster stack trace printing", "Compressing exceptions"], ans: 1 },
+        { id: 116, level: "FAANG", topic: "System Design", q: "Bulkhead pattern in exception handling:", options: ["Catches all exceptions", "Isolates failures so one component doesn't bring down others", "Creates exception hierarchies", "Retries failed operations"], ans: 1 },
+        { id: 117, level: "FAANG", topic: "Best Practices", q: "When should you use checked vs unchecked exceptions according to modern best practices (e.g., Spring)?", options: ["Always checked", "Unchecked for most cases, checked for recoverable API contracts", "Checked only for IO", "Depends on Java version"], ans: 1 },
+        { id: 118, level: "FAANG", topic: "Observability", q: "Exception rate as a metric helps detect:", options: ["Memory leaks only", "Application degradation and anomalies proactively", "CPU spikes", "Thread count"], ans: 1 },
+        { id: 119, level: "FAANG", topic: "Best Practices", q: "Exception handling in constructor: if constructor throws, the object:", options: ["Is partially initialized and can be used", "Is never created; GC handles cleanup", "Must call super()", "Is cached"], ans: 1 },
+        { id: 120, level: "FAANG", topic: "System Design", q: "Saga pattern in distributed systems handles failures through:", options: ["Global try-catch", "Compensating transactions for each step", "Rollback only at DB level", "Exception propagation"], ans: 1 },
+
+        // ─── OUTPUT & TRICKY (121–150) ─────────────────────────────────
+        { id: 121, level: "Tricky", topic: "Output", q: "What prints?\ntry { return 1; } finally { return 2; }", options: ["1", "2", "Compile error", "Exception"], ans: 1 },
+        { id: 122, level: "Tricky", topic: "Output", q: "try{throw new RuntimeException();}catch(Exception e){System.out.print(\"A\");}finally{System.out.print(\"B\");} Output?", options: ["A", "B", "AB", "BA"], ans: 2 },
+        { id: 123, level: "Tricky", topic: "Output", q: "Can you catch the same exception type in two different catch blocks of one try?", options: ["Yes", "No, compile error", "Only in Java 9+", "Only with multi-catch"], ans: 1 },
+        { id: 124, level: "Tricky", topic: "Output", q: "What happens when you throw null?\nthrow null;", options: ["Throws NullPointerException", "Compile error", "Throws IllegalArgumentException", "Nothing"], ans: 0 },
+        { id: 125, level: "Tricky", topic: "Output", q: "int[] a = new int[5]; System.out.println(a[5]); throws:", options: ["NullPointerException", "ArrayIndexOutOfBoundsException", "IndexOutOfBoundsException", "Compile error"], ans: 1 },
+        { id: 126, level: "Tricky", topic: "Output", q: "String s = null; s.length(); throws:", options: ["StringException", "NullPointerException", "IllegalStateException", "Compile error"], ans: 1 },
+        { id: 127, level: "Tricky", topic: "Output", q: "Integer.parseInt(\"abc\") throws:", options: ["IllegalArgumentException", "NumberFormatException", "ParseException", "ArithmeticException"], ans: 1 },
+        { id: 128, level: "Tricky", topic: "Tricky Concepts", q: "Can a static initializer block throw checked exceptions?", options: ["Yes always", "No, only unchecked/Error", "Yes with try-catch inside", "Only in Java 11+"], ans: 2 },
+        { id: 129, level: "Tricky", topic: "Tricky Concepts", q: "Which exception signals serious JVM problems that apps shouldn't catch?", options: ["RuntimeException", "Error (like OutOfMemoryError, StackOverflowError)", "IOException", "SQLException"], ans: 1 },
+        { id: 130, level: "Tricky", topic: "Tricky Concepts", q: "Can you declare throws on a main method?", options: ["No", "Yes: public static void main(String[] args) throws Exception", "Only RuntimeException", "Only in test code"], ans: 1 },
+        { id: 131, level: "Tricky", topic: "Output", q: "What is printed?\nSystem.out.println(1/0);", options: ["Infinity", "ArithmeticException at runtime", "Compile error", "0"], ans: 1 },
+        { id: 132, level: "Tricky", topic: "Output", q: "1.0/0 in Java produces:", options: ["ArithmeticException", "Infinity (double)", "NaN", "Compile error"], ans: 1 },
+        { id: 133, level: "Tricky", topic: "Tricky Concepts", q: "ConcurrentModificationException is thrown when:", options: ["Collection is accessed by 2 threads", "Iterator detects structural modification during iteration", "Adding null to collection", "Using wrong iterator type"], ans: 1 },
+        { id: 134, level: "Tricky", topic: "Tricky Concepts", q: "UnsupportedOperationException from Arrays.asList() is thrown when:", options: ["Accessing invalid index", "Trying to add/remove elements (fixed-size list)", "Sorting the list", "Iterating the list"], ans: 1 },
+        { id: 135, level: "Tricky", topic: "Tricky Concepts", q: "What does assert throw when assertion fails?", options: ["AssertionException", "AssertionError", "IllegalStateException", "RuntimeException"], ans: 1 },
+        { id: 136, level: "Tricky", topic: "Tricky Concepts", q: "Which exception is thrown when casting incompatible types?", options: ["TypeException", "ClassCastException", "CastException", "InvalidTypeException"], ans: 1 },
+        { id: 137, level: "Tricky", topic: "Tricky Concepts", q: "CloneNotSupportedException is thrown when:", options: ["Object.clone() called without implementing Cloneable", "Clone constructor fails", "Copy constructor fails", "Serialization fails"], ans: 0 },
+        { id: 138, level: "Tricky", topic: "Tricky Concepts", q: "Which annotation suppresses warnings about unchecked operations?", options: ["@SuppressWarnings(\"unchecked\")", "@IgnoreWarnings", "@Safe", "@Unchecked"], ans: 0 },
+        { id: 139, level: "Tricky", topic: "Tricky Concepts", q: "What does ExceptionInInitializerError indicate?", options: ["Method threw exception", "Static initializer threw an exception", "Constructor failed", "Import failed"], ans: 1 },
+        { id: 140, level: "Tricky", topic: "Tricky Concepts", q: "NoClassDefFoundError vs ClassNotFoundException: which is checked?", options: ["NoClassDefFoundError", "ClassNotFoundException", "Both", "Neither"], ans: 1 },
+        { id: 141, level: "Tricky", topic: "Tricky Concepts", q: "VerifyError is thrown by JVM when:", options: ["Class verification fails (bytecode invalid)", "Variable type mismatch at runtime", "Method not found", "Interface not implemented"], ans: 0 },
+        { id: 142, level: "Tricky", topic: "Tricky Concepts", q: "AbstractMethodError is thrown when:", options: ["Abstract class is instantiated", "Abstract method has no implementation at runtime", "Interface has abstract methods", "Method signature changes after compilation"], ans: 1 },
+        { id: 143, level: "Tricky", topic: "Output", q: "catch(Exception e) before catch(RuntimeException e) causes:", options: ["Runtime error", "Compile error (unreachable catch block)", "Works fine", "Only catches Exception"], ans: 1 },
+        { id: 144, level: "Tricky", topic: "Tricky Concepts", q: "What is a 'poison pill' pattern for exception propagation?", options: ["Swallowing exceptions", "Sentinal value to signal shutdown/error across queues", "Logging only", "Re-throwing as Error"], ans: 1 },
+        { id: 145, level: "Tricky", topic: "Tricky Concepts", q: "SOF (StackOverflowError) typically happens due to:", options: ["Large arrays", "Infinite recursion", "Many threads", "Memory leak"], ans: 1 },
+        { id: 146, level: "Tricky", topic: "Tricky Concepts", q: "NoSuchMethodException vs NoSuchMethodError?", options: ["Both the same", "Exception=reflection API; Error=JVM linkage failure", "Error=reflection; Exception=JVM", "Both unchecked"], ans: 1 },
+        { id: 147, level: "Tricky", topic: "Tricky Concepts", q: "Callable vs Runnable regarding exceptions:", options: ["Both can throw checked exceptions", "Callable can throw Exception; Runnable cannot", "Runnable can throw; Callable cannot", "Neither can throw checked"], ans: 1 },
+        { id: 148, level: "Tricky", topic: "Tricky Concepts", q: "IllegalMonitorStateException is thrown when:", options: ["Lock is null", "wait()/notify() called without owning monitor", "Thread is interrupted in sync block", "Deadlock occurs"], ans: 1 },
+        { id: 149, level: "Tricky", topic: "Output", q: "try{ System.exit(0); } finally { System.out.println(\"F\"); } prints:", options: ["F", "Nothing (finally skipped after System.exit)", "Runtime error", "Compile error"], ans: 1 },
+        { id: 150, level: "Tricky", topic: "Tricky Concepts", q: "Which Java 14+ feature improves NullPointerException messages?", options: ["Records", "Helpful NullPointerExceptions (JEP 358)", "Pattern matching", "Sealed classes"], ans: 1 },
+
+        // ─── FILL THE REMAINING TO 230 ────────────────────────────────
+        { id: 151, level: "Basics", topic: "Hierarchy", q: "Which package contains most exception classes?", options: ["java.util", "java.io", "java.lang", "java.exception"], ans: 2 },
+        { id: 152, level: "Basics", topic: "Try-Catch", q: "What is the catch block parameter?", options: ["The method that caused exception", "Reference to the thrown exception object", "Exception message string only", "Stack trace array"], ans: 1 },
+        { id: 153, level: "Basics", topic: "Keywords", q: "Can 'throw' statement appear outside a method?", options: ["Yes, in class body", "No, only inside methods/constructors/initializers", "Yes, anywhere", "Only in static blocks"], ans: 1 },
+        { id: 154, level: "Intermediate", topic: "Custom Exceptions", q: "Domain-specific exceptions improve:", options: ["JVM performance", "Code readability and error diagnosis", "GC efficiency", "Compilation speed"], ans: 1 },
+        { id: 155, level: "Intermediate", topic: "Exception Chaining", q: "printStackTrace(PrintWriter pw) is useful for:", options: ["Performance", "Writing stack trace to a log file/writer", "Multi-threading", "Filtering exceptions"], ans: 1 },
+        { id: 156, level: "Advanced", topic: "Streams & Lambdas", q: "Which functional interface throws checked exceptions?", options: ["Function<T,R>", "Consumer<T>", "CheckedFunction (custom or Vavr)", "Predicate<T>"], ans: 2 },
+        { id: 157, level: "Advanced", topic: "Design Patterns", q: "Try monad (like in Vavr/Scala) wraps:", options: ["Just exceptions", "Computation that may succeed or fail, without throwing", "Async operations only", "Database transactions"], ans: 1 },
+        { id: 158, level: "FAANG", topic: "Best Practices", q: "Exception hierarchy design for a large system should:", options: ["Use a single custom exception", "Have a root application exception with subtypes per domain", "Only use built-in exceptions", "Avoid custom exceptions entirely"], ans: 1 },
+        { id: 159, level: "Tricky", topic: "Output", q: "new Integer(\"hello\") throws:", options: ["CompileError", "NumberFormatException", "ClassCastException", "IllegalArgumentException"], ans: 1 },
+        { id: 160, level: "Basics", topic: "Definition", q: "What is the difference between error and exception?", options: ["No difference", "Error=serious JVM issue not meant to catch; Exception=recoverable application issues", "Error is checked; Exception is unchecked", "Error is in java.io; Exception is in java.lang"], ans: 1 },
+        { id: 161, level: "Intermediate", topic: "Try-with-resources", q: "If close() throws exception AND the try body throws exception, which is suppressed?", options: ["try body exception", "close() exception is suppressed; try body exception propagates", "Both propagate", "Neither propagates"], ans: 1 },
+        { id: 162, level: "Advanced", topic: "Concurrency", q: "Which exception is thrown when accessing a cancelled Future?", options: ["InterruptedException", "CancellationException", "ExecutionException", "TimeoutException"], ans: 1 },
+        { id: 163, level: "Tricky", topic: "Tricky Concepts", q: "Can you have a finally block without try block?", options: ["Yes", "No, compile error", "Only in Java 11+", "Only with catch"], ans: 1 },
+        { id: 164, level: "FAANG", topic: "System Design", q: "Dead letter queue (DLQ) in messaging relates to exceptions by:", options: ["Deleting failed messages", "Storing messages that failed processing for later analysis/retry", "Converting exceptions to messages", "Logging only"], ans: 1 },
+        { id: 165, level: "Advanced", topic: "Performance", q: "Which is faster: return a null to indicate 'not found' or throw NoSuchElementException?", options: ["Exception is faster", "Null return is faster (no stack trace)", "Both the same", "Depends on JVM"], ans: 1 },
+        { id: 166, level: "Intermediate", topic: "Overriding", q: "If parent doesn't declare any checked exception, child overriding can throw:", options: ["Any checked exception", "No new checked exceptions (only unchecked)", "Same checked exceptions only", "Any exception"], ans: 1 },
+        { id: 167, level: "Basics", topic: "Try-Catch", q: "What is exception handling?", options: ["Preventing all errors", "Mechanism to handle runtime errors gracefully", "Compile-time error fixing", "Debugging technique"], ans: 1 },
+        { id: 168, level: "Intermediate", topic: "Exception Propagation", q: "Checked exceptions must be handled before:", options: ["Runtime", "Compile time", "Link time", "Class loading"], ans: 1 },
+        { id: 169, level: "Advanced", topic: "JVM Internals", q: "Exception class loading: when is an exception class loaded?", options: ["At JVM start", "When first thrown or referenced", "At compile time", "During class verification"], ans: 1 },
+        { id: 170, level: "FAANG", topic: "Observability", q: "Distributed tracing (e.g., Jaeger/Zipkin) helps with exceptions by:", options: ["Preventing exceptions", "Tracking exception propagation across services with trace IDs", "Caching exceptions", "Reducing exception frequency"], ans: 1 },
+        { id: 171, level: "Tricky", topic: "Tricky Concepts", q: "Which of these CAN be caught?", options: ["Error", "OutOfMemoryError", "StackOverflowError", "All of the above technically (but shouldn't be)"], ans: 3 },
+        { id: 172, level: "Intermediate", topic: "Custom Exceptions", q: "What makes a 'well-designed' exception class?", options: ["Extends Error", "Meaningful name, message, chained cause, and appropriate hierarchy placement", "No extra fields", "Always unchecked"], ans: 1 },
+        { id: 173, level: "Basics", topic: "Types", q: "Which exceptions don't need to be declared in throws clause?", options: ["Checked exceptions", "All exceptions", "Unchecked exceptions (RuntimeException & Error)", "Only Error"], ans: 2 },
+        { id: 174, level: "Advanced", topic: "Streams & Lambdas", q: "Stream.forEach with exception: what pattern handles it?", options: ["Try-catch inside lambda", "Wrapper method that converts to RuntimeException", "Both A and B", "Not possible"], ans: 2 },
+        { id: 175, level: "Tricky", topic: "Output", q: "What is printed: catch(RuntimeException | IOException e) where IOException is parent of RuntimeException?", options: ["Compiles fine", "Compile error: IOException is not related to RuntimeException", "Compile error: alternative in multi-catch cannot be related", "Runtime error"], ans: 2 },
+        { id: 176, level: "FAANG", topic: "Best Practices", q: "Which exception handling strategy is best for third-party library integration?", options: ["Let all exceptions propagate", "Wrap library exceptions in domain exceptions (exception translation)", "Catch and swallow", "Re-throw as-is"], ans: 1 },
+        { id: 177, level: "Intermediate", topic: "Re-throwing", q: "throw e vs throw new SomeException(e): what's the key difference?", options: ["No difference", "throw e preserves original stack trace; new SomeException(e) creates new stack but chains cause", "new creates faster exception", "throw e chains automatically"], ans: 1 },
+        { id: 178, level: "Basics", topic: "Hierarchy", q: "Which exception is related to invalid method argument?", options: ["ArithmeticException", "NullPointerException", "IllegalArgumentException", "ClassCastException"], ans: 2 },
+        { id: 179, level: "Advanced", topic: "Concurrency", q: "In parallel streams, if a thread throws, what happens to other threads?", options: ["They continue", "Stream fails and other tasks may be interrupted", "Exception is swallowed", "All threads join and re-throw"], ans: 1 },
+        { id: 180, level: "Tricky", topic: "Tricky Concepts", q: "Which Java 7+ feature helps avoid resource leaks?", options: ["Multi-catch", "Try-with-resources", "Diamond operator", "Method references"], ans: 1 },
+        { id: 181, level: "Basics", topic: "Definition", q: "What is the call stack?", options: ["Collection class", "Stack of active method invocations in a thread", "Exception hierarchy", "JVM memory area"], ans: 1 },
+        { id: 182, level: "Intermediate", topic: "Exception Chaining", q: "When should you NOT chain exceptions?", options: ["When adding context", "When original exception reveals implementation details you want to hide", "When logging", "Never, always chain"], ans: 1 },
+        { id: 183, level: "Advanced", topic: "JVM Internals", q: "MethodHandle exceptions are handled via:", options: ["Standard try-catch", "Throwing Throwable, requires catching Throwable", "Special MethodException", "Automatic wrapping in RuntimeException"], ans: 1 },
+        { id: 184, level: "FAANG", topic: "Best Practices", q: "Global exception handler in Spring Boot uses:", options: ["@ExceptionHandler on each controller", "@ControllerAdvice / @RestControllerAdvice", "web.xml config", "Filter chain only"], ans: 1 },
+        { id: 185, level: "Basics", topic: "Try-Catch", q: "The order of catch blocks matters because:", options: ["JVM processes them randomly", "More specific exceptions must come before more general ones", "More general exceptions come first", "Order doesn't matter"], ans: 1 },
+        { id: 186, level: "Intermediate", topic: "Custom Exceptions", q: "When should a custom exception include additional fields?", options: ["Never", "When extra context (error code, entity ID, etc.) aids diagnosis or handling", "Always", "Only for checked exceptions"], ans: 1 },
+        { id: 187, level: "Advanced", topic: "Performance", q: "Exception instances that are cached/reused lose:", options: ["Type information", "Accurate stack trace (points to where cached, not where thrown)", "Message", "Cause chain"], ans: 1 },
+        { id: 188, level: "Tricky", topic: "Output", q: "What does e.toString() typically return?", options: ["Stack trace", "Exception class name + getMessage()", "Just the message", "Nothing"], ans: 1 },
+        { id: 189, level: "Basics", topic: "Keywords", q: "Is it valid to have an empty catch block? catch(Exception e){}", options: ["No, compile error", "Yes, but considered bad practice", "Yes, best practice", "Only for IOException"], ans: 1 },
+        { id: 190, level: "Intermediate", topic: "Try-with-resources", q: "Resources declared in try-with-resources are scoped to:", options: ["Entire method", "Only the try block and its catch/finally", "Only catch block", "Only finally block"], ans: 1 },
+        { id: 191, level: "Advanced", topic: "Design Patterns", q: "Which design pattern can eliminate checked exceptions in API design?", options: ["Factory", "Null object", "Builder with validation throwing only at build()", "Observer"], ans: 2 },
+        { id: 192, level: "FAANG", topic: "System Design", q: "Exponential backoff in retry logic helps with exceptions by:", options: ["Giving more time for transient failures to resolve", "Preventing exception creation", "Chaining exceptions", "Using circuit breaker only"], ans: 0 },
+        { id: 193, level: "Tricky", topic: "Tricky Concepts", q: "Which of these is thrown by Collections.unmodifiableList() on modification?", options: ["IllegalStateException", "UnsupportedOperationException", "ConcurrentModificationException", "IllegalArgumentException"], ans: 1 },
+        { id: 194, level: "Basics", topic: "Hierarchy", q: "ArrayStoreException is thrown when:", options: ["Array is null", "Storing wrong type into typed array", "Array index is out of bounds", "Array is empty"], ans: 1 },
+        { id: 195, level: "Intermediate", topic: "Exception Propagation", q: "Exception swallowing (catch and do nothing) is dangerous because:", options: ["It improves performance", "Bugs are silently hidden making diagnosis impossible", "It violates JVM spec", "It causes memory leaks"], ans: 1 },
+        { id: 196, level: "Advanced", topic: "Streams & Lambdas", q: "Which Vavr/functional-style class represents Try monad?", options: ["Optional", "Try<T>", "Either<L,R>", "Result<T>"], ans: 1 },
+        { id: 197, level: "FAANG", topic: "Observability", q: "Exception fingerprinting (grouping similar exceptions) helps with:", options: ["Performance", "Identifying root causes and prioritizing fixes at scale", "Memory usage", "Thread management"], ans: 1 },
+        { id: 198, level: "Basics", topic: "Types", q: "Errors are meant to be:", options: ["Always caught and handled", "Mostly not caught; indicate unrecoverable situations", "Converted to exceptions", "Logged and ignored"], ans: 1 },
+        { id: 199, level: "Intermediate", topic: "Custom Exceptions", q: "What is the recommended minimum set of constructors for a custom exception?", options: ["Just no-arg", "no-arg, String msg, String+Throwable, Throwable", "Only String msg", "Static factory only"], ans: 1 },
+        { id: 200, level: "Tricky", topic: "Tricky Concepts", q: "What happens to exception thrown in static initializer?", options: ["Propagates directly", "Wrapped in ExceptionInInitializerError", "Ignored silently", "Converted to RuntimeException"], ans: 1 },
+
+        // Extra 30 questions (201–230)
+        { id: 201, level: "Basics", topic: "Keywords", q: "Which keyword is used to handle exceptions?", options: ["handle", "try/catch", "manage", "except"], ans: 1 },
+        { id: 202, level: "Basics", topic: "Try-Catch", q: "What is the output if try block completes normally and finally has no code?\ntry{System.out.print(\"A\");}finally{}", options: ["A", "Nothing", "Compile error", "Exception"], ans: 0 },
+        { id: 203, level: "Intermediate", topic: "Custom Exceptions", q: "Custom checked exception forces calling code to:", options: ["Ignore it", "Handle or declare it", "Convert to RuntimeException", "Log it always"], ans: 1 },
+        { id: 204, level: "Advanced", topic: "Concurrency", q: "Which executor method propagates exceptions back to caller?", options: ["execute()", "submit() via Future.get()", "shutdown()", "awaitTermination()"], ans: 1 },
+        { id: 205, level: "FAANG", topic: "Best Practices", q: "Fail-fast principle in exception handling means:", options: ["Retry immediately", "Throw exception as early as possible when bad state detected", "Catch all exceptions", "Use finally always"], ans: 1 },
+        { id: 206, level: "Tricky", topic: "Output", q: "Can you throw an exception from a lambda assigned to Runnable?", options: ["Checked exceptions: Yes", "Checked exceptions: No (Runnable.run() doesn't declare them)", "Any exception: Yes", "No exceptions at all"], ans: 1 },
+        { id: 207, level: "Basics", topic: "Hierarchy", q: "InterruptedException is:", options: ["Unchecked", "Checked", "Error", "RuntimeException"], ans: 1 },
+        { id: 208, level: "Intermediate", topic: "Exception Chaining", q: "Why is exception chaining (wrapping) useful?", options: ["Better performance", "Preserves original cause while adding context at each abstraction layer", "Reduces stack trace size", "Avoids finally blocks"], ans: 1 },
+        { id: 209, level: "Advanced", topic: "JVM Internals", q: "Throwable.fillInStackTrace() is called:", options: ["By catch block", "In Throwable constructor automatically", "Only when printStackTrace() is called", "By finally block"], ans: 1 },
+        { id: 210, level: "FAANG", topic: "System Design", q: "Problem: service A calls B calls C. C throws. What design principle prevents total failure?", options: ["Exception swallowing", "Defensive programming + bulkhead/timeout + graceful degradation", "Re-throwing always", "Logging only"], ans: 1 },
+        { id: 211, level: "Basics", topic: "Types", q: "Which is a checked exception?", options: ["IllegalArgumentException", "NullPointerException", "CloneNotSupportedException", "ArithmeticException"], ans: 2 },
+        { id: 212, level: "Intermediate", topic: "Multi-catch", q: "Multi-catch with | is compiled to:", options: ["Multiple catch blocks by compiler", "Single catch with instanceof checks", "New bytecode instruction", "Uses generic type erasure"], ans: 0 },
+        { id: 213, level: "Advanced", topic: "Performance", q: "Exception handling has near-zero cost when:", options: ["Always has cost", "No exception is thrown (happy path)", "Using multi-catch", "Using try-with-resources"], ans: 1 },
+        { id: 214, level: "Tricky", topic: "Output", q: "try{} catch(Exception e){} catch(Throwable t){} – is this valid?", options: ["No, unreachable catch", "Yes, valid", "Compile error", "Only in Java 9+"], ans: 1 },
+        { id: 215, level: "FAANG", topic: "Logging", q: "When using SLF4J, correct way to log exception is:", options: ["log.error(e)", "log.error(\"msg\", e)", "log.error(e.getMessage())", "log.error(e.toString())"], ans: 1 },
+        { id: 216, level: "Basics", topic: "Finally", q: "What is a common use case of finally block?", options: ["Throwing new exceptions", "Closing resources like DB connections, files", "Catching exceptions", "Declaring exceptions"], ans: 1 },
+        { id: 217, level: "Intermediate", topic: "Try-with-resources", q: "Which interface does FileReader implement that allows try-with-resources?", options: ["Serializable", "AutoCloseable via Closeable via Reader", "Readable only", "FileInterface"], ans: 1 },
+        { id: 218, level: "Advanced", topic: "Design Patterns", q: "Template method pattern with exceptions: abstract method should:", options: ["Swallow exceptions", "Declare throws so subclasses can throw appropriately", "Only throw RuntimeException", "Use checked exceptions always"], ans: 1 },
+        { id: 219, level: "Tricky", topic: "Tricky Concepts", q: "What is thrown when you call super.clone() without implementing Cloneable?", options: ["CloneException", "CloneNotSupportedException", "IllegalStateException", "UnsupportedOperationException"], ans: 1 },
+        { id: 220, level: "FAANG", topic: "Best Practices", q: "Which is an anti-pattern? catch (Exception e) { throw e; }", options: ["Always bad", "Pointless catch-rethrow that adds no value", "Good defensive coding", "Required for logging"], ans: 1 },
+        { id: 221, level: "Basics", topic: "Hierarchy", q: "Throwable has how many direct subclasses?", options: ["1", "2 (Exception and Error)", "3", "Many"], ans: 1 },
+        { id: 222, level: "Intermediate", topic: "Exception Propagation", q: "Propagation stops when exception is:", options: ["Declared in throws", "Caught in catch block", "Reaches main()", "Logged"], ans: 1 },
+        { id: 223, level: "Advanced", topic: "Streams & Lambdas", q: "CompletableFuture.exceptionally() receives:", options: ["The original result", "The exception as Throwable", "Null", "A new CompletableFuture"], ans: 1 },
+        { id: 224, level: "Tricky", topic: "Output", q: "catch(IOException | RuntimeException e): e is:", options: ["Mutable", "Effectively final", "Static", "Null"], ans: 1 },
+        { id: 225, level: "FAANG", topic: "System Design", q: "Timeout exceptions in distributed systems are often:", options: ["Permanent failures", "Transient and worth retrying with backoff", "Always bugs", "System errors"], ans: 1 },
+        { id: 226, level: "Basics", topic: "Keywords", q: "Can 'throws' keyword appear on lambda expressions?", options: ["Yes", "No, lambdas cannot declare throws", "Only Java 11+", "Only checked exceptions"], ans: 1 },
+        { id: 227, level: "Intermediate", topic: "Custom Exceptions", q: "Should exception messages include sensitive data (passwords, PII)?", options: ["Yes, for debugging", "No, security risk in logs and stack traces", "Only in dev mode", "Depends on log level"], ans: 1 },
+        { id: 228, level: "Advanced", topic: "Concurrency", q: "Which exception indicates a thread tried to acquire a lock it can't get (non-blocking)?", options: ["LockException", "This isn't an exception; tryLock() returns false", "ThreadException", "MonitorException"], ans: 1 },
+        { id: 229, level: "FAANG", topic: "Best Practices", q: "Exception-free code via exhaustive validation at entry points is called:", options: ["Defensive programming", "Fail-fast with input validation", "Both A and B", "Exception suppression"], ans: 2 },
+        { id: 230, level: "Tricky", topic: "Tricky Concepts", q: "What does 'precise rethrow' (Java 7+) allow?", options: ["Rethrowing Object types", "Compiler tracks exact exception types in catch so you can declare narrower throws on rethrow", "Throwing from static context", "Rethrowing from finally"], ans: 1 },
+      ],
+
+      scenarios: [
+        {
+          id: "S1", level: "Beginner", title: "File Reader Crash",
+          desc: "Write a method readFileContent(String path) that reads a text file and returns its content as a String. If the file doesn't exist, throw a meaningful custom checked exception FileNotFoundException. Ensure the stream is always closed regardless of what happens.",
+          hint: "Use try-with-resources with FileReader/BufferedReader. Create a custom checked exception. Think about what message should be in the exception.",
+          tags: ["File IO", "Custom Exception", "try-with-resources"]
+        },
+        {
+          id: "S2", level: "Beginner", title: "Safe Integer Parser",
+          desc: "Create a utility method safeParseInt(String s) that returns an Optional<Integer> instead of throwing NumberFormatException. If parsing fails, return Optional.empty(). Write unit test cases for valid, invalid, and null inputs.",
+          hint: "Wrap Integer.parseInt() in try-catch. Return Optional.of(result) on success. Handle null input explicitly.",
+          tags: ["Optional", "NumberFormatException", "Utility Method"]
+        },
+        {
+          id: "S3", level: "Intermediate", title: "Bank Account Transactions",
+          desc: "Implement a BankAccount class with deposit(double) and withdraw(double) methods. Create custom exceptions: InsufficientFundsException (checked), InvalidAmountException (unchecked). withdraw() should throw InsufficientFundsException if balance is insufficient, and both methods should throw InvalidAmountException for negative amounts.",
+          hint: "InsufficientFundsException extends Exception. InvalidAmountException extends RuntimeException. Include the missing amount in InsufficientFundsException.",
+          tags: ["Custom Exception Hierarchy", "Business Logic", "Checked vs Unchecked"]
+        },
+        {
+          id: "S4", level: "Intermediate", title: "Database Connection Pool",
+          desc: "Simulate a connection pool with getConnection() and releaseConnection(). If pool is exhausted, throw PoolExhaustedException. Ensure connections are always released using try-with-resources (make Connection implement AutoCloseable). Handle the case where release itself fails.",
+          hint: "Implement AutoCloseable on Connection wrapper. Handle suppressed exceptions. Use finally as backup or rely on try-with-resources.",
+          tags: ["try-with-resources", "AutoCloseable", "Suppressed Exceptions"]
+        },
+        {
+          id: "S5", level: "Intermediate", title: "Multi-Layer Service with Exception Translation",
+          desc: "Build a 3-layer architecture: Repository (throws SQLException) → Service (catches SQLException, wraps in ServiceException) → Controller (catches ServiceException, returns error response). Implement exception chaining so the original cause is preserved.",
+          hint: "ServiceException(String message, Throwable cause). In service: catch(SQLException e){ throw new ServiceException('DB error', e); }. Root cause accessible via getCause().",
+          tags: ["Exception Translation", "Exception Chaining", "Layered Architecture"]
+        },
+        {
+          id: "S6", level: "Intermediate", title: "Retry Logic with Exceptions",
+          desc: "Write a generic retry utility: retry(Callable<T> task, int maxAttempts, Class<? extends Exception>... retryOn). It should retry only for specified exception types, with exponential backoff (1s, 2s, 4s...), and throw MaxRetriesExceededException wrapping the last exception after all attempts fail.",
+          hint: "Use instanceof checks or Class.isAssignableFrom(). Thread.sleep() for backoff. Wrap last exception in MaxRetriesExceededException(lastException).",
+          tags: ["Retry Logic", "Exponential Backoff", "Generic Methods", "Callable"]
+        },
+        {
+          id: "S7", level: "Intermediate", title: "Stream Exception Handling",
+          desc: "You have a List<String> filePaths. For each path, read the first line of the file. Files that can't be read should be skipped (with logging), not crash the stream. Collect successfully read lines into a List<String>. Use Stream API.",
+          hint: "Create wrapper method that catches IOException and returns Optional.empty(). Use flatMap with Optional::stream (Java 9+) to filter empties.",
+          tags: ["Stream API", "Lambda Exceptions", "Optional", "Functional Style"]
+        },
+        {
+          id: "S8", level: "Advanced", title: "Thread-Safe Exception Aggregation",
+          desc: "Submit 10 tasks to an ExecutorService. Each may throw exceptions. After all complete, collect ALL exceptions (not just the first) and throw a single AggregateException containing the list. Use Future and handle ExecutionException properly.",
+          hint: "Iterate all Futures, call get() in try-catch, collect exceptions to list. Create AggregateException(List<Throwable>) custom exception.",
+          tags: ["ExecutorService", "Future", "ExecutionException", "Aggregate Exception"]
+        },
+        {
+          id: "S9", level: "Advanced", title: "CompletableFuture Exception Handling",
+          desc: "Build an async pipeline: fetchUser(userId) → enrichWithProfile(user) → sendNotification(enrichedUser). Each step may fail. Use CompletableFuture. If fetchUser fails, return a default guest user. If enrichWithProfile fails, skip enrichment and use plain user. If sendNotification fails, log and complete without rethrowing.",
+          hint: "Use .exceptionally() for fallbacks, .handle() for conditional recovery. Don't use .get() or try-catch directly.",
+          tags: ["CompletableFuture", "Async", "exceptionally", "handle"]
+        },
+        {
+          id: "S10", level: "Advanced", title: "Global Exception Handler in REST API",
+          desc: "Design a Spring Boot GlobalExceptionHandler using @RestControllerAdvice. Handle: ResourceNotFoundException → 404, ValidationException → 400 with field errors, AuthorizationException → 403, all other exceptions → 500. Each response should include: timestamp, status, errorCode, message, traceId (from MDC).",
+          hint: "Use @ExceptionHandler per type. Build ErrorResponse DTO. MDC.get('traceId') for correlation. Return ResponseEntity<ErrorResponse>.",
+          tags: ["Spring Boot", "@ControllerAdvice", "REST Error Handling", "MDC"]
+        },
+        {
+          id: "S11", level: "Advanced", title: "Custom Serializable Exception",
+          desc: "Design a complete DomainException hierarchy for an e-commerce system: base DomainException → OrderException, PaymentException, InventoryException. Each should: be serializable, support exception chaining, include an errorCode (enum), be usable in distributed systems (via RMI or message queues).",
+          hint: "Add serialVersionUID, implement Serializable, include ErrorCode enum field, provide 4 standard constructors. Consider if checked or unchecked per domain.",
+          tags: ["Custom Exception Hierarchy", "Serializable", "Domain Design", "Error Codes"]
+        },
+        {
+          id: "S12", level: "Advanced", title: "Circuit Breaker Exception Pattern",
+          desc: "Implement a simple CircuitBreaker class that wraps a Callable<T>. States: CLOSED (normal), OPEN (failing - throw CircuitBreakerOpenException immediately), HALF_OPEN (test one call). Trip to OPEN after 3 consecutive failures. Reset after 5 seconds in OPEN state. Thread-safe.",
+          hint: "Use AtomicInteger for failure count, AtomicReference<State> for state, AtomicLong for lastFailureTime. Synchronized or volatile for thread safety.",
+          tags: ["Circuit Breaker", "Thread Safety", "Design Pattern", "AtomicInteger"]
+        },
+        {
+          id: "S13", level: "Advanced", title: "Sneaky Throws and Functional Interfaces",
+          desc: "Create a custom functional interface ThrowingFunction<T,R> that can throw any exception. Implement a static wrapper: wrap(ThrowingFunction<T,R>) → Function<T,R> that converts checked exceptions to RuntimeException. Then use it in a stream pipeline that reads files.",
+          hint: "ThrowingFunction has R apply(T t) throws Exception. The wrapper catches Exception and rethrows as RuntimeException(e). @FunctionalInterface annotation.",
+          tags: ["Functional Interfaces", "Sneaky Throws", "Generics", "Stream API"]
+        },
+        {
+          id: "S14", level: "FAANG", title: "Distributed Transaction Saga",
+          desc: "Design exception handling for a Saga pattern across 3 microservices: OrderService, PaymentService, InventoryService. If PaymentService fails: compensate by cancelling order. If InventoryService fails: compensate by refunding payment and cancelling order. Each compensating action may also fail. Design the exception hierarchy and recovery strategy.",
+          hint: "CompensationFailedException wrapping original + compensation error. Saga orchestrator catches and triggers compensations. Dead letter queue for unrecoverable failures. Idempotent compensation actions.",
+          tags: ["Saga Pattern", "Microservices", "Compensation", "Distributed Systems"]
+        },
+        {
+          id: "S15", level: "FAANG", title: "Exception Monitoring and Alerting System",
+          desc: "Design an exception monitoring system: (1) Intercept all exceptions application-wide, (2) Fingerprint/group similar exceptions, (3) Track frequency per exception type per time window, (4) Alert (log/metric) when threshold exceeded (e.g., >10 NullPointerExceptions/minute). Implement using AOP or wrapper pattern.",
+          hint: "AOP @AfterThrowing or InvocationHandler. HashMap<String,AtomicInteger> for counts per fingerprint. Scheduled cleanup every minute. Exception fingerprint = class name + first stack frame.",
+          tags: ["AOP", "Monitoring", "Metrics", "Exception Fingerprinting"]
+        },
+        {
+          id: "S16", level: "FAANG", title: "Rate Limiter with Exception Handling",
+          desc: "Build a RateLimiter that allows N requests per second. If limit exceeded, throw RateLimitExceededException with retryAfterMs field. Integrate with an HTTP client: on 429 response → throw RateLimitExceededException. On connection timeout → throw ServiceUnavailableException. Implement exponential backoff retry only for ServiceUnavailableException.",
+          hint: "Token bucket or sliding window algorithm. HTTP client wraps response codes to domain exceptions. Retry only specific exception types. Backoff: 100ms, 200ms, 400ms...",
+          tags: ["Rate Limiting", "HTTP Client", "Retry", "Domain Exceptions"]
+        },
+        {
+          id: "S17", level: "FAANG", title: "JVM Tuning: Exception Performance",
+          desc: "Your service is creating 1000 exceptions/second under load (known slow path). Profile and optimize: (1) Identify the hot exception path, (2) Use exception pooling/caching with overridden fillInStackTrace(), (3) Benchmark before/after with JMH, (4) Explain the trade-offs (lost stack trace accuracy).",
+          hint: "Override fillInStackTrace() { return this; } for cached exceptions. Static final instance for sentinel exceptions. JMH @Benchmark. Trade-off: no stack trace = harder debugging.",
+          tags: ["Performance", "JMH", "fillInStackTrace", "JVM Optimization"]
+        },
+        {
+          id: "S18", level: "FAANG", title: "Exception Handling in Event-Driven Architecture",
+          desc: "In a Kafka consumer, processing messages may throw exceptions. Design: (1) Transient errors → retry with backoff (max 3 times), (2) Permanent errors → send to Dead Letter Topic, (3) Deserialization errors → send to DLT immediately (not retried), (4) Keep the consumer alive regardless. Classify exceptions by type.",
+          hint: "TransientException vs PermanentException hierarchy. DeserializationException always to DLT. KafkaTemplate to DLT. @KafkaListener with error handler. SeekToCurrentErrorHandler or DefaultErrorHandler.",
+          tags: ["Kafka", "Event-Driven", "Dead Letter Queue", "Retry Strategy"]
+        },
+        {
+          id: "S19", level: "FAANG", title: "Custom Exception Framework Design",
+          desc: "Design a company-wide exception framework for a large engineering org: (1) Base exception hierarchy by domain, (2) ErrorCode system with HTTP mapping, (3) Exception serialization to JSON for APIs, (4) Automatic MDC context enrichment, (5) Exception documentation via annotations. Create the framework API (not full implementation).",
+          hint: "@ErrorCode annotation with code, httpStatus, retryable fields. BaseException.toErrorResponse() method. MDCEnricher aspect. ErrorCodeRegistry maps codes to HTTP statuses. Exception documentation via Javadoc + annotation processor.",
+          tags: ["Framework Design", "Error Codes", "Annotations", "System Design"]
+        },
+        {
+          id: "S20", level: "FAANG", title: "Graceful Degradation System",
+          desc: "Design a recommendation service that: (1) Calls ML model service for personalized recommendations, (2) Falls back to cached recommendations if ML service throws ServiceException or times out, (3) Falls back to popular items if cache throws CacheException, (4) Returns empty list with warning log only as last resort. Each level logs appropriately. Implement with CompletableFuture.",
+          hint: "Chain CompletableFuture with .exceptionally() for each fallback level. Log at WARN for first fallback, ERROR for second, CRITICAL for last. Include latency metrics at each level.",
+          tags: ["Graceful Degradation", "Fallback Chain", "CompletableFuture", "Resilience Patterns"]
+        },
+      ]
+    };
+
+    const LEVELS = ["All", "Basics", "Intermediate", "Advanced", "FAANG", "Tricky"];
+    const TOPICS = ["All Topics", "Definition", "Hierarchy", "Types", "Keywords", "Try-Catch", "Finally", "Multi-catch", "Custom Exceptions", "Exception Chaining", "Try-with-resources", "Exception Propagation", "Re-throwing", "Overriding", "Nested Try", "Concurrency", "JVM Internals", "Performance", "Streams & Lambdas", "Design Patterns", "System Design", "Best Practices", "Logging", "Observability", "Output", "Tricky Concepts"];
+
+    const levelColors = {
+      Basics: { bg: "bg-emerald-500/20", text: "text-emerald-300", border: "border-emerald-500/40" },
+      Intermediate: { bg: "bg-blue-500/20", text: "text-blue-300", border: "border-blue-500/40" },
+      Advanced: { bg: "bg-purple-500/20", text: "text-purple-300", border: "border-purple-500/40" },
+      FAANG: { bg: "bg-orange-500/20", text: "text-orange-300", border: "border-orange-500/40" },
+      Tricky: { bg: "bg-red-500/20", text: "text-red-300", border: "border-red-500/40" },
+      Beginner: { bg: "bg-emerald-500/20", text: "text-emerald-300", border: "border-emerald-500/40" },
+    };
+
+    function App() {
+      const [tab, setTab] = useState("mcq");
+      const [levelFilter, setLevelFilter] = useState("All");
+      const [topicFilter, setTopicFilter] = useState("All Topics");
+      const [search, setSearch] = useState("");
+      const [page, setPage] = useState(1);
+      const [answered, setAnswered] = useState({});
+      const [showHints, setShowHints] = useState({});
+      const [quizMode, setQuizMode] = useState(false);
+      const [quizIdx, setQuizIdx] = useState(0);
+      const [quizAnswered, setQuizAnswered] = useState(null);
+      const [quizScore, setQuizScore] = useState(0);
+      const [quizTotal, setQuizTotal] = useState(0);
+      const PER_PAGE = 10;
+
+      const filtered = allQuestions.mcq.filter(q => {
+        if (levelFilter !== "All" && q.level !== levelFilter) return false;
+        if (topicFilter !== "All Topics" && q.topic !== topicFilter) return false;
+        if (search && !q.q.toLowerCase().includes(search.toLowerCase())) return false;
+        return true;
+      });
+
+      const totalPages = Math.ceil(filtered.length / PER_PAGE);
+      const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+      const quizQuestions = allQuestions.mcq.filter(q =>
+        levelFilter !== "All" ? q.level === levelFilter : true
+      );
+      const currentQuiz = quizQuestions[quizIdx];
+
+      const stats = {
+        total: allQuestions.mcq.length,
+        answered: Object.keys(answered).length,
+        correct: Object.values(answered).filter(a => a.correct).length,
+      };
+
+      function handleAnswer(qId, optIdx, correctIdx) {
+        if (answered[qId]) return;
+        setAnswered(p => ({ ...p, [qId]: { chosen: optIdx, correct: optIdx === correctIdx } }));
+      }
+
+      function handleQuizAnswer(optIdx) {
+        if (quizAnswered !== null) return;
+        const correct = optIdx === currentQuiz.ans;
+        setQuizAnswered(optIdx);
+        setQuizTotal(t => t + 1);
+        if (correct) setQuizScore(s => s + 1);
+      }
+
+      function nextQuiz() {
+        setQuizAnswered(null);
+        setQuizIdx(i => (i + 1) % quizQuestions.length);
+      }
+
+      useEffect(() => { setPage(1); }, [levelFilter, topicFilter, search]);
+
+      const progressPct = stats.total > 0 ? Math.round((stats.answered / stats.total) * 100) : 0;
+
+      return (
+        <div style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", background: "#0a0e1a", minHeight: "100vh", color: "#e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+          <style>{`
+            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+            ::-webkit-scrollbar{width:6px;height:6px}
+            ::-webkit-scrollbar-track{background:#0a0e1a}
+            ::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+            .glow{box-shadow:0 0 20px rgba(99,102,241,.3)}
+            .card-hover{transition:all .2s ease}
+            .card-hover:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(99,102,241,.2)}
+            .option-btn{transition:all .15s ease}
+            .option-btn:hover:not(:disabled){background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.6)}
+            .tab-active{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 0 16px rgba(99,102,241,.5)}
+            .progress-bar{background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899);transition:width .5s ease}
+            .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.5px}
+            .scenario-card{border:1px solid rgba(99,102,241,.25);background:rgba(99,102,241,.05);border-radius:12px;padding:20px;margin-bottom:16px;transition:all .2s}
+            .scenario-card:hover{border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.08)}
+            .correct-opt{background:rgba(34,197,94,.15)!important;border-color:rgba(34,197,94,.6)!important}
+            .wrong-opt{background:rgba(239,68,68,.15)!important;border-color:rgba(239,68,68,.6)!important}
+            .reveal-opt{background:rgba(34,197,94,.1)!important;border-color:rgba(34,197,94,.4)!important}
+            
+            /* Custom Tailwind Colors mapping */
+            .bg-emerald-500\/20 { background-color: rgba(16, 185, 129, 0.2); }
+            .text-emerald-300 { color: rgb(110, 231, 183); }
+            .border-emerald-500\/40 { border-color: rgba(16, 185, 129, 0.4); }
+
+            .bg-blue-500\/20 { background-color: rgba(59, 130, 246, 0.2); }
+            .text-blue-300 { color: rgb(147, 197, 253); }
+            .border-blue-500\/40 { border-color: rgba(59, 130, 246, 0.4); }
+
+            .bg-purple-500\/20 { background-color: rgba(168, 85, 247, 0.2); }
+            .text-purple-300 { color: rgb(216, 180, 254); }
+            .border-purple-500\/40 { border-color: rgba(168, 85, 247, 0.4); }
+
+            .bg-orange-500\/20 { background-color: rgba(249, 115, 22, 0.2); }
+            .text-orange-300 { color: rgb(253, 186, 116); }
+            .border-orange-500\/40 { border-color: rgba(249, 115, 22, 0.4); }
+
+            .bg-red-500\/20 { background-color: rgba(239, 68, 68, 0.2); }
+            .text-red-300 { color: rgb(252, 165, 165); }
+            .border-red-500\/40 { border-color: rgba(239, 68, 68, 0.4); }
+          `}</style>
+
+          {/* Header */}
+          <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,.15),rgba(139,92,246,.1))", borderBottom: "1px solid rgba(99,102,241,.3)", padding: "24px 20px" }}>
+            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+                <div style={{ fontSize: 28 }}>☕</div>
+                <div>
+                  <h1 style={{ fontSize: 22, fontWeight: 700, background: "linear-gradient(135deg,#a5b4fc,#e879f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", margin: 0 }}>
+                    Java Exception Mastery
+                  </h1>
+                  <p style={{ color: "#64748b", fontSize: 12, margin: 0 }}>230 MCQs + 20 Coding Scenarios · Basics → FAANG Level</p>
+                </div>
+              </div>
+
+              {/* Stats Bar */}
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 16 }}>
+                {[
+                  { label: "Total MCQs", val: stats.total, icon: "📋" },
+                  { label: "Attempted", val: stats.answered, icon: "✍️" },
+                  { label: "Correct", val: stats.correct, icon: "✅" },
+                  { label: "Accuracy", val: stats.answered ? Math.round(stats.correct / stats.answered * 100) + "%" : "–", icon: "🎯" },
+                  { label: "Scenarios", val: 20, icon: "💻" },
+                ].map(s => (
+                  <div key={s.label} style={{ background: "rgba(15,23,42,.6)", border: "1px solid rgba(99,102,241,.2)", borderRadius: 8, padding: "8px 16px", display: "flex", gap: 8, alignItems: "center" }}>
+                    <span>{s.icon}</span>
+                    <div>
+                      <div style={{ fontSize: 18, fontWeight: 700, color: "#a5b4fc" }}>{s.val}</div>
+                      <div style={{ fontSize: 10, color: "#64748b" }}>{s.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Progress */}
+              <div style={{ marginTop: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>MCQ Progress</span>
+                  <span style={{ fontSize: 11, color: "#a5b4fc" }}>{progressPct}%</span>
+                </div>
+                <div style={{ height: 4, background: "rgba(99,102,241,.15)", borderRadius: 2 }}>
+                  <div className="progress-bar" style={{ height: "100%", width: progressPct + "%", borderRadius: 2 }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px" }}>
+            <div style={{ display: "flex", gap: 8, padding: "16px 0 0", borderBottom: "1px solid rgba(99,102,241,.15)", marginBottom: 20 }}>
+              {[
+                { id: "mcq", label: "📋 MCQ Bank (230)", desc: "Multiple Choice" },
+                { id: "quiz", label: "⚡ Quiz Mode", desc: "Test Yourself" },
+                { id: "scenarios", label: "💻 Coding Scenarios (20)", desc: "FAANG Practice" },
+              ].map(t => (
+                <button key={t.id} onClick={() => setTab(t.id)}
+                  style={{ padding: "8px 18px", borderRadius: "8px 8px 0 0", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, fontFamily: "inherit", background: tab === t.id ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "rgba(99,102,241,.08)", color: tab === t.id ? "white" : "#64748b", transition: "all .2s" }}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {/* MCQ Tab */}
+            {tab === "mcq" && (
+              <div>
+                {/* Filters */}
+                <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+                  <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search questions..."
+                    style={{ flex: 1, minWidth: 200, background: "rgba(15,23,42,.8)", border: "1px solid rgba(99,102,241,.3)", borderRadius: 8, padding: "8px 12px", color: "#e2e8f0", fontSize: 13, fontFamily: "inherit", outline: "none" }} />
+                  <select value={levelFilter} onChange={e => setLevelFilter(e.target.value)}
+                    style={{ background: "rgba(15,23,42,.8)", border: "1px solid rgba(99,102,241,.3)", borderRadius: 8, padding: "8px 12px", color: "#e2e8f0", fontSize: 12, fontFamily: "inherit", cursor: "pointer" }}>
+                    {LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+                  </select>
+                  <select value={topicFilter} onChange={e => setTopicFilter(e.target.value)}
+                    style={{ background: "rgba(15,23,42,.8)", border: "1px solid rgba(99,102,241,.3)", borderRadius: 8, padding: "8px 12px", color: "#e2e8f0", fontSize: 12, fontFamily: "inherit", cursor: "pointer" }}>
+                    {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                  <span style={{ alignSelf: "center", fontSize: 12, color: "#64748b" }}>{filtered.length} questions</span>
+                </div>
+
+                {/* Questions */}
+                {paginated.map((q, qi) => {
+                  const ans = answered[q.id];
+                  const lc = levelColors[q.level] || levelColors.Basics;
+                  return (
+                    <div key={q.id} className="card-hover" style={{ background: "rgba(15,23,42,.7)", border: `1px solid rgba(99,102,241,.2)`, borderRadius: 12, padding: "18px 20px", marginBottom: 12 }}>
+                      <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 12 }}>
+                        <span style={{ minWidth: 32, height: 32, borderRadius: 8, background: "rgba(99,102,241,.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#a5b4fc" }}>#{q.id}</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+                            <span className={`badge ${lc.bg} ${lc.text}`} style={{ border: `1px solid`, borderColor: lc.border.replace("border-", "") }}>{q.level}</span>
+                            <span style={{ fontSize: 11, color: "#64748b", padding: "2px 8px", background: "rgba(100,116,139,.1)", borderRadius: 999 }}>{q.topic}</span>
+                          </div>
+                          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, whiteSpace: "pre-line" }}>{q.q}</p>
+                        </div>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                        {q.options.map((opt, i) => {
+                          let extra = "";
+                          if (ans) {
+                            if (i === q.ans) extra = "reveal-opt";
+                            if (ans.chosen === i && ans.chosen !== q.ans) extra = "wrong-opt";
+                            if (ans.chosen === i && ans.correct) extra = "correct-opt";
+                          }
+                          return (
+                            <button key={i} onClick={() => handleAnswer(q.id, i, q.ans)} disabled={!!ans}
+                              className={`option-btn ${extra}`}
+                              style={{ background: "rgba(99,102,241,.06)", border: "1px solid rgba(99,102,241,.2)", borderRadius: 8, padding: "8px 12px", color: "#cbd5e1", fontSize: 12, fontFamily: "inherit", cursor: ans ? "default" : "pointer", textAlign: "left", display: "flex", gap: 8, alignItems: "center" }}>
+                              <span style={{ color: "#6366f1", fontWeight: 700, minWidth: 16 }}>{String.fromCharCode(65 + i)}.</span>
+                              {opt}
+                              {ans && i === q.ans && <span style={{ marginLeft: "auto", color: "#22c55e" }}>✓</span>}
+                              {ans && ans.chosen === i && i !== q.ans && <span style={{ marginLeft: "auto", color: "#ef4444" }}>✗</span>}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {ans && (
+                        <div style={{ marginTop: 10, padding: "8px 12px", borderRadius: 8, background: ans.correct ? "rgba(34,197,94,.08)" : "rgba(239,68,68,.08)", border: `1px solid ${ans.correct ? "rgba(34,197,94,.3)" : "rgba(239,68,68,.3)"}`, fontSize: 12, color: ans.correct ? "#86efac" : "#fca5a5" }}>
+                          {ans.correct ? "✅ Correct!" : `❌ Incorrect. Correct answer: ${q.options[q.ans]}`}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                {/* Pagination */}
+                <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "20px 0 32px", flexWrap: "wrap" }}>
+                  <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
+                    style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid rgba(99,102,241,.3)", background: "rgba(99,102,241,.1)", color: "#a5b4fc", cursor: page === 1 ? "not-allowed" : "pointer", opacity: page === 1 ? 0.4 : 1, fontSize: 12, fontFamily: "inherit" }}>← Prev</button>
+                  {Array.from({ length: Math.min(7, totalPages) }, (_, i) => {
+                    const p = totalPages <= 7 ? i + 1 : page <= 4 ? i + 1 : page >= totalPages - 3 ? totalPages - 6 + i : page - 3 + i;
+                    return (
+                      <button key={p} onClick={() => setPage(p)}
+                        style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid rgba(99,102,241,.3)", background: page === p ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "rgba(99,102,241,.1)", color: page === p ? "white" : "#a5b4fc", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>{p}</button>
+                    );
+                  })}
+                  <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
+                    style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid rgba(99,102,241,.3)", background: "rgba(99,102,241,.1)", color: "#a5b4fc", cursor: page === totalPages ? "not-allowed" : "pointer", opacity: page === totalPages ? 0.4 : 1, fontSize: 12, fontFamily: "inherit" }}>Next →</button>
+                </div>
+              </div>
+            )}
+
+            {/* Quiz Mode Tab */}
+            {tab === "quiz" && currentQuiz && (
+              <div style={{ maxWidth: 700, margin: "0 auto", paddingBottom: 40 }}>
+                <div style={{ display: "flex", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
+                  <select value={levelFilter} onChange={e => { setLevelFilter(e.target.value); setQuizIdx(0); setQuizAnswered(null); }}
+                    style={{ background: "rgba(15,23,42,.8)", border: "1px solid rgba(99,102,241,.3)", borderRadius: 8, padding: "8px 12px", color: "#e2e8f0", fontSize: 12, fontFamily: "inherit" }}>
+                    {LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+                  </select>
+                  <div style={{ flex: 1, textAlign: "right", fontSize: 13, color: "#64748b", alignSelf: "center" }}>
+                    Score: <span style={{ color: "#22c55e", fontWeight: 700 }}>{quizScore}</span> / {quizTotal} 
+                    {quizTotal > 0 && <span style={{ color: "#a5b4fc", marginLeft: 8 }}>({Math.round(quizScore / quizTotal * 100)}%)</span>}
+                  </div>
+                </div>
+
+                {/* Progress */}
+                <div style={{ marginBottom: 4, fontSize: 11, color: "#64748b" }}>Question {quizIdx + 1} of {quizQuestions.length}</div>
+                <div style={{ height: 3, background: "rgba(99,102,241,.15)", borderRadius: 2, marginBottom: 20 }}>
+                  <div style={{ height: "100%", width: ((quizIdx + 1) / quizQuestions.length * 100) + "%", background: "linear-gradient(90deg,#6366f1,#8b5cf6)", borderRadius: 2, transition: "width .3s" }} />
+                </div>
+
+                <div style={{ background: "rgba(15,23,42,.8)", border: "1px solid rgba(99,102,241,.3)", borderRadius: 16, padding: 28, glow: true }}>
+                  <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
+                    <span className={`badge ${(levelColors[currentQuiz.level] || levelColors.Basics).bg} ${(levelColors[currentQuiz.level] || levelColors.Basics).text}`}>{currentQuiz.level}</span>
+                    <span style={{ fontSize: 11, color: "#64748b", padding: "2px 8px", background: "rgba(100,116,139,.1)", borderRadius: 999 }}>{currentQuiz.topic}</span>
+                  </div>
+                  <p style={{ fontSize: 15, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{currentQuiz.q}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {currentQuiz.options.map((opt, i) => {
+                      let extra = "";
+                      if (quizAnswered !== null) {
+                        if (i === currentQuiz.ans) extra = "reveal-opt";
+                        if (quizAnswered === i && i !== currentQuiz.ans) extra = "wrong-opt";
+                        if (quizAnswered === i && i === currentQuiz.ans) extra = "correct-opt";
+                      }
+                      return (
+                        <button key={i} onClick={() => handleQuizAnswer(i)} disabled={quizAnswered !== null}
+                          className={`option-btn ${extra}`}
+                          style={{ background: "rgba(99,102,241,.06)", border: "1px solid rgba(99,102,241,.2)", borderRadius: 10, padding: "12px 16px", color: "#cbd5e1", fontSize: 13, fontFamily: "inherit", cursor: quizAnswered !== null ? "default" : "pointer", textAlign: "left", display: "flex", gap: 12, alignItems: "center" }}>
+                          <span style={{ width: 24, height: 24, borderRadius: 6, background: "rgba(99,102,241,.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "#a5b4fc", flexShrink: 0 }}>{String.fromCharCode(65 + i)}</span>
+                          {opt}
+                          {quizAnswered !== null && i === currentQuiz.ans && <span style={{ marginLeft: "auto", color: "#22c55e", fontSize: 16 }}>✓</span>}
+                          {quizAnswered !== null && quizAnswered === i && i !== currentQuiz.ans && <span style={{ marginLeft: "auto", color: "#ef4444", fontSize: 16 }}>✗</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {quizAnswered !== null && (
+                    <div style={{ marginTop: 16 }}>
+                      <div style={{ padding: "10px 14px", borderRadius: 8, background: quizAnswered === currentQuiz.ans ? "rgba(34,197,94,.08)" : "rgba(239,68,68,.08)", border: `1px solid ${quizAnswered === currentQuiz.ans ? "rgba(34,197,94,.3)" : "rgba(239,68,68,.3)"}`, fontSize: 13, color: quizAnswered === currentQuiz.ans ? "#86efac" : "#fca5a5", marginBottom: 12 }}>
+                        {quizAnswered === currentQuiz.ans ? "🎉 Correct!" : `💡 Correct: ${currentQuiz.options[currentQuiz.ans]}`}
+                      </div>
+                      <button onClick={nextQuiz}
+                        style={{ width: "100%", padding: "12px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white", fontSize: 14, fontWeight: 600, fontFamily: "inherit", cursor: "pointer" }}>
+                        Next Question →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Scenarios Tab */}
+            {tab === "scenarios" && (
+              <div style={{ paddingBottom: 40 }}>
+                <div style={{ background: "rgba(99,102,241,.08)", border: "1px solid rgba(99,102,241,.2)", borderRadius: 12, padding: "14px 18px", marginBottom: 20, fontSize: 13, color: "#94a3b8" }}>
+                  💡 <strong style={{ color: "#a5b4fc" }}>20 Real-World Coding Scenarios</strong> — ranging from beginner file handling to FAANG-level distributed system design. Code each on your machine before revealing hints.
+                </div>
+                {allQuestions.scenarios.map(s => {
+                  const lc = levelColors[s.level] || levelColors.Basics;
+                  const hint = showHints[s.id];
+                  return (
+                    <div key={s.id} className="scenario-card">
+                      <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 12 }}>
+                        <div style={{ minWidth: 40, height: 40, borderRadius: 10, background: "rgba(99,102,241,.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "#a5b4fc" }}>{s.id}</div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 6 }}>
+                            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#e2e8f0" }}>{s.title}</h3>
+                            <span className={`badge ${lc.bg} ${lc.text}`}>{s.level}</span>
+                          </div>
+                          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                            {s.tags.map(tag => (
+                              <span key={tag} style={{ fontSize: 10, padding: "2px 8px", borderRadius: 999, background: "rgba(99,102,241,.1)", border: "1px solid rgba(99,102,241,.2)", color: "#818cf8" }}>{tag}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style={{ background: "rgba(0,0,0,.3)", borderRadius: 8, padding: "14px 16px", marginBottom: 12, fontSize: 13, lineHeight: 1.7, color: "#cbd5e1", borderLeft: "3px solid rgba(99,102,241,.5)" }}>
+                        {s.desc}
+                      </div>
+
+                      <div style={{ display: "flex", gap: 10 }}>
+                        <button onClick={() => setShowHints(p => ({ ...p, [s.id]: !p[s.id] }))}
+                          style={{ padding: "7px 16px", borderRadius: 8, border: "1px solid rgba(234,179,8,.3)", background: "rgba(234,179,8,.08)", color: "#fbbf24", fontSize: 12, fontFamily: "inherit", cursor: "pointer", fontWeight: 600 }}>
+                          {hint ? "🙈 Hide Hint" : "💡 Show Hint"}
+                        </button>
+                      </div>
+
+                      {hint && (
+                        <div style={{ marginTop: 10, background: "rgba(234,179,8,.05)", border: "1px solid rgba(234,179,8,.2)", borderRadius: 8, padding: "12px 16px", fontSize: 12, color: "#fde68a", lineHeight: 1.7 }}>
+                          <strong>💡 Hint:</strong> {s.hint}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('praction-root'));
+    root.render(<App />);
+  </script>
 
   <!--
     - custom js link
