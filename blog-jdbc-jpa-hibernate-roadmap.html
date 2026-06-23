@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The JDBC → JPA → Hibernate Roadmap — Shivansh Kumar</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="./assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Premium Roadmap Specific CSS */
+    .roadmap-container {
+      font-family: 'Outfit', 'Poppins', sans-serif;
+      color: var(--white-1);
+    }
+
+    .blog-header { margin-bottom: 25px; }
+
+    .blog-meta-wrapper {
+      display: flex; align-items: center; gap: 12px;
+      font-size: var(--fs-7); color: var(--light-gray-70);
+      margin-bottom: 12px; font-weight: 500;
+    }
+
+    .blog-meta-wrapper .category {
+      color: var(--orange-yellow-crayola); background: var(--accent-soft-glow);
+      padding: 3px 12px; border-radius: 20px; font-size: 11px;
+      letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600;
+    }
+
+    .blog-title {
+      font-size: clamp(22px, 5vw, 32px); font-weight: 600;
+      color: var(--white-1); line-height: 1.25; margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .blog-subtitle {
+      font-size: var(--fs-6); color: var(--light-gray);
+      line-height: 1.6; margin-bottom: 25px; font-weight: 300;
+    }
+
+    .back-to-blog {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--orange-yellow-crayola); font-size: var(--fs-6);
+      font-weight: var(--fw-500); border: 1px solid var(--orange-yellow-crayola);
+      padding: 8px 18px; border-radius: 8px; transition: var(--transition-1);
+      margin-bottom: 20px; background: transparent;
+    }
+
+    .back-to-blog:hover {
+      background: var(--orange-yellow-crayola); color: var(--smoky-black);
+      transform: translateX(-4px);
+    }
+
+    .blog-banner-img {
+      width: 100%; height: 220px; border-radius: 16px; overflow: hidden;
+      margin-bottom: 25px; border: 1px solid var(--jet); box-shadow: var(--shadow-2);
+    }
+
+    .blog-banner-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
+      display: block; transition: transform var(--transition-2);
+    }
+
+    .blog-banner-img:hover img { transform: scale(1.03); }
+
+    @media (min-width: 576px) { .blog-banner-img { height: 280px; } }
+    @media (min-width: 1024px) { .blog-banner-img { height: 340px; } }
+
+    .roadmap { padding: 10px 0 30px; max-width: 100%; }
+
+    .header-block {
+      margin-bottom: 20px; border-left: 4px solid var(--orange-yellow-crayola);
+      padding-left: 15px;
+    }
+
+    .header-block h1 { font-size: 22px; font-weight: 600; color: var(--white-1); }
+    .header-block p { font-size: 13px; color: var(--light-gray); margin-top: 4px; }
+
+    .progress-bar {
+      display: flex; gap: 6px; margin-bottom: 28px; height: 6px;
+      background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden;
+    }
+    .prog-seg { height: 100%; flex: 1; border-radius: 3px; }
+
+    .phase {
+      margin-bottom: 20px; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--jet); background: var(--eerie-black-1);
+      box-shadow: var(--shadow-2); transition: border-color var(--transition-1), transform var(--transition-1);
+    }
+    .phase:hover { border-color: rgba(255, 255, 255, 0.1); }
+
+    .phase-header {
+      padding: 16px 20px; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; user-select: none; transition: background-color var(--transition-1);
+    }
+
+    .phase-badge {
+      font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    .phase-title { font-size: 16px; font-weight: 600; color: var(--white-1); font-family: 'Outfit', sans-serif; }
+    .phase-sub { font-size: 12px; color: var(--light-gray); margin-top: 4px; font-weight: 300; }
+
+    .chevron {
+      font-size: 14px; color: var(--light-gray-70); transition: transform 0.25s ease, color 0.25s ease;
+      display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;
+      border-radius: 50%; background: rgba(255, 255, 255, 0.03);
+    }
+    .chevron.open { transform: rotate(180deg); color: var(--orange-yellow-crayola); background: rgba(16, 185, 129, 0.1); }
+
+    .phase-body { display: none; padding: 10px 20px 24px; background: var(--eerie-black-2); border-top: 1px solid var(--jet); }
+    .phase-body.open { display: block; animation: slideDown 0.3s ease-out; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section { margin-top: 20px; }
+    .section:first-child { margin-top: 5px; }
+
+    .section-title {
+      font-size: 12px; font-weight: 600; color: var(--orange-yellow-crayola); margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--jet); padding-bottom: 6px;
+    }
+
+    .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+
+    .topic-card {
+      border: 1px solid var(--jet); border-radius: 12px; padding: 14px 16px;
+      background: var(--eerie-black-1); transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .topic-card:hover { border-color: rgba(16, 185, 129, 0.3); transform: translateY(-2px); box-shadow: var(--shadow-1); }
+
+    .topic-name {
+      font-size: 14px; font-weight: 600; color: var(--white-1); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 6px;
+    }
+    .topic-name ion-icon { font-size: 16px; color: var(--orange-yellow-crayola); }
+
+    .subtopics { list-style: none; padding-left: 0; margin-bottom: 0; }
+    .subtopics li { font-size: 12.5px; color: var(--light-gray); padding: 4px 0 4px 14px; position: relative; line-height: 1.5; }
+    .subtopics li::before { content: "•"; position: absolute; left: 2px; top: 3px; color: var(--orange-yellow-crayola); font-size: 14px; opacity: 0.7; }
+
+    .p1 .phase-header { background: linear-gradient(135deg, rgba(181, 212, 244, 0.04) 0%, rgba(135, 180, 230, 0.02) 100%); border-left: 4px solid #378ADD; }
+    .p1 .phase-badge { background: rgba(55, 138, 221, 0.12); color: #87B4E6; border: 1px solid rgba(55, 138, 221, 0.2); }
+
+    .p2 .phase-header { background: linear-gradient(135deg, rgba(250, 238, 218, 0.04) 0%, rgba(250, 199, 117, 0.02) 100%); border-left: 4px solid #FAC775; }
+    .p2 .phase-badge { background: rgba(250, 199, 117, 0.12); color: #FAC775; border: 1px solid rgba(250, 199, 117, 0.2); }
+
+    .p3 .phase-header { background: linear-gradient(135deg, rgba(251, 234, 240, 0.04) 0%, rgba(244, 192, 209, 0.02) 100%); border-left: 4px solid #D4537E; }
+    .p3 .phase-badge { background: rgba(212, 83, 126, 0.12); color: #F4C0D1; border: 1px solid rgba(212, 83, 126, 0.2); }
+
+    .faang-tip {
+      background: rgba(239, 159, 39, 0.04); border-left: 4px solid #EF9F27; border-radius: 0 12px 12px 0;
+      padding: 14px 18px; margin-top: 20px; font-size: 13px; color: var(--light-gray); line-height: 1.6;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .faang-tip ion-icon { font-size: 18px; color: #EF9F27; flex-shrink: 0; margin-top: 1px; }
+    .faang-tip strong { color: var(--white-1); font-weight: 600; }
+
+    pre {
+      background: var(--eerie-black-1); padding: 15px; border-radius: 10px; border: 1px solid var(--jet);
+      overflow-x: auto; margin: 20px 0; color: var(--white-2); font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.5;
+    }
+
+    code {
+      background: var(--eerie-black-1); padding: 2px 6px; border-radius: 4px; color: var(--orange-yellow-crayola);
+      font-family: 'Courier New', Courier, monospace; font-size: 13.5px;
+    }
+    pre code { background: transparent; padding: 0; color: inherit; }
+    
+    .checklist { margin-top: 20px; }
+    .checklist-title { font-size: 18px; font-weight: 600; color: var(--white-1); margin-bottom: 10px; margin-top: 30px; border-bottom: 1px solid var(--jet); padding-bottom: 5px; }
+    .checklist ul { list-style: none; padding: 0; }
+    .checklist li { margin-bottom: 8px; font-size: 14px; color: var(--light-gray); display: flex; align-items: center; gap: 8px; }
+    .checklist li::before { content: "☐"; color: var(--orange-yellow-crayola); font-size: 18px; }
+
+    @media (max-width: 768px) {
+      .phase-header { padding: 14px 16px; }
+      .phase-badge { padding: 2px 8px; font-size: 9px; }
+      .phase-title { font-size: 14px; }
+      .phase-sub { font-size: 11px; }
+      .topics-grid { grid-template-columns: 1fr; }
+      .back-to-blog { width: 100%; justify-content: center; }
+    }
+  </style>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4717756785839065" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Shivansh Kumar" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Shivansh Kumar">Shivansh Kumar</h1>
+          <p class="title">Software Engineer</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="javascript:void(0)" class="contact-link" id="email-copy-link"
+                data-copy-email="kumarshivansh1013@gmail.com" title="Click or hover to copy">kumarshivansh1013@gmail.com</a>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="location-outline"></ion-icon></div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Noida, India</address>
+            </div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/shivansh-kumar-492b3021b/" class="social-link" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-linkedin"></ion-icon></a>
+          </li>
+          <li class="social-item">
+            <a href="https://github.com/ShivanshKumar4265" class="social-link" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-github"></ion-icon></a>
+          </li>
+          <li class="social-item">
+            <a href="https://x.com/codeXstalker" class="social-link" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-twitter"></ion-icon></a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <article class="active roadmap-container">
+        <header class="blog-header">
+          <div class="blog-meta-wrapper">
+            <span class="category">Backend</span>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <time datetime="2026-06-24">Jun 24, 2026</time>
+            <span class="dot" style="display:inline-block;width:4px;height:4px;background:var(--light-gray-70);border-radius:50%"></span>
+            <span>18 min read</span>
+          </div>
+
+          <h1 class="blog-title">The JDBC → JPA → Hibernate Roadmap</h1>
+          <p class="blog-subtitle">A Chronological, Connected Learning Path for Java Database Mastery.</p>
+
+          <a href="./index.html#blog" class="back-to-blog">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Portfolio</span>
+          </a>
+        </header>
+
+        <figure class="blog-banner-img">
+          <img src="./assets/images/blog-hibernate-roadmap-banner.png" alt="The JDBC to JPA to Hibernate Roadmap">
+        </figure>
+
+        <div class="roadmap">
+          <div class="faang-tip" style="margin-bottom: 30px;">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <div>
+              <strong>How to read this map:</strong> Every layer builds on the previous one. JDBC is the raw foundation. JPA is the abstraction standard built <em>on top of</em> JDBC's concepts. Hibernate is the most powerful <em>implementation</em> of JPA — and understanding JDBC first makes Hibernate feel logical, not magical.
+            </div>
+          </div>
+
+          <div class="progress-bar">
+            <div class="prog-seg" style="background:#378ADD"></div>
+            <div class="prog-seg" style="background:#FAC775"></div>
+            <div class="prog-seg" style="background:#D4537E"></div>
+          </div>
+
+          <!-- PHASE 1: JDBC -->
+          <div class="phase p1">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 1</span>
+                  <span class="phase-title">JDBC (Java Database Connectivity)</span>
+                </div>
+                <div class="phase-sub">Talk to the database the raw, manual way</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body open">
+              <p style="font-size: 13px; color: var(--light-gray); margin-bottom: 20px;">
+                JDBC is Java's lowest-level API for database communication. You write SQL yourself, manage connections yourself, and map results yourself. It's verbose — but understanding it makes everything above it click.
+              </p>
+              
+              <div class="section">
+                <div class="section-title">1.1 Foundations & Setup</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="cube-outline"></ion-icon> Core Concepts</div>
+                    <ul class="subtopics">
+                      <li><strong>What is JDBC?</strong> — The Java standard API for relational database access (<code>java.sql</code>)</li>
+                      <li><strong>JDBC Architecture</strong> — DriverManager → Connection → Statement → ResultSet</li>
+                      <li><strong>JDBC Drivers</strong> — Type 1, 2, 3, 4 drivers; why Type 4 (thin driver) is used today</li>
+                      <li><strong>Adding a JDBC Driver</strong> — Maven dependency (e.g., <code>mysql-connector-java</code>)</li>
+                      <li><strong>DriverManager vs DataSource</strong> — Differences, when to use which</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">1.2 Establishing a Connection</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="link-outline"></ion-icon> Connections</div>
+                    <ul class="subtopics">
+                      <li><code>DriverManager.getConnection()</code> — The basic connection call</li>
+                      <li><strong>JDBC URL format</strong> — <code>jdbc:mysql://host:port/dbname?params</code></li>
+                      <li><strong>Connection properties</strong> — Timeouts, SSL, charset</li>
+                      <li><strong>Connection lifecycle</strong> — Open, use, close</li>
+                      <li><strong>Why connections are expensive</strong> — TCP handshake, auth, state</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">1.3 Executing SQL & 1.4 Reading Results</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="code-working-outline"></ion-icon> Statements</div>
+                    <ul class="subtopics">
+                      <li><strong>Statement</strong> — Simple SQL execution</li>
+                      <li><strong>PreparedStatement</strong> — Parameterized queries; prevents SQL injection</li>
+                      <li><strong>CallableStatement</strong> — Calling stored procedures</li>
+                      <li><code>executeQuery()</code> vs <code>executeUpdate()</code> vs <code>execute()</code></li>
+                      <li><strong>Batch execution</strong> — <code>addBatch()</code> / <code>executeBatch()</code></li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="list-outline"></ion-icon> ResultSets</div>
+                    <ul class="subtopics">
+                      <li><strong>ResultSet</strong> — Cursor-based iteration over rows</li>
+                      <li><code>ResultSet.next()</code> — Row navigation</li>
+                      <li><strong>Column access</strong> — <code>getString()</code>, <code>getInt()</code>, etc.</li>
+                      <li><strong>ResultSetMetaData</strong> — Inspect column names, types dynamically</li>
+                      <li><strong>Scrollable & Updatable</strong> — <code>TYPE_SCROLL_INSENSITIVE</code></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">1.5 Transactions & 1.6 Pooling</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="shield-checkmark-outline"></ion-icon> Transactions</div>
+                    <ul class="subtopics">
+                      <li><strong>auto-commit mode</strong> — Default ON</li>
+                      <li><code>setAutoCommit(false)</code> — Start a manual transaction</li>
+                      <li><code>commit()</code> / <code>rollback()</code></li>
+                      <li><strong>Savepoints</strong> — Partial rollbacks</li>
+                      <li><strong>Isolation levels</strong> — Read Uncommitted to Serializable</li>
+                      <li>Dirty read, Non-repeatable read, Phantom read</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="layers-outline"></ion-icon> Connection Pooling</div>
+                    <ul class="subtopics">
+                      <li><strong>The problem</strong> — Creating connection per request is slow</li>
+                      <li><strong>What a pool does</strong> — Reuses pre-created connections</li>
+                      <li><strong>HikariCP</strong> — The fastest modern JDBC pool</li>
+                      <li><strong>Pool configuration</strong> — <code>maximumPoolSize</code>, <code>idleTimeout</code></li>
+                      <li><strong>DataSource interface</strong> — Standard way to get pooled connections</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faang-tip">
+                <ion-icon name="bulb-outline"></ion-icon>
+                <div>
+                  <strong>JDBC Pain Points (Why We Need More):</strong> Manual SQL, manual mapping (row by row), manual try-catch-finally, no object relationships, no caching, no lazy loading. <em>These pain points are exactly what JPA and Hibernate solve.</em>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHASE 2: JPA -->
+          <div class="phase p2">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 2</span>
+                  <span class="phase-title">JPA (Jakarta Persistence API)</span>
+                </div>
+                <div class="phase-sub">A standard contract for Object-Relational Mapping</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <p style="font-size: 13px; color: var(--light-gray); margin-bottom: 20px;">
+                JPA is <strong>not a library</strong> — it's a <strong>specification</strong>. It defines <em>how</em> Java objects should be mapped to database tables, <em>how</em> queries should be written, and <em>how</em> transactions should be managed — without dictating the implementation.
+              </p>
+
+              <div class="section">
+                <div class="section-title">2.1 ORM Concept & 2.2 Entity Mapping</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="git-compare-outline"></ion-icon> The ORM Concept</div>
+                    <ul class="subtopics">
+                      <li><strong>What is ORM?</strong> — Object-Relational Mapping</li>
+                      <li><strong>The impedance mismatch</strong> — Objects vs Tables</li>
+                      <li><strong>JPA vs JDBC</strong> — JPA sits above JDBC</li>
+                      <li><strong>JPA Providers</strong> — Hibernate, EclipseLink</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="document-text-outline"></ion-icon> Core Annotations</div>
+                    <ul class="subtopics">
+                      <li><code>@Entity</code>, <code>@Table</code></li>
+                      <li><code>@Id</code>, <code>@GeneratedValue</code> (AUTO, IDENTITY, SEQUENCE)</li>
+                      <li><code>@Column</code>, <code>@Transient</code></li>
+                      <li><code>@Enumerated</code>, <code>@Temporal</code>, <code>@Lob</code></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">2.3 Relationships & 2.4 Fetch Types</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="share-social-outline"></ion-icon> Relationships</div>
+                    <ul class="subtopics">
+                      <li><code>@OneToOne</code>, <code>@OneToMany</code></li>
+                      <li><code>@ManyToOne</code>, <code>@ManyToMany</code></li>
+                      <li><code>@JoinColumn</code>, <code>@JoinTable</code></li>
+                      <li><code>mappedBy</code> — The non-owning side</li>
+                      <li>Owning side vs inverse side concept</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="download-outline"></ion-icon> Fetching & Cascades</div>
+                    <ul class="subtopics">
+                      <li><code>FetchType.EAGER</code> vs <code>LAZY</code></li>
+                      <li><strong>The N+1 problem</strong></li>
+                      <li><code>CascadeType</code> (PERSIST, MERGE, REMOVE, ALL)</li>
+                      <li><code>orphanRemoval = true</code></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">2.6 Entity Lifecycle & 2.7 EntityManager</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="sync-outline"></ion-icon> Entity States</div>
+                    <ul class="subtopics">
+                      <li><strong>Transient</strong> — New object</li>
+                      <li><strong>Managed (Persistent)</strong> — Tracked by EntityManager</li>
+                      <li><strong>Detached</strong> — Was managed, now un-tracked</li>
+                      <li><strong>Removed</strong> — Marked for deletion</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="albums-outline"></ion-icon> EntityManager API</div>
+                    <ul class="subtopics">
+                      <li><code>persist()</code>, <code>find()</code></li>
+                      <li><code>merge()</code>, <code>remove()</code></li>
+                      <li><code>flush()</code>, <code>refresh()</code></li>
+                      <li><code>detach()</code>, <code>clear()</code></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">2.9 JPQL & 2.10 Criteria API</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="search-outline"></ion-icon> JPQL</div>
+                    <ul class="subtopics">
+                      <li>Operates on <em>entities</em>, not tables</li>
+                      <li><code>SELECT e FROM Employee e</code></li>
+                      <li><code>JOIN FETCH</code> (solves N+1)</li>
+                      <li>Named parameters <code>:paramName</code></li>
+                      <li><code>@NamedQuery</code></li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="construct-outline"></ion-icon> Criteria API & Tx</div>
+                    <ul class="subtopics">
+                      <li>Type-safe, programmatic queries</li>
+                      <li><code>CriteriaBuilder</code>, <code>CriteriaQuery</code></li>
+                      <li><code>@Transactional</code> (Spring)</li>
+                      <li>Propagation types & Rollback rules</li>
+                      <li>Inheritance Strategies (SINGLE_TABLE, JOINED)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PHASE 3: HIBERNATE -->
+          <div class="phase p3">
+            <div class="phase-header" onclick="togglePhase(this)">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap">
+                  <span class="phase-badge">Phase 3</span>
+                  <span class="phase-title">Hibernate & Spring Data</span>
+                </div>
+                <div class="phase-sub">The most powerful JPA implementation and modern tools</div>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="phase-body">
+              <p style="font-size: 13px; color: var(--light-gray); margin-bottom: 20px;">
+                Hibernate <em>implements</em> JPA, but also has its own powerful features that go beyond the spec. This is where performance, caching, and advanced mapping become your tools.
+              </p>
+
+              <div class="section">
+                <div class="section-title">3.1 Architecture & 3.3 Persistence Context</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="settings-outline"></ion-icon> Core Hibernate</div>
+                    <ul class="subtopics">
+                      <li>SessionFactory (= EntityManagerFactory)</li>
+                      <li>Session (= EntityManager)</li>
+                      <li><code>hbm2ddl.auto</code> (update, create-drop)</li>
+                      <li>Dialects (MySQLDialect)</li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="save-outline"></ion-icon> First-Level Cache</div>
+                    <ul class="subtopics">
+                      <li>A per-Session identity map</li>
+                      <li>Identity guarantee</li>
+                      <li><strong>Dirty checking</strong> — Auto-detects changes</li>
+                      <li>Flush → SQL generation timing</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">3.4 HQL & 3.6 Caching</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="server-outline"></ion-icon> Advanced Queries</div>
+                    <ul class="subtopics">
+                      <li><strong>HQL vs JPQL</strong> — HQL is a superset</li>
+                      <li><code>createNativeQuery(sql)</code></li>
+                      <li>Solving N+1: <code>@BatchSize</code>, <code>EntityGraph</code></li>
+                      <li><code>@FetchProfile</code></li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="flash-outline"></ion-icon> Caching Strategy</div>
+                    <ul class="subtopics">
+                      <li><strong>First-Level (L1)</strong> — Always on</li>
+                      <li><strong>Second-Level (L2)</strong> — Shared across Sessions</li>
+                      <li>L2 Providers (Ehcache, Redis)</li>
+                      <li><strong>Query Cache</strong> — Caches IDs, not entities</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">3.8 Advanced Mapping & 3.11 Locking</div>
+                <div class="topics-grid">
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="extension-puzzle-outline"></ion-icon> Advanced Mapping</div>
+                    <ul class="subtopics">
+                      <li><code>@Formula</code> — Computed columns</li>
+                      <li><code>@Where</code> — Soft delete filtering</li>
+                      <li><code>@Filter</code>, <code>@Immutable</code></li>
+                      <li>Collections: <code>@ElementCollection</code></li>
+                    </ul>
+                  </div>
+                  <div class="topic-card">
+                    <div class="topic-name"><ion-icon name="lock-closed-outline"></ion-icon> Locking & Batching</div>
+                    <ul class="subtopics">
+                      <li><strong>Optimistic locking</strong> — <code>@Version</code></li>
+                      <li><strong>Pessimistic locking</strong> — <code>FOR UPDATE</code></li>
+                      <li>Batch Processing — <code>hibernate.jdbc.batch_size</code></li>
+                      <li><code>StatelessSession</code> for pure ETL</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">3.16 Spring Data JPA</div>
+                <div class="topics-grid">
+                  <div class="topic-card" style="grid-column: 1 / -1;">
+                    <div class="topic-name"><ion-icon name="leaf-outline"></ion-icon> The Practical Layer</div>
+                    <ul class="subtopics" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
+                      <li><code>JpaRepository&lt;T, ID&gt;</code> — CRUD + paging</li>
+                      <li><strong>Derived query methods</strong> — <code>findByEmailAndAge()</code></li>
+                      <li><code>@Query</code> for custom JPQL</li>
+                      <li><code>Pageable</code> / <code>Page&lt;T&gt;</code> / <code>Slice&lt;T&gt;</code></li>
+                      <li><code>Specification&lt;T&gt;</code> — Composable predicates</li>
+                      <li><code>@Modifying</code> + <code>@Transactional</code> for bulk updates</li>
+                      <li>Auditing (<code>@CreatedDate</code>, <code>@LastModifiedDate</code>)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- THE FULL CONNECTION MAP -->
+          <div style="margin-top: 50px;">
+            <h2 class="blog-title" style="font-size: 24px; border-bottom: 1px solid var(--jet); padding-bottom: 10px; margin-bottom: 20px;">The Full Connection Map</h2>
+            <pre>
+  RAW JDBC
+  ─────────────────────────────────────────────────────
+  DriverManager → Connection → Statement → ResultSet
+  Manual SQL | Manual Mapping | Manual Transactions
+       │
+       │  Pain: verbose, error-prone, no object awareness
+       ▼
+  JPA SPECIFICATION (Standard)
+  ─────────────────────────────────────────────────────
+  @Entity/@Table → EntityManager → JPQL → @Transactional
+  Standard contract any provider must fulfill
+  Still generates SQL and uses JDBC underneath
+       │
+       │  JPA is the "what". Hibernate is the "how".
+       ▼
+  HIBERNATE (JPA Provider + Extensions)
+  ─────────────────────────────────────────────────────
+  SessionFactory/Session → L1/L2 Cache → HQL/Criteria
+  Batch processing | Envers | Filters | Custom types
+  Generates optimized SQL → sends via JDBC → DB
+       │
+       │  Spring Data JPA wraps Hibernate for productivity
+       ▼
+  SPRING DATA JPA
+  ─────────────────────────────────────────────────────
+  JpaRepository → Derived queries → Specifications
+  @Transactional | @EnableJpaAuditing | Projections
+            </pre>
+          </div>
+
+          <!-- CHECKLIST -->
+          <div class="checklist">
+            <h2 class="checklist-title">Topic Checklist (Study Order)</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px;">
+              <div>
+                <h3 style="color: var(--orange-yellow-crayola); font-size: 15px; margin-bottom: 10px;">JDBC Block</h3>
+                <ul>
+                  <li>JDBC Architecture & Drivers</li>
+                  <li>Connection & Connection Pooling (HikariCP)</li>
+                  <li>Statement / PreparedStatement / CallableStatement</li>
+                  <li>ResultSet & ResultSetMetaData</li>
+                  <li>Transactions, Savepoints, Isolation Levels</li>
+                  <li>Batch Execution</li>
+                </ul>
+              </div>
+              <div>
+                <h3 style="color: var(--orange-yellow-crayola); font-size: 15px; margin-bottom: 10px;">JPA Block</h3>
+                <ul>
+                  <li>ORM concept & impedance mismatch</li>
+                  <li>Entity annotations (<code>@Entity</code>, <code>@Id</code>, etc.)</li>
+                  <li>Relationships (<code>@OneToMany</code>, <code>@ManyToOne</code>, etc.)</li>
+                  <li>FetchType (EAGER vs LAZY) — understand N+1 here</li>
+                  <li>Cascade types & orphanRemoval</li>
+                  <li>Entity lifecycle states</li>
+                  <li>EntityManager API</li>
+                  <li>JPQL & Criteria API</li>
+                  <li>Transactions with JPA (<code>@Transactional</code>)</li>
+                </ul>
+              </div>
+              <div>
+                <h3 style="color: var(--orange-yellow-crayola); font-size: 15px; margin-bottom: 10px;">Hibernate Block</h3>
+                <ul>
+                  <li>SessionFactory vs EntityManagerFactory</li>
+                  <li>Persistence Context & dirty checking</li>
+                  <li>HQL & Native SQL queries</li>
+                  <li>First-Level Cache & Second-Level Cache</li>
+                  <li>Solving N+1 (JOIN FETCH, <code>@BatchSize</code>)</li>
+                  <li>Advanced mapping (<code>@Formula</code>, <code>@Where</code>)</li>
+                  <li>Optimistic & Pessimistic locking</li>
+                  <li>Spring Data JPA basics</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="faang-tip" style="margin-top: 40px; justify-content: center; text-align: center;">
+            <div>
+              <em>Master each block before moving to the next. JDBC gives you the "why". JPA gives you the "what". Hibernate gives you the "how". Spring Data JPA gives you the productivity.</em>
+            </div>
+          </div>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    function togglePhase(element) {
+      const body = element.nextElementSibling;
+      const chevron = element.querySelector('.chevron');
+      
+      body.classList.toggle('open');
+      chevron.classList.toggle('open');
+    }
+    
+    // Copy email functionality
+    const emailLink = document.getElementById('email-copy-link');
+    if (emailLink) {
+      emailLink.addEventListener('click', function() {
+        const email = this.getAttribute('data-copy-email');
+        navigator.clipboard.writeText(email).then(() => {
+          const originalText = this.innerText;
+          this.innerText = 'Copied!';
+          setTimeout(() => {
+            this.innerText = originalText;
+          }, 2000);
+        });
+      });
+    }
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
